@@ -8,7 +8,6 @@
 	<!-- 支付 -->
 	<bean id="payAction" class="com.wideka.sync.pay.action.PayAction" parent="baseAction" scope="request">
 		<property name="payService" ref="payService" />
-		<property name="tradeService" ref="tradeService" />
 	</bean>
 	
 	<bean id="payService" class="com.wideka.sync.pay.service.impl.PayServiceImpl">
