@@ -71,18 +71,20 @@ public class WeiposAction extends BaseAction {
 		return RESOURCE_RESULT;
 	}
 
-	public void accesstoken() {
+	public String accesstoken() {
 		try {
 			String result =
 				HttpUtil
 					.get("http://open.wangpos.com/wopengateway/api/accesstoken/get?appid=57198b9391b9b24b3bf49e0a&secret=SLPZONKL");
-			System.out.println(result);
+			this.setResourceResult(result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		return RESOURCE_RESULT;
 	}
 
-	public void api() throws Exception {
+	public String api() throws Exception {
 		String access_token = "5719f7ee4deaae42b12778e0";
 		String timestamp = "135678976098";
 		String nonce = "01234567";
@@ -154,7 +156,8 @@ public class WeiposAction extends BaseAction {
 			url += "&signature=" + sign;
 		}
 
-		System.out.println(HttpUtil.get(url));
+		this.setResourceResult(HttpUtil.get(url));
+		return RESOURCE_RESULT;
 	}
 
 	public String getSignature() {
