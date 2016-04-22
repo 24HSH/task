@@ -62,8 +62,13 @@ public class WeiposAction extends BaseAction {
 		return RESOURCE_RESULT;
 	}
 
-	public void weiposNotify() {
+	/**
+	 * 
+	 * @return
+	 */
+	public String weiposNotify() {
 
+		return RESOURCE_RESULT;
 	}
 
 	public void accesstoken() {
