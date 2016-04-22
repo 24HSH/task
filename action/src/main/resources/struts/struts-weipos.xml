@@ -1,0 +1,14 @@
+<!DOCTYPE struts PUBLIC
+ "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+ "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="{http://sync}sync$weipos"
+		extends="{http://sync}sync$framework" namespace="/weipos">
+		<action name="callback" class="weiposAction" method="callback"></action>
+		<action name="notify" class="weiposAction" method="weiposNotify"></action>
+		<action name="accesstoken" class="weiposAction" method="accesstoken"></action>
+		<action name="api" class="weiposAction" method="api"></action>
+	</package>
+	
+</struts>

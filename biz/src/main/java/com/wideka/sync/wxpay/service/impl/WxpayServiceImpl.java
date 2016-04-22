@@ -8,12 +8,12 @@ import com.wideka.sync.api.wxpay.IWxpayService;
 import com.wideka.sync.framework.bo.BooleanResult;
 import com.wideka.sync.framework.log.Logger4jCollection;
 import com.wideka.sync.framework.log.Logger4jExtend;
-import com.wideka.sync.framework.util.EncryptUtil;
 import com.wideka.sync.framework.util.LogUtil;
 import com.wideka.sync.wxpay.dao.IWxpayDao;
 import com.wideka.weixin.api.pay.IRefundService;
 import com.wideka.weixin.api.pay.IUnifiedOrderService;
 import com.wideka.weixin.api.pay.bo.WxNotify;
+import com.wideka.weixin.framework.util.EncryptUtil;
 
 /**
  * 

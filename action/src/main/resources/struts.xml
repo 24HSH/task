@@ -6,4 +6,5 @@
 	<include file="struts/struts-framework.xml" />
 	<include file="struts/struts-error.xml" />
 	<include file="struts/struts-pay.xml" />
+	<include file="struts/struts-weipos.xml" />
 </struts>
