@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.wideka.sync.api.weipos.bo.Data;
 import com.wideka.sync.api.weipos.bo.MsgContent;
 import com.wideka.sync.api.weipos.bo.Order;
+import com.wideka.sync.api.weipos.bo.PrintContent;
 import com.wideka.sync.api.weipos.bo.Result;
 import com.wideka.sync.api.weipos.bo.Trade;
 import com.wideka.sync.framework.action.BaseAction;
@@ -128,9 +129,27 @@ public class WeiposAction extends BaseAction {
 
 			order.setMsgContent(msgContent);
 			order.setShowContent("html code");
-			order.setPrintMode(1);
-			order
-				.setPrintContent("y82yzbXY1rc6IM37vqlTT0hPCsGqz7W157uwOiAxODY4NHh4eHh4eAogIMGqz7XIyzog1cXI/QoK\nz8K1pcqxvOQ6IDIwMTUtMDUtMjEgMTA6Mjg6MzYKy82yzcqxvOQ6ILDr0KHKsdLUxNoKoaqhqqGq\noaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGqoaoKINChvMYgICAgyv3BvyAgICAgw/uzxgogNy4wMCAg\nICAgMbfdICAgICDO97rsysG4x8Lrt7kKIDguMDAgICAgIDG33SAgICAgz+O4ycjiy7+4x8Lrt7kK\nMTAuMDAgICAgIDG33SAgICAgwunAscWjyOK4x8Lrt7kKoaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGq\noaqhqqGqoaoKtqm1pb3wtu46IDI1LjAw1KoK08W73civICA6IC0yLjAw1KoKyrW8ytanuLY6IDIz\nLjAw1Ko=");
+
+			// order.setPrintMode(1);
+			// order.setPrintContent("y82yzbXY1rc6IM37vqlTT0hPCsGqz7W157uwOiAxODY4NHh4eHh4eAogIMGqz7XIyzog1cXI/QoK\nz8K1pcqxvOQ6IDIwMTUtMDUtMjEgMTA6Mjg6MzYKy82yzcqxvOQ6ILDr0KHKsdLUxNoKoaqhqqGq\noaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGqoaoKINChvMYgICAgyv3BvyAgICAgw/uzxgogNy4wMCAg\nICAgMbfdICAgICDO97rsysG4x8Lrt7kKIDguMDAgICAgIDG33SAgICAgz+O4ycjiy7+4x8Lrt7kK\nMTAuMDAgICAgIDG33SAgICAgwunAscWjyOK4x8Lrt7kKoaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGq\noaqhqqGqoaoKtqm1pb3wtu46IDI1LjAw1KoK08W73civICA6IC0yLjAw1KoKyrW8ytanuLY6IDIz\nLjAw1Ko=");
+
+			order.setPrintMode(2);
+			PrintContent[] printContents = new PrintContent[12];
+			printContents[0] = new PrintContent("点菜单", "CENTER", "BOLD");
+			printContents[1] = new PrintContent("分店名称：东北饺子馆");
+			printContents[2] = new PrintContent("桌号：12号桌");
+			printContents[3] = new PrintContent("订单编号：1234567890");
+			printContents[4] = new PrintContent("下单时间：2015-05-22 08:30");
+			printContents[5] = new PrintContent("小计            数量         名称");
+			printContents[6] = new PrintContent("￥12.0   *2    青椒炒肉");
+			printContents[7] = new PrintContent("￥10.0   *1    麻婆豆腐");
+			printContents[8] = new PrintContent("￥14.0   *2    土豆丝肉泥");
+			printContents[9] = new PrintContent("合计：62元");
+			printContents[10] = new PrintContent("折扣：满40减2");
+			printContents[11] = new PrintContent("折扣后合计60元");
+
+			order.setPrintContents(printContents);
+
 			int[] command = { 1, 2 };
 			order.setCommand(command);
 

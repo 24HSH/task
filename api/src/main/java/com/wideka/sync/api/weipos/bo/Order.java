@@ -50,6 +50,12 @@ public class Order implements Serializable {
 	private String printContent;
 
 	/**
+	 * 旺POS标签打印内容.
+	 */
+	@JSONField(name = "print_content")
+	private PrintContent[] printContents;
+
+	/**
 	 * 指令集合， 1-接单打印， 2-拒绝接单.
 	 */
 	@JSONField(name = "command")
@@ -101,6 +107,14 @@ public class Order implements Serializable {
 
 	public void setPrintContent(String printContent) {
 		this.printContent = printContent;
+	}
+
+	public PrintContent[] getPrintContents() {
+		return printContents;
+	}
+
+	public void setPrintContents(PrintContent[] printContents) {
+		this.printContents = printContents;
 	}
 
 	public int[] getCommand() {

@@ -15,6 +15,26 @@ public class PrintContent implements Serializable {
 	private static final long serialVersionUID = 3248716595134926830L;
 
 	/**
+	 * 
+	 * @param content
+	 * @param gravity
+	 * @param fontStyle
+	 */
+	public PrintContent(String content, String gravity, String fontStyle) {
+		this.content = content;
+		this.gravity = gravity;
+		this.fontStyle = fontStyle;
+	}
+
+	/**
+	 * 
+	 * @param content
+	 */
+	public PrintContent(String content) {
+		this.content = content;
+	}
+
+	/**
 	 * 本行内容.
 	 */
 	@JSONField(name = "content")
