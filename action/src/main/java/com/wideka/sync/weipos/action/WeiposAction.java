@@ -1,5 +1,8 @@
 package com.wideka.sync.weipos.action;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.alibaba.fastjson.JSON;
 import com.wideka.sync.api.weipos.bo.Data;
 import com.wideka.sync.api.weipos.bo.MsgContent;
@@ -92,9 +95,15 @@ public class WeiposAction extends BaseAction {
 		String token = "21vMPTNxPYUQPPeO52wPu6DbHdpt";
 		String device_en = "cce90238";
 
-		String url =
-			"http://open.wangpos.com/wopengateway/api/entry?access_token=" + access_token + "&timestamp=" + timestamp
-				+ "&nonce=" + nonce + "&mcode=" + mcode + "&service=" + service + "&device_en=" + device_en;
+		String url = "http://open.wangpos.com/wopengateway/api/entry";
+
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("access_token", access_token);
+		map.put("timestamp", timestamp);
+		map.put("nonce", nonce);
+		map.put("mcode", mcode);
+		map.put("service", service);
+		map.put("device_en", device_en);
 
 		String sign = null;
 
@@ -105,7 +114,7 @@ public class WeiposAction extends BaseAction {
 
 			sign = EncryptUtil.encryptSHA(a).toUpperCase();
 
-			url += "&signature=" + sign;
+			map.put("signature", sign);
 		} else if ("order.msg.push".equals(service)) {
 			Order order = new Order();
 			order.setTemplate_code("MSG100006");
@@ -120,7 +129,8 @@ public class WeiposAction extends BaseAction {
 			order.setMsgContent(msgContent);
 			order.setShowContent("html code");
 			order.setPrintMode(1);
-			order.setPrintContent("a");
+			order
+				.setPrintContent("y82yzbXY1rc6IM37vqlTT0hPCsGqz7W157uwOiAxODY4NHh4eHh4eAogIMGqz7XIyzog1cXI/QoK\nz8K1pcqxvOQ6IDIwMTUtMDUtMjEgMTA6Mjg6MzYKy82yzcqxvOQ6ILDr0KHKsdLUxNoKoaqhqqGq\noaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGqoaoKINChvMYgICAgyv3BvyAgICAgw/uzxgogNy4wMCAg\nICAgMbfdICAgICDO97rsysG4x8Lrt7kKIDguMDAgICAgIDG33SAgICAgz+O4ycjiy7+4x8Lrt7kK\nMTAuMDAgICAgIDG33SAgICAgwunAscWjyOK4x8Lrt7kKoaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGq\noaqhqqGqoaoKtqm1pb3wtu46IDI1LjAw1KoK08W73civICA6IC0yLjAw1KoKyrW8ytanuLY6IDIz\nLjAw1Ko=");
 			int[] command = { 1, 2 };
 			order.setCommand(command);
 
@@ -132,7 +142,8 @@ public class WeiposAction extends BaseAction {
 
 			sign = EncryptUtil.encryptSHA(a).toUpperCase();
 
-			url += "&data=" + d + "&signature=" + sign;
+			map.put("data", d);
+			map.put("signature", sign);
 		} else if ("cashier.api.order".equals(service)) {
 			Data data = new Data();
 			data.setDeviceEn(device_en);
@@ -154,11 +165,12 @@ public class WeiposAction extends BaseAction {
 
 			sign = EncryptUtil.encryptSHA(a).toUpperCase();
 
-			url += "&data=" + d + "&signature=" + sign;
+			map.put("data", d);
+			map.put("signature", sign);
 		}
 
 		try {
-			this.setResourceResult(HttpUtil.get(url));
+			this.setResourceResult(HttpUtil.post(url, map));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
