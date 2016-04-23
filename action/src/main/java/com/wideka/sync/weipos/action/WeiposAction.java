@@ -85,7 +85,7 @@ public class WeiposAction extends BaseAction {
 	}
 
 	public String api() throws Exception {
-		String access_token = "5719f7ee4deaae42b12778e0";
+		String access_token = "571b78564deaae42b12779d5";
 		String timestamp = "135678976098";
 		String nonce = "01234567";
 		String mcode = "162201";
@@ -120,19 +120,19 @@ public class WeiposAction extends BaseAction {
 			order.setMsgContent(msgContent);
 			order.setShowContent("html code");
 			order.setPrintMode(1);
-			order
-				.setPrintContent("y82yzbXY1rc6IM37vqlTT0hPCsGqz7W157uwOiAxODY4NHh4eHh4eAogIMGqz7XIyzog1cXI/QoK\nz8K1pcqxvOQ6IDIwMTUtMDUtMjEgMTA6Mjg6MzYKy82yzcqxvOQ6ILDr0KHKsdLUxNoKoaqhqqGq\noaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGqoaoKINChvMYgICAgyv3BvyAgICAgw/uzxgogNy4wMCAg\nICAgMbfdICAgICDO97rsysG4x8Lrt7kKIDguMDAgICAgIDG33SAgICAgz+O4ycjiy7+4x8Lrt7kK\nMTAuMDAgICAgIDG33SAgICAgwunAscWjyOK4x8Lrt7kKoaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGq\noaqhqqGqoaoKtqm1pb3wtu46IDI1LjAw1KoK08W73civICA6IC0yLjAw1KoKyrW8ytanuLY6IDIz\nLjAw1Ko=");
+			order.setPrintContent("a");
 			int[] command = { 1, 2 };
 			order.setCommand(command);
 
+			String d = JSON.toJSONString(order);
+
 			String a =
-				"access_token=" + access_token + "&data=" + JSON.toJSONString(order) + "&device_en=" + device_en
-					+ "&mcode=" + mcode + "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp
-					+ "&token=" + token;
+				"access_token=" + access_token + "&data=" + d + "&device_en=" + device_en + "&mcode=" + mcode
+					+ "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp + "&token=" + token;
 
 			sign = EncryptUtil.encryptSHA(a).toUpperCase();
 
-			url += "&signature=" + sign;
+			url += "&data=" + d + "&signature=" + sign;
 		} else if ("cashier.api.order".equals(service)) {
 			Data data = new Data();
 			data.setDeviceEn(device_en);
@@ -146,17 +146,23 @@ public class WeiposAction extends BaseAction {
 
 			data.setTrade(trade);
 
+			String d = JSON.toJSONString(data);
+
 			String a =
-				"access_token=" + access_token + "&data=" + JSON.toJSONString(data) + "&device_en=" + device_en
-					+ "&mcode=" + mcode + "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp
-					+ "&token=" + token;
+				"access_token=" + access_token + "&data=" + d + "&device_en=" + device_en + "&mcode=" + mcode
+					+ "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp + "&token=" + token;
 
 			sign = EncryptUtil.encryptSHA(a).toUpperCase();
 
-			url += "&signature=" + sign;
+			url += "&data=" + d + "&signature=" + sign;
 		}
 
-		this.setResourceResult(HttpUtil.get(url));
+		try {
+			this.setResourceResult(HttpUtil.get(url));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return RESOURCE_RESULT;
 	}
 
