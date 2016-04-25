@@ -149,7 +149,7 @@ public class WeiposAction extends BaseAction {
 			printContent[1] = new PrintContent("分店名称：好社惠下沙1号亭\n");
 			printContent[2] = new PrintContent("订单编号：1234567890\n");
 			printContent[3] = new PrintContent("下单时间：2015-05-22 08:30\n");
-			printContent[4] = new PrintContent("小计            数量         名称\n");
+			printContent[4] = new PrintContent(" 小计    数量    名称\n");
 			printContent[5] = new PrintContent("￥12.0   *2    青椒炒肉\n");
 			printContent[6] = new PrintContent("￥10.0   *1    麻婆豆腐\n");
 			printContent[7] = new PrintContent("￥14.0   *2    土豆丝肉泥\n");
@@ -159,7 +159,7 @@ public class WeiposAction extends BaseAction {
 
 			order.setPrintContent(printContent);
 
-			int[] command = { 1, 2 };
+			int[] command = { 1 };
 			order.setCommand(command);
 
 			String d = JSON.toJSONString(order);
