@@ -14,6 +14,12 @@ public class Trade implements Serializable {
 	private static final long serialVersionUID = 1204325406388811125L;
 
 	/**
+	 * 收银订单号.
+	 */
+	@JSONField(name = "cashier_trade_no")
+	private String cashierTradeNo;
+
+	/**
 	 * 第三方订单流水号，不可空，由数字和英文字母组成，长度不超过30.
 	 */
 	@JSONField(name = "out_trade_no")
@@ -42,6 +48,14 @@ public class Trade implements Serializable {
 	 */
 	@JSONField(name = "attach")
 	private String attach;
+
+	public String getCashierTradeNo() {
+		return cashierTradeNo;
+	}
+
+	public void setCashierTradeNo(String cashierTradeNo) {
+		this.cashierTradeNo = cashierTradeNo;
+	}
 
 	public String getOutTradeNo() {
 		return outTradeNo;

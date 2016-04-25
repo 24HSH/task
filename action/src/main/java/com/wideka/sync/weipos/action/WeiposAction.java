@@ -11,6 +11,7 @@ import com.wideka.sync.api.weipos.bo.PrintContent;
 import com.wideka.sync.api.weipos.bo.Result;
 import com.wideka.sync.api.weipos.bo.Trade;
 import com.wideka.sync.framework.action.BaseAction;
+import com.wideka.sync.framework.util.UUIDUtil;
 import com.wideka.weixin.framework.util.EncryptUtil;
 import com.wideka.weixin.framework.util.HttpUtil;
 
@@ -71,7 +72,19 @@ public class WeiposAction extends BaseAction {
 	 * @return
 	 */
 	public String weiposNotify() {
+		@SuppressWarnings("unchecked")
+		Map<Object, Object> map = this.getServletRequest().getParameterMap();
 
+		System.out.println("==============================");
+		for (Map.Entry<Object, Object> m : map.entrySet()) {
+			String[] a = ((String[]) m.getValue());
+			for (String b : a) {
+				System.out.println(m.getKey() + "=" + b);
+			}
+		}
+		System.out.println("==============================");
+
+		this.setResourceResult("success");
 		return RESOURCE_RESULT;
 	}
 
@@ -89,7 +102,7 @@ public class WeiposAction extends BaseAction {
 	}
 
 	public String api() throws Exception {
-		String access_token = "571d830491b9b24b3bf4a028";
+		String access_token = "571dbfea91b9b24b3bf4a09d";
 		String timestamp = "135678976098";
 		String nonce = "01234567";
 		String mcode = "162201";
@@ -125,24 +138,24 @@ public class WeiposAction extends BaseAction {
 			msgContent.setTitle("好社惠商城订单");
 			msgContent.setVoice("您有未处理订单");
 			msgContent.setDesc("未处理好社惠商城订单");
-			msgContent.setDescDetail("");
+			msgContent.setDescDetail("订单编号：1234567890\n订单时间：2015-5-26 12:30");
 
 			order.setMsgContent(msgContent);
-			order.setShowContent("<html><body><div style='color: red;'>asd</div></body></html>");
+			order.setShowContent("<html><body></body></html>");
 
 			order.setPrintMode(2);
 			PrintContent[] printContent = new PrintContent[11];
-			printContent[0] = new PrintContent("点菜单", "CENTER", "BOLD");
-			printContent[1] = new PrintContent("分店名称：好社惠下沙1号亭");
-			printContent[2] = new PrintContent("订单编号：1234567890");
-			printContent[3] = new PrintContent("下单时间：2015-05-22 08:30");
-			printContent[4] = new PrintContent("小计            数量         名称");
-			printContent[5] = new PrintContent("￥12.0   *2    青椒炒肉");
-			printContent[6] = new PrintContent("￥10.0   *1    麻婆豆腐");
-			printContent[7] = new PrintContent("￥14.0   *2    土豆丝肉泥");
-			printContent[8] = new PrintContent("合计：62元");
-			printContent[9] = new PrintContent("折扣：满40减2");
-			printContent[10] = new PrintContent("折扣后合计60元");
+			printContent[0] = new PrintContent("点菜单\n", "CENTER", "BOLD");
+			printContent[1] = new PrintContent("分店名称：好社惠下沙1号亭\n");
+			printContent[2] = new PrintContent("订单编号：1234567890\n");
+			printContent[3] = new PrintContent("下单时间：2015-05-22 08:30\n");
+			printContent[4] = new PrintContent("小计            数量         名称\n");
+			printContent[5] = new PrintContent("￥12.0   *2    青椒炒肉\n");
+			printContent[6] = new PrintContent("￥10.0   *1    麻婆豆腐\n");
+			printContent[7] = new PrintContent("￥14.0   *2    土豆丝肉泥\n");
+			printContent[8] = new PrintContent("合计：62元\n");
+			printContent[9] = new PrintContent("折扣：满40减2\n");
+			printContent[10] = new PrintContent("折扣后合计60元\n\n\n\n\n");
 
 			order.setPrintContent(printContent);
 
@@ -160,19 +173,28 @@ public class WeiposAction extends BaseAction {
 			map.put("data", d);
 			map.put("signature", sign);
 		} else if ("cashier.api.order".equals(service)) {
-			Data data = new Data();
-			data.setDeviceEn(device_en);
-
 			Trade trade = new Trade();
-			trade.setOutTradeNo("test0987654322");
-			trade.setBody("test下单");
-			trade.setTotalFee(1);
+			trade.setOutTradeNo(UUIDUtil.generate());
+			trade.setBody("我是内容");
+			trade.setTotalFee(100);
 			trade.setNotifyUrl("http://wx.wideka.com/sync/weipos/notify.htm");
-			trade.setAttach("attach备注");
+			trade.setAttach("我是附件");
 
-			data.setTrade(trade);
+			String d = JSON.toJSONString(trade);
 
-			String d = JSON.toJSONString(data);
+			String a =
+				"access_token=" + access_token + "&data=" + d + "&device_en=" + device_en + "&mcode=" + mcode
+					+ "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp + "&token=" + token;
+
+			sign = EncryptUtil.encryptSHA(a).toUpperCase();
+
+			map.put("data", d);
+			map.put("signature", sign);
+		} else if ("cashier.api.refund".equals(service)) {
+			Trade trade = new Trade();
+			trade.setCashierTradeNo("10001622012016042500000037");
+
+			String d = JSON.toJSONString(trade);
 
 			String a =
 				"access_token=" + access_token + "&data=" + d + "&device_en=" + device_en + "&mcode=" + mcode
