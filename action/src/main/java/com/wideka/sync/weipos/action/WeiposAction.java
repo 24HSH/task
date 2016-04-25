@@ -181,7 +181,8 @@ public class WeiposAction extends BaseAction {
 			msgContent.setDescDetail("订单编号：1234567890\n订单时间：2015-5-26 12:30");
 
 			order.setMsgContent(msgContent);
-			order.setShowContent("<html><body></body></html>");
+			order.setShowContent("<html><body>" + "<div>点菜单</div>" + "<div>分店名称：好社惠下沙1号亭</div>"
+				+ "<div>订单编号：1234567890</div>" + "<div>下单时间：2015-05-22 08:30</div>" + "</body></html>");
 
 			order.setPrintMode(2);
 			PrintContent[] printContent = new PrintContent[11];
