@@ -1,7 +1,7 @@
 package com.wideka.sync.weipos.action;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.alibaba.fastjson.JSON;
 import com.wideka.sync.api.weipos.bo.Data;
@@ -102,16 +102,17 @@ public class WeiposAction extends BaseAction {
 	}
 
 	public String api() throws Exception {
-		String access_token = "571dbfea91b9b24b3bf4a09d";
+		String access_token = "571e0ace91b9b24b3bf4a10a";
 		String timestamp = "135678976098";
 		String nonce = "01234567";
 		String mcode = "162201";
 		String token = "21vMPTNxPYUQPPeO52wPu6DbHdpt";
 		String device_en = "cce90238";
+		String biz_code = "101460";
 
 		String url = "http://open.wangpos.com/wopengateway/api/entry";
 
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new TreeMap<String, String>();
 		map.put("access_token", access_token);
 		map.put("timestamp", timestamp);
 		map.put("nonce", nonce);
@@ -122,11 +123,50 @@ public class WeiposAction extends BaseAction {
 		String sign = null;
 
 		if ("base.device.get_status".equals(service) || "base.store.info".equals(service)) {
-			String a =
-				"access_token=" + access_token + "&device_en=" + device_en + "&mcode=" + mcode + "&nonce=" + nonce
-					+ "&service=" + service + "&timestamp=" + timestamp + "&token=" + token;
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, String> m : map.entrySet()) {
+				if (sb.length() > 0) {
+					sb.append("&");
+				}
+				sb.append(m.getKey()).append("=").append(m.getValue());
+			}
+			sb.append("&token=").append(token);
 
-			sign = EncryptUtil.encryptSHA(a).toUpperCase();
+			sign = EncryptUtil.encryptSHA(sb.toString()).toUpperCase();
+
+			map.put("signature", sign);
+		} else if ("base.msg.app_msg".equals(service)) {
+			map.put("biz_code", biz_code);
+			String d = "{'a':1,'b':2}";
+			map.put("data", d);
+
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, String> m : map.entrySet()) {
+				if (sb.length() > 0) {
+					sb.append("&");
+				}
+				sb.append(m.getKey()).append("=").append(m.getValue());
+			}
+			sb.append("&token=").append(token);
+
+			sign = EncryptUtil.encryptSHA(sb.toString()).toUpperCase();
+
+			map.put("signature", sign);
+		} else if ("base.msg.notify_msg".equals(service)) {
+			map.put("biz_code", biz_code);
+			String d = "/";
+			map.put("data", d);
+
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, String> m : map.entrySet()) {
+				if (sb.length() > 0) {
+					sb.append("&");
+				}
+				sb.append(m.getKey()).append("=").append(m.getValue());
+			}
+			sb.append("&token=").append(token);
+
+			sign = EncryptUtil.encryptSHA(sb.toString()).toUpperCase();
 
 			map.put("signature", sign);
 		} else if ("order.msg.push".equals(service)) {
@@ -164,13 +204,19 @@ public class WeiposAction extends BaseAction {
 
 			String d = JSON.toJSONString(order);
 
-			String a =
-				"access_token=" + access_token + "&data=" + d + "&device_en=" + device_en + "&mcode=" + mcode
-					+ "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp + "&token=" + token;
-
-			sign = EncryptUtil.encryptSHA(a).toUpperCase();
-
 			map.put("data", d);
+
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, String> m : map.entrySet()) {
+				if (sb.length() > 0) {
+					sb.append("&");
+				}
+				sb.append(m.getKey()).append("=").append(m.getValue());
+			}
+			sb.append("&token=").append(token);
+
+			sign = EncryptUtil.encryptSHA(sb.toString()).toUpperCase();
+
 			map.put("signature", sign);
 		} else if ("cashier.api.order".equals(service)) {
 			Trade trade = new Trade();
@@ -182,13 +228,19 @@ public class WeiposAction extends BaseAction {
 
 			String d = JSON.toJSONString(trade);
 
-			String a =
-				"access_token=" + access_token + "&data=" + d + "&device_en=" + device_en + "&mcode=" + mcode
-					+ "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp + "&token=" + token;
-
-			sign = EncryptUtil.encryptSHA(a).toUpperCase();
-
 			map.put("data", d);
+
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, String> m : map.entrySet()) {
+				if (sb.length() > 0) {
+					sb.append("&");
+				}
+				sb.append(m.getKey()).append("=").append(m.getValue());
+			}
+			sb.append("&token=").append(token);
+
+			sign = EncryptUtil.encryptSHA(sb.toString()).toUpperCase();
+
 			map.put("signature", sign);
 		} else if ("cashier.api.refund".equals(service)) {
 			Trade trade = new Trade();
@@ -196,13 +248,19 @@ public class WeiposAction extends BaseAction {
 
 			String d = JSON.toJSONString(trade);
 
-			String a =
-				"access_token=" + access_token + "&data=" + d + "&device_en=" + device_en + "&mcode=" + mcode
-					+ "&nonce=" + nonce + "&service=" + service + "&timestamp=" + timestamp + "&token=" + token;
-
-			sign = EncryptUtil.encryptSHA(a).toUpperCase();
-
 			map.put("data", d);
+
+			StringBuilder sb = new StringBuilder();
+			for (Map.Entry<String, String> m : map.entrySet()) {
+				if (sb.length() > 0) {
+					sb.append("&");
+				}
+				sb.append(m.getKey()).append("=").append(m.getValue());
+			}
+			sb.append("&token=").append(token);
+
+			sign = EncryptUtil.encryptSHA(sb.toString()).toUpperCase();
+
 			map.put("signature", sign);
 		}
 
