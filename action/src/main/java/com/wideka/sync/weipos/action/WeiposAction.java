@@ -6,7 +6,7 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.wideka.sync.api.weipos.bo.Data;
 import com.wideka.sync.api.weipos.bo.MsgContent;
-import com.wideka.sync.api.weipos.bo.Order;
+import com.wideka.sync.api.weipos.bo.CustOrder;
 import com.wideka.sync.api.weipos.bo.PrintContent;
 import com.wideka.sync.api.weipos.bo.Result;
 import com.wideka.sync.api.weipos.bo.Trade;
@@ -89,7 +89,7 @@ public class WeiposAction extends BaseAction {
 	}
 
 	public String api() throws Exception {
-		String access_token = "571b78564deaae42b12779d5";
+		String access_token = "571d830491b9b24b3bf4a028";
 		String timestamp = "135678976098";
 		String nonce = "01234567";
 		String mcode = "162201";
@@ -117,38 +117,34 @@ public class WeiposAction extends BaseAction {
 
 			map.put("signature", sign);
 		} else if ("order.msg.push".equals(service)) {
-			Order order = new Order();
+			CustOrder order = new CustOrder();
 			order.setTemplate_code("MSG100006");
 			order.setOutOrderNo("052600004");
 
 			MsgContent msgContent = new MsgContent();
-			msgContent.setTitle("美团外卖订单");
+			msgContent.setTitle("好社惠商城订单");
 			msgContent.setVoice("您有未处理订单");
-			msgContent.setDesc("未处理美团外卖订单");
-			msgContent.setDescDetail("订单编号：123456789\n桌号：3号桌\n订单时间：2015-5-26 12:30");
+			msgContent.setDesc("未处理好社惠商城订单");
+			msgContent.setDescDetail("");
 
 			order.setMsgContent(msgContent);
-			order.setShowContent("html code");
-
-			// order.setPrintMode(1);
-			// order.setPrintContent("y82yzbXY1rc6IM37vqlTT0hPCsGqz7W157uwOiAxODY4NHh4eHh4eAogIMGqz7XIyzog1cXI/QoK\nz8K1pcqxvOQ6IDIwMTUtMDUtMjEgMTA6Mjg6MzYKy82yzcqxvOQ6ILDr0KHKsdLUxNoKoaqhqqGq\noaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGqoaoKINChvMYgICAgyv3BvyAgICAgw/uzxgogNy4wMCAg\nICAgMbfdICAgICDO97rsysG4x8Lrt7kKIDguMDAgICAgIDG33SAgICAgz+O4ycjiy7+4x8Lrt7kK\nMTAuMDAgICAgIDG33SAgICAgwunAscWjyOK4x8Lrt7kKoaqhqqGqoaqhqqGqoaqhqqGqoaqhqqGq\noaqhqqGqoaoKtqm1pb3wtu46IDI1LjAw1KoK08W73civICA6IC0yLjAw1KoKyrW8ytanuLY6IDIz\nLjAw1Ko=");
+			order.setShowContent("<html><body><div style='color: red;'>asd</div></body></html>");
 
 			order.setPrintMode(2);
-			PrintContent[] printContents = new PrintContent[12];
-			printContents[0] = new PrintContent("点菜单", "CENTER", "BOLD");
-			printContents[1] = new PrintContent("分店名称：东北饺子馆");
-			printContents[2] = new PrintContent("桌号：12号桌");
-			printContents[3] = new PrintContent("订单编号：1234567890");
-			printContents[4] = new PrintContent("下单时间：2015-05-22 08:30");
-			printContents[5] = new PrintContent("小计            数量         名称");
-			printContents[6] = new PrintContent("￥12.0   *2    青椒炒肉");
-			printContents[7] = new PrintContent("￥10.0   *1    麻婆豆腐");
-			printContents[8] = new PrintContent("￥14.0   *2    土豆丝肉泥");
-			printContents[9] = new PrintContent("合计：62元");
-			printContents[10] = new PrintContent("折扣：满40减2");
-			printContents[11] = new PrintContent("折扣后合计60元");
+			PrintContent[] printContent = new PrintContent[11];
+			printContent[0] = new PrintContent("点菜单", "CENTER", "BOLD");
+			printContent[1] = new PrintContent("分店名称：好社惠下沙1号亭");
+			printContent[2] = new PrintContent("订单编号：1234567890");
+			printContent[3] = new PrintContent("下单时间：2015-05-22 08:30");
+			printContent[4] = new PrintContent("小计            数量         名称");
+			printContent[5] = new PrintContent("￥12.0   *2    青椒炒肉");
+			printContent[6] = new PrintContent("￥10.0   *1    麻婆豆腐");
+			printContent[7] = new PrintContent("￥14.0   *2    土豆丝肉泥");
+			printContent[8] = new PrintContent("合计：62元");
+			printContent[9] = new PrintContent("折扣：满40减2");
+			printContent[10] = new PrintContent("折扣后合计60元");
 
-			order.setPrintContents(printContents);
+			order.setPrintContent(printContent);
 
 			int[] command = { 1, 2 };
 			order.setCommand(command);

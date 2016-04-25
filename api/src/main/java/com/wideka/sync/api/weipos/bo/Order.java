@@ -11,7 +11,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class Order implements Serializable {
 
-	private static final long serialVersionUID = 5762217192234419508L;
+	private static final long serialVersionUID = 7766350659055873347L;
 
 	/**
 	 * 常量，标识此消息类型.
@@ -42,18 +42,6 @@ public class Order implements Serializable {
 	 */
 	@JSONField(name = "print_mode")
 	private int printMode;
-
-	/**
-	 * 标准打印内容，这是对原始内容进行Base64编码（GBK）后的内容.
-	 */
-	@JSONField(name = "print_content")
-	private String printContent;
-
-	/**
-	 * 旺POS标签打印内容.
-	 */
-	@JSONField(name = "print_content")
-	private PrintContent[] printContents;
 
 	/**
 	 * 指令集合， 1-接单打印， 2-拒绝接单.
@@ -101,22 +89,6 @@ public class Order implements Serializable {
 		this.printMode = printMode;
 	}
 
-	public String getPrintContent() {
-		return printContent;
-	}
-
-	public void setPrintContent(String printContent) {
-		this.printContent = printContent;
-	}
-
-	public PrintContent[] getPrintContents() {
-		return printContents;
-	}
-
-	public void setPrintContents(PrintContent[] printContents) {
-		this.printContents = printContents;
-	}
-
 	public int[] getCommand() {
 		return command;
 	}
@@ -124,5 +96,4 @@ public class Order implements Serializable {
 	public void setCommand(int[] command) {
 		this.command = command;
 	}
-
 }
