@@ -67,7 +67,7 @@ mark {
   color: #000;
   background: #ff0;
 }
-ssync {
+small {
   font-size: 80%;
 }
 sub,
@@ -582,7 +582,7 @@ th {
 .glyphicon-resize-full:before {
   content: "\e096";
 }
-.glyphicon-resize-ssync:before {
+.glyphicon-resize-small:before {
   content: "\e097";
 }
 .glyphicon-exclamation-sign:before {
@@ -1189,30 +1189,30 @@ h6,
   line-height: 1.1;
   color: inherit;
 }
-h1 ssync,
-h2 ssync,
-h3 ssync,
-h4 ssync,
-h5 ssync,
-h6 ssync,
-.h1 ssync,
-.h2 ssync,
-.h3 ssync,
-.h4 ssync,
-.h5 ssync,
-.h6 ssync,
-h1 .ssync,
-h2 .ssync,
-h3 .ssync,
-h4 .ssync,
-h5 .ssync,
-h6 .ssync,
-.h1 .ssync,
-.h2 .ssync,
-.h3 .ssync,
-.h4 .ssync,
-.h5 .ssync,
-.h6 .ssync {
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+.h1 small,
+.h2 small,
+.h3 small,
+.h4 small,
+.h5 small,
+.h6 small,
+h1 .small,
+h2 .small,
+h3 .small,
+h4 .small,
+h5 .small,
+h6 .small,
+.h1 .small,
+.h2 .small,
+.h3 .small,
+.h4 .small,
+.h5 .small,
+.h6 .small {
   font-weight: normal;
   line-height: 1;
   color: #777;
@@ -1226,18 +1226,18 @@ h3,
   margin-top: 20px;
   margin-bottom: 10px;
 }
-h1 ssync,
-.h1 ssync,
-h2 ssync,
-.h2 ssync,
-h3 ssync,
-.h3 ssync,
-h1 .ssync,
-.h1 .ssync,
-h2 .ssync,
-.h2 .ssync,
-h3 .ssync,
-.h3 .ssync {
+h1 small,
+.h1 small,
+h2 small,
+.h2 small,
+h3 small,
+.h3 small,
+h1 .small,
+.h1 .small,
+h2 .small,
+.h2 .small,
+h3 .small,
+.h3 .small {
   font-size: 65%;
 }
 h4,
@@ -1249,18 +1249,18 @@ h6,
   margin-top: 10px;
   margin-bottom: 10px;
 }
-h4 ssync,
-.h4 ssync,
-h5 ssync,
-.h5 ssync,
-h6 ssync,
-.h6 ssync,
-h4 .ssync,
-.h4 .ssync,
-h5 .ssync,
-.h5 .ssync,
-h6 .ssync,
-.h6 .ssync {
+h4 small,
+.h4 small,
+h5 small,
+.h5 small,
+h6 small,
+.h6 small,
+h4 .small,
+.h4 .small,
+h5 .small,
+.h5 .small,
+h6 .small,
+.h6 .small {
   font-size: 75%;
 }
 h1,
@@ -1301,8 +1301,8 @@ p {
     font-size: 21px;
   }
 }
-ssync,
-.ssync {
+small,
+.small {
   font-size: 85%;
 }
 mark,
@@ -1487,16 +1487,16 @@ blockquote ol:last-child {
   margin-bottom: 0;
 }
 blockquote footer,
-blockquote ssync,
-blockquote .ssync {
+blockquote small,
+blockquote .small {
   display: block;
   font-size: 80%;
   line-height: 1.42857143;
   color: #777;
 }
 blockquote footer:before,
-blockquote ssync:before,
-blockquote .ssync:before {
+blockquote small:before,
+blockquote .small:before {
   content: '\2014 \00A0';
 }
 .blockquote-reverse,
@@ -1509,18 +1509,18 @@ blockquote.pull-right {
 }
 .blockquote-reverse footer:before,
 blockquote.pull-right footer:before,
-.blockquote-reverse ssync:before,
-blockquote.pull-right ssync:before,
-.blockquote-reverse .ssync:before,
-blockquote.pull-right .ssync:before {
+.blockquote-reverse small:before,
+blockquote.pull-right small:before,
+.blockquote-reverse .small:before,
+blockquote.pull-right .small:before {
   content: '';
 }
 .blockquote-reverse footer:after,
 blockquote.pull-right footer:after,
-.blockquote-reverse ssync:after,
-blockquote.pull-right ssync:after,
-.blockquote-reverse .ssync:after,
-blockquote.pull-right .ssync:after {
+.blockquote-reverse small:after,
+blockquote.pull-right small:after,
+.blockquote-reverse .small:after,
+blockquote.pull-right .small:after {
   content: '\00A0 \2014';
 }
 address {
@@ -5313,12 +5313,12 @@ button.list-group-item {
 .list-group-item.active .list-group-item-heading,
 .list-group-item.active:hover .list-group-item-heading,
 .list-group-item.active:focus .list-group-item-heading,
-.list-group-item.active .list-group-item-heading > ssync,
-.list-group-item.active:hover .list-group-item-heading > ssync,
-.list-group-item.active:focus .list-group-item-heading > ssync,
-.list-group-item.active .list-group-item-heading > .ssync,
-.list-group-item.active:hover .list-group-item-heading > .ssync,
-.list-group-item.active:focus .list-group-item-heading > .ssync {
+.list-group-item.active .list-group-item-heading > small,
+.list-group-item.active:hover .list-group-item-heading > small,
+.list-group-item.active:focus .list-group-item-heading > small,
+.list-group-item.active .list-group-item-heading > .small,
+.list-group-item.active:hover .list-group-item-heading > .small,
+.list-group-item.active:focus .list-group-item-heading > .small {
   color: inherit;
 }
 .list-group-item.active .list-group-item-text,
@@ -5477,10 +5477,10 @@ button.list-group-item-danger.active:focus {
   color: inherit;
 }
 .panel-title > a,
-.panel-title > ssync,
-.panel-title > .ssync,
-.panel-title > ssync > a,
-.panel-title > .ssync > a {
+.panel-title > small,
+.panel-title > .small,
+.panel-title > small > a,
+.panel-title > .small > a {
   color: inherit;
 }
 .panel-footer {
