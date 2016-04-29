@@ -1,26 +1,26 @@
-package com.wideka.sync.weipos.action;
+package com.wideka.sync.wangpos.action;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.alibaba.fastjson.JSON;
-import com.wideka.sync.api.weipos.bo.Data;
-import com.wideka.sync.api.weipos.bo.MsgContent;
-import com.wideka.sync.api.weipos.bo.CustOrder;
-import com.wideka.sync.api.weipos.bo.PrintContent;
-import com.wideka.sync.api.weipos.bo.Result;
-import com.wideka.sync.api.weipos.bo.Trade;
+import com.wideka.sync.api.wangpos.bo.CustOrder;
+import com.wideka.sync.api.wangpos.bo.Data;
+import com.wideka.sync.api.wangpos.bo.MsgContent;
+import com.wideka.sync.api.wangpos.bo.PrintContent;
+import com.wideka.sync.api.wangpos.bo.Result;
+import com.wideka.sync.api.wangpos.bo.Trade;
 import com.wideka.sync.framework.action.BaseAction;
+import com.wideka.sync.framework.util.HttpUtil;
 import com.wideka.sync.framework.util.UUIDUtil;
 import com.wideka.weixin.framework.util.EncryptUtil;
-import com.wideka.weixin.framework.util.HttpUtil;
 
 /**
  * 
  * @author JiakunXu
  * 
  */
-public class WeiposAction extends BaseAction {
+public class WangposAction extends BaseAction {
 
 	private static final long serialVersionUID = -9176828111428175603L;
 

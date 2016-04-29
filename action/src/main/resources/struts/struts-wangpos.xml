@@ -1,0 +1,14 @@
+<!DOCTYPE struts PUBLIC
+ "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+ "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="{http://sync}sync$wangpos"
+		extends="{http://sync}sync$framework" namespace="/wangpos">
+		<action name="callback" class="wangposAction" method="callback"></action>
+		<action name="notify" class="wangposAction" method="weiposNotify"></action>
+		<action name="accesstoken" class="wangposAction" method="accesstoken"></action>
+		<action name="api" class="wangposAction" method="api"></action>
+	</package>
+	
+</struts>

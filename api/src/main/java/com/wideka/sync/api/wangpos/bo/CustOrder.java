@@ -1,4 +1,4 @@
-package com.wideka.sync.api.weipos.bo;
+package com.wideka.sync.api.wangpos.bo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

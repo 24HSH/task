@@ -1,0 +1,11 @@
+<!DOCTYPE struts PUBLIC
+ "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+ "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="{http://sync}sync$wizarpos"
+		extends="{http://sync}sync$framework" namespace="/wizarpos">
+		<action name="api" class="wizarposAction" method="api"></action>
+	</package>
+	
+</struts>
