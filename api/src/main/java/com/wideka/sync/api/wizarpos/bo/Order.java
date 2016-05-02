@@ -1,6 +1,7 @@
 package com.wideka.sync.api.wizarpos.bo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -18,6 +19,11 @@ public class Order implements Serializable {
 	 * 订单编号(原始订单修改操作用).
 	 */
 	private String orderId;
+
+	/**
+	 * 微信号.
+	 */
+	private String openId;
 
 	/**
 	 * 购物车编号(购物车结算用).
@@ -39,6 +45,11 @@ public class Order implements Serializable {
 	 */
 	private String mid;
 
+	/**
+	 * 微信订单标志,1:一月内所有订单 2:三月内所有订单 3: 全部订单.
+	 */
+	private String status;
+
 	@JSONField(name = "orderDetail")
 	private List<OrderDetail> orderDetailList;
 
@@ -53,6 +64,16 @@ public class Order implements Serializable {
 	private String dispatchType;
 
 	/**
+	 * 付款金额.
+	 */
+	private BigDecimal amount;
+
+	/**
+	 * 支付状态(0 未支付 1 已支付).
+	 */
+	private String payStatus;
+
+	/**
 	 * 收货地址编号.
 	 */
 	private String addressId;
@@ -60,7 +81,7 @@ public class Order implements Serializable {
 	/**
 	 * pos 机是否要打印小票 true 打印,false 不打印.
 	 */
-	private boolean print;
+	private Boolean print;
 
 	/**
 	 * 微信消息模板跳转链接.
@@ -73,6 +94,14 @@ public class Order implements Serializable {
 
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public String getCartId() {
@@ -107,6 +136,14 @@ public class Order implements Serializable {
 		this.mid = mid;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public List<OrderDetail> getOrderDetailList() {
 		return orderDetailList;
 	}
@@ -131,6 +168,22 @@ public class Order implements Serializable {
 		this.dispatchType = dispatchType;
 	}
 
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+
 	public String getAddressId() {
 		return addressId;
 	}
@@ -139,11 +192,11 @@ public class Order implements Serializable {
 		this.addressId = addressId;
 	}
 
-	public boolean isPrint() {
+	public Boolean isPrint() {
 		return print;
 	}
 
-	public void setPrint(boolean print) {
+	public void setPrint(Boolean print) {
 		this.print = print;
 	}
 

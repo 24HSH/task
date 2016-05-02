@@ -22,6 +22,8 @@ public class OrderDetail implements Serializable {
 
 	private String remark;
 
+	private String operateType;
+
 	public String getProductId() {
 		return productId;
 	}
@@ -60,6 +62,14 @@ public class OrderDetail implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getOperateType() {
+		return operateType;
+	}
+
+	public void setOperateType(String operateType) {
+		this.operateType = operateType;
 	}
 
 }
