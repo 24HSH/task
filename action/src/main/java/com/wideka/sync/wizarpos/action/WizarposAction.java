@@ -1,8 +1,14 @@
 package com.wideka.sync.wizarpos.action;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
+import com.wideka.sync.api.wizarpos.bo.Order;
+import com.wideka.sync.api.wizarpos.bo.OrderDetail;
 import com.wideka.sync.framework.action.BaseAction;
 import com.wideka.sync.framework.util.HttpUtil;
 
@@ -35,6 +41,39 @@ public class WizarposAction extends BaseAction {
 			str = "{\"mid\": \"" + mid + "\", \"openId\": \"oAab_tj8kpkcXmINJAZIcxzzyvWs\"}";
 		} else if ("/szws/getMerchantDefByMid".equals(api)) {
 			str = "{\"mid\": \"" + mid + "\"}";
+		} else if ("/wxshop/pay".equals(api)) {
+			str =
+				"{\"mid\": \""
+					+ mid
+					+ "\", \"orderId\":\"100000000\", \"payAmount\": \"0.01\", \"print\": \"true\", \"url\": \"wx.wideka.com\"}";
+		} else if ("/wxshop/market/order/submit".equals(api)) {
+			Order order = new Order();
+			order.setCardId(null);
+			order.setMid(mid);
+
+			List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.setProductId("0bd1d2c3-7347-4a7c-8263-8fc978792c89");
+			orderDetail.setAmount(BigDecimal.TEN);
+			orderDetail.setPrice(BigDecimal.ONE);
+			orderDetail.setQty(10);
+			orderDetail.setRemark(null);
+			orderDetailList.add(orderDetail);
+
+			order.setOrderDetailList(orderDetailList);
+			order.setRemark(null);
+			order.setUrl("http://wwww.wideka.com");
+
+			str = JSON.toJSONString(order);
+		} else if ("/wxshop/order/submit".equals(api)) {
+			Order order = new Order();
+			order.setOrderId("100000000");
+			order.setMid(mid);
+			order.setDispatchType("1");
+			order.setPrint(true);
+			order.setUrl("http://wwww.wideka.com");
+
+			str = JSON.toJSONString(order);
 		}
 
 		try {

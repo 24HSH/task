@@ -355,8 +355,8 @@ public final class HttpUtil {
 		String responseStr = null;
 		try {
 			hp.setHeader("content-type", "application/json");
-			// hp.setHeader("appkey", "wizarpos6c78ddcakh49c936fc724");
-			// hp.setHeader("appsecret", "sM4AOVdWfPE4DxkXGEs8VFjJDFzC__AUN6pbDB03sGU-0vQYe3");
+			hp.setHeader("appkey", "wizarpos6c78ddcakh49c936fc724");
+			hp.setHeader("appsecret", "sM4AOVdWfPE4DxkXGEs8VFjJDFzC__AUN6pbDB03sGU-0vQYe3");
 
 			responseStr = httpclient.execute(hp, responseHandler);
 		} catch (ClientProtocolException e) {
