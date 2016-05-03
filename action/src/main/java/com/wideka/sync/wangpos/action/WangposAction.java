@@ -71,7 +71,7 @@ public class WangposAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String weiposNotify() {
+	public String wangposNotify() {
 		@SuppressWarnings("unchecked")
 		Map<Object, Object> map = this.getServletRequest().getParameterMap();
 

@@ -11,6 +11,8 @@ import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.wideka.sync.api.wizarpos.bo.Order;
 import com.wideka.sync.api.wizarpos.bo.OrderDetail;
+import com.wideka.sync.api.wizarpos.bo.Payment;
+import com.wideka.sync.api.wizarpos.bo.SaleOrder;
 import com.wideka.sync.framework.action.BaseAction;
 import com.wideka.sync.framework.util.HttpUtil;
 
@@ -24,6 +26,23 @@ public class WizarposAction extends BaseAction {
 	private static final long serialVersionUID = -322645893755696525L;
 
 	private String api;
+
+	public String wizarposNotify() {
+		@SuppressWarnings("unchecked")
+		Map<Object, Object> map = this.getServletRequest().getParameterMap();
+
+		System.out.println("==============================");
+		for (Map.Entry<Object, Object> m : map.entrySet()) {
+			String[] a = ((String[]) m.getValue());
+			for (String b : a) {
+				System.out.println(m.getKey() + "=" + b);
+			}
+		}
+		System.out.println("==============================");
+
+		this.setResourceResult("success");
+		return RESOURCE_RESULT;
+	}
 
 	public String api() {
 		String mid = "100100210000302";
@@ -58,6 +77,8 @@ public class WizarposAction extends BaseAction {
 			order.setOrderDetailList(orderDetailList);
 
 			str = JSON.toJSONString(order);
+		} else if ("/order/detail".equals(api)) {
+			str = "{\"mid\": \"" + mid + "\", \"orderId\": \"03100100210000302201605030003\"}";
 		} else if ("/muslim/bind".equals(api)) {
 			str = "{\"mid\": \"" + mid + "\", \"sn\": \"WP14451000002474\"}";
 		} else if ("/wechart/wxshop/userinfo".equals(api)) {
@@ -119,13 +140,13 @@ public class WizarposAction extends BaseAction {
 		} else if ("/wxshop/shopRemind".equals(api)) {
 			str =
 				"{\"mid\": \"" + mid
-					+ "\", \"orderId\": \"03100105100000001201504210069\", \"sendMessage\": \"微店结帐\", \"type\": \"1\"}";
+					+ "\", \"orderId\": \"03100105100000001201504210070\", \"sendMessage\": \"微店结帐\", \"type\": \"3\"}";
 		} else if ("/thirdSyncService/editMidStatus".equals(api)) {
 			str = "{\"mid\": \"" + mid + "\", \"merchantStatus\": \"0\"}";
 		} else if ("/thirdSyncService/syncThirdServiceDef".equals(api)) {
 			str =
 				"{\"mid\": \"" + mid
-					+ "\", \"notifySet\": \"1\", \"serviceUrl\": \"http://wx.wideka.com\", \"urlType\": \"3\"}";
+					+ "\", \"notifySet\": \"1\", \"serviceUrl\": \"http://wx.wideka.com\", \"urlType\": \"5\"}";
 		} else if ("/product/merchandise".equals(api)) {
 			str = "{\"mid\": \"" + mid + "\", \"productId\": \"0888bb66-0723-42bd-ae8e-abc3357c3040\"}";
 		} else if ("/wxshop/weixintemplateinfo".equals(api)) {
@@ -148,6 +169,43 @@ public class WizarposAction extends BaseAction {
 					+ "\", \"cardNo\": \"14e11ae4-8b12-11e4-8732-00163e00298f\", \"sendMessage\": \"发送内容\"}";
 		} else if ("/wxshop/order/query".equals(api)) {
 			str = "{\"mid\": \"" + mid + "\", \"orderId\": \"1458f9d2-85c4-4916-a2eb-9805e83673c4\"}";
+		} else if ("/catering/pay".equals(api)) {
+			Order order = new Order();
+			order.setMid(mid);
+			order.setOrderId("5c812935-fd96-4f81-ae06-2e3fbb27034d");
+			order.setAmount(BigDecimal.TEN);
+			order.setPrint(true);
+
+			List<Payment> paymentList = new ArrayList<Payment>();
+			Payment payment = new Payment();
+			payment.setPayType("1");
+			payment.setAmount("50.00");
+			paymentList.add(payment);
+
+			order.setPaymentList(paymentList);
+
+			str = JSON.toJSONString(order);
+		} else if ("/thirdSyncService/saleorder/submit".equals(api)) {
+			SaleOrder saleOrder = new SaleOrder();
+			saleOrder.setMid(mid);
+			saleOrder.setOrderType("3");
+			saleOrder.setStatus("0");
+			saleOrder.setDispatchType("2");
+			saleOrder.setAmount("100.00");
+			saleOrder.setPayStatus("0");
+			saleOrder.setPrint(true);
+
+			List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.setProductId("0bd1d2c3-7347-4a7c-8263-8fc978792c89");
+			orderDetail.setName("牛奶");
+			orderDetail.setPrice(BigDecimal.TEN);
+			orderDetail.setQty(10);
+			orderDetail.setAmount(BigDecimal.TEN);
+			orderDetailList.add(orderDetail);
+			saleOrder.setOrderDetailList(orderDetailList);
+
+			str = JSON.toJSONString(saleOrder);
 		}
 
 		if (StringUtils.isNotBlank(str)) {

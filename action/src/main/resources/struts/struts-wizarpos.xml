@@ -5,6 +5,7 @@
 	
 	<package name="{http://sync}sync$wizarpos"
 		extends="{http://sync}sync$framework" namespace="/wizarpos">
+		<action name="notify" class="wizarposAction" method="wizarposNotify"></action>
 		<action name="api" class="wizarposAction" method="api"></action>
 	</package>
 	

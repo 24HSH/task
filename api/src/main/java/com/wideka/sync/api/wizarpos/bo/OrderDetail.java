@@ -12,7 +12,15 @@ public class OrderDetail implements Serializable {
 
 	private static final long serialVersionUID = -5949473713198941714L;
 
+	/**
+	 * 商品 ID(商品 uuid).
+	 */
 	private String productId;
+
+	/**
+	 * 商品名称.
+	 */
+	private String name;
 
 	private BigDecimal amount;
 
@@ -30,6 +38,14 @@ public class OrderDetail implements Serializable {
 
 	public void setProductId(String productId) {
 		this.productId = productId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public BigDecimal getAmount() {

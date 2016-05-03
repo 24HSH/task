@@ -88,6 +88,9 @@ public class Order implements Serializable {
 	 */
 	private String url;
 
+	@JSONField(name = "payments")
+	private List<Payment> paymentList;
+
 	public String getOrderId() {
 		return orderId;
 	}
@@ -192,7 +195,7 @@ public class Order implements Serializable {
 		this.addressId = addressId;
 	}
 
-	public Boolean isPrint() {
+	public Boolean getPrint() {
 		return print;
 	}
 
@@ -206,6 +209,14 @@ public class Order implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public List<Payment> getPaymentList() {
+		return paymentList;
+	}
+
+	public void setPaymentList(List<Payment> paymentList) {
+		this.paymentList = paymentList;
 	}
 
 }
