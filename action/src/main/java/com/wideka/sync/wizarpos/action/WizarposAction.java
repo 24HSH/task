@@ -209,7 +209,7 @@ public class WizarposAction extends BaseAction {
 			str = JSON.toJSONString(saleOrder);
 		} else if ("/saleData/getdata".equals(api)) {
 			SaleData saleData = new SaleData();
-			saleData.setTableName("erp_product_stock");
+			saleData.setTableName("erp_product_category");
 			saleData.setLastReceivedTime("1431192843875");
 			saleData.setMid(mid);
 			saleData.setCount(10000);
