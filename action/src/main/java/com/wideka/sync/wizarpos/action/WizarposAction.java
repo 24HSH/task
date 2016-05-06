@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.wideka.sync.api.wizarpos.bo.Order;
 import com.wideka.sync.api.wizarpos.bo.OrderDetail;
 import com.wideka.sync.api.wizarpos.bo.Payment;
+import com.wideka.sync.api.wizarpos.bo.SaleData;
 import com.wideka.sync.api.wizarpos.bo.SaleOrder;
 import com.wideka.sync.framework.action.BaseAction;
 import com.wideka.sync.framework.util.HttpUtil;
@@ -206,6 +207,14 @@ public class WizarposAction extends BaseAction {
 			saleOrder.setOrderDetailList(orderDetailList);
 
 			str = JSON.toJSONString(saleOrder);
+		} else if ("/saleData/getdata".equals(api)) {
+			SaleData saleData = new SaleData();
+			saleData.setTableName("erp_product_stock");
+			saleData.setLastReceivedTime("1431192843875");
+			saleData.setMid(mid);
+			saleData.setCount(10000);
+
+			str = JSON.toJSONString(saleData);
 		}
 
 		if (StringUtils.isNotBlank(str)) {
