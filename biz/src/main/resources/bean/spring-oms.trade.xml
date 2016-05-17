@@ -5,18 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="triggers">
-			<list>
-				<!--
-				<ref bean="actionMonitorTrigger" />
-				<ref bean="cacheMonitorTrigger" />
-				<ref bean="logMonitorTrigger" />
-				-->
-				<ref bean="syncTrigger" />
-				<ref bean="sync2SendTrigger" />
-			</list>
-		</property>
+	<!-- 账单 -->
+	<bean id="omsTradeService" class="com.hsh24.sync.oms.service.impl.TradeServiceImpl">
+		<property name="tradeDao" ref="omsTradeDao" />
 	</bean>
+	
+	<bean id="omsTradeDao" class="com.hsh24.sync.oms.dao.impl.TradeDaoImpl" parent="baseDao" />
 	
 </beans>
