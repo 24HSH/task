@@ -8,5 +8,6 @@ public class TradeToSendSyncTask {
 	
 	public void toSendSync(){
 		
+		
 	}
 }
