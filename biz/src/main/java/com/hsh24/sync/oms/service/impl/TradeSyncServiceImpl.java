@@ -40,6 +40,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 				continue;
 			}
 
+			Long id = tradeLog.getId();
 			Long tradeId = tradeLog.getTradeId();
 
 			Trade trade = tradeService.getTrade(tradeId);
@@ -56,12 +57,16 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 			if ("tosend".equals(tradeLog.getType())) {
 
-				continue;
-			}
+				BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
+				if (result.getResult()) {
+					count++;
+				}
+			} else if ("cancel".equals(tradeLog.getType())) {
 
-			if ("cancel".equals(tradeLog.getType())) {
-
-				continue;
+				BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
+				if (result.getResult()) {
+					count++;
+				}
 			}
 		}
 
