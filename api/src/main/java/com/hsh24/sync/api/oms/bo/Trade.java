@@ -24,21 +24,21 @@ public class Trade implements Serializable {
 	/**
 	 * 店铺ID.
 	 */
+	@JSONField(name = "orgId")
 	private Long shopId;
 
 	/**
 	 * 供应商ID.
 	 */
+	@JSONField(name = "supplier")
 	private Long supId;
 
 	/**
 	 * 交易价格（不含折扣）.
 	 */
+	@JSONField(name = "purchaseMoney")
 	private BigDecimal tradePrice;
 
-	/**
-	 * 备注，店小儿分类交易.
-	 */
 	private String remark;
 
 	/**
@@ -58,14 +58,13 @@ public class Trade implements Serializable {
 	@JSONField(name = "purchaseDt")
 	private String createDate;
 
-	/**
-	 * 买家付款时间.
-	 */
-	private String payDate;
+	@JSONField(name = "preArriveDt")
+	private String sendDate;
 
-	/**
-	 * 操作人ID.
-	 */
+	@JSONField(name = "createBy")
+	private String createUser;
+
+	@JSONField(name = "purchaser")
 	private String modifyUser;
 
 	// >>>>>>>>>>以下是辅助属性<<<<<<<<<<
@@ -73,6 +72,7 @@ public class Trade implements Serializable {
 	/**
 	 * 订单行项目.
 	 */
+	@JSONField(name = "purchaseOrderGoodsList")
 	private List<Order> orderList;
 
 	public Long getTradeId() {
@@ -152,12 +152,20 @@ public class Trade implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public String getPayDate() {
-		return payDate;
+	public String getSendDate() {
+		return sendDate;
 	}
 
-	public void setPayDate(String payDate) {
-		this.payDate = payDate;
+	public void setSendDate(String sendDate) {
+		this.sendDate = sendDate;
+	}
+
+	public String getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
 	}
 
 	public String getModifyUser() {
