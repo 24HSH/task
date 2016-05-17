@@ -22,7 +22,8 @@ public interface ITradeLogService {
 	/**
 	 * 完成 tradeLog 数据处理.
 	 * 
-	 * @param updateTradeLog
+	 * @param id
+	 * @param modifyUser
 	 * @return
 	 */
 	BooleanResult finishTradeLog(Long id, String modifyUser);

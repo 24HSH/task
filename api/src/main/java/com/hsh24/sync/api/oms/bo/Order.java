@@ -43,24 +43,25 @@ public class Order implements Serializable {
 	/**
 	 * 购买该sku商品的数量.
 	 */
+	@JSONField(name = "goodsNum")
 	private int quantity;
 
 	/**
 	 * 购买价格.
 	 */
+	@JSONField(name = "goodsFactPrice")
 	private BigDecimal price;
 
 	/**
 	 * 操作人ID.
 	 */
-	private String modifyUser;
+	@JSONField(name = "createBy")
+	private String createUser;
 
 	// >>>>>>>>>>以下是辅助属性<<<<<<<<<<
 
-	/**
-	 * 供应商id 创建时权限控制.
-	 */
-	private Long supId;
+	@JSONField(name = "orgId")
+	private Long shopId;
 
 	public Long getOrderId() {
 		return orderId;
@@ -139,20 +140,20 @@ public class Order implements Serializable {
 		return BigDecimal.ZERO;
 	}
 
-	public String getModifyUser() {
-		return modifyUser;
+	public String getCreateUser() {
+		return createUser;
 	}
 
-	public void setModifyUser(String modifyUser) {
-		this.modifyUser = modifyUser;
+	public void setCreateUser(String createUser) {
+		this.createUser = createUser;
 	}
 
-	public Long getSupId() {
-		return supId;
+	public Long getShopId() {
+		return shopId;
 	}
 
-	public void setSupId(Long supId) {
-		this.supId = supId;
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
 	}
 
 }

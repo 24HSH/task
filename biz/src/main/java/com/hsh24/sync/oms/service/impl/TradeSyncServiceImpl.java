@@ -13,7 +13,7 @@ import com.hsh24.sync.api.oms.bo.Order;
 import com.hsh24.sync.api.oms.bo.Trade;
 import com.hsh24.sync.api.oms.bo.TradeLog;
 import com.hsh24.sync.framework.bo.BooleanResult;
-import com.wideka.weixin.framework.util.HttpUtil;
+import com.hsh24.sync.framework.util.HttpUtil;
 
 /**
  * 
@@ -54,9 +54,15 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 				continue;
 			}
 
+			Long shopId = trade.getShopId();
+
 			List<Order> orderList = orderService.getOrderList(tradeId);
 			if (orderList == null || orderList.size() == 0) {
 				continue;
+			}
+
+			for (Order order : orderList) {
+				order.setShopId(shopId);
 			}
 
 			trade.setOrderList(orderList);
