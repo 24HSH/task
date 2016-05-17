@@ -28,7 +28,7 @@
 			   t.type,
 			   t.trade_price AS tradePrice,
 			   DATE_FORMAT(t.create_date, '%Y-%m-%d %T') AS createDate
-		  FROM dms_tb_trade t
+		  FROM dms.dms_tb_trade t
 		 WHERE t.trade_id = #tradeId#
 	]]>
 	</select>

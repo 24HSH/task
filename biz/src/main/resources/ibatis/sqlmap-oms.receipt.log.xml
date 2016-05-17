@@ -2,25 +2,25 @@
 <!DOCTYPE sqlMap
 	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
-<sqlMap namespace="oms.trade.log">
+<sqlMap namespace="oms.receipt.log">
 	
-	<typeAlias alias="tradeLog" type="com.hsh24.sync.api.oms.bo.TradeLog" />
+	<typeAlias alias="receiptLog" type="com.hsh24.sync.api.oms.bo.ReceiptLog" />
 	
-	<select id="getTradeLogList" parameterClass="tradeLog" resultClass="tradeLog">
+	<select id="getReceiptLogList" parameterClass="receiptLog" resultClass="receiptLog">
 	<![CDATA[
 		SELECT ID,
-			   TRADE_ID AS tradeId,
+			   RECEIPT_ID AS receiptId,
 			   TYPE
-		  FROM dms.dms_tb_trade_log
+		  FROM dms.dms_tb_receipt_log
 		 WHERE STATE= 'U'
 		 ORDER BY MODIFY_DATE
 		 LIMIT 10
 	]]>
 	</select>
 
-	<update id="finishTradeLog" parameterClass="tradeLog">
+	<update id="finishReceiptLog" parameterClass="receiptLog">
 	<![CDATA[
-		UPDATE dms.dms_tb_trade_log t
+		UPDATE dms.dms_tb_receipt_log t
 		   SET t.STATE = 'D',
 			   t.MODIFY_DATE = NOW(),
 			   t.MODIFY_USER = #modifyUser#

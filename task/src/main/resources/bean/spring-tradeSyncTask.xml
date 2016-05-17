@@ -9,7 +9,7 @@
 		<property name="tradeSyncService" ref="omsTradeSyncService" />
 	</bean>
 
-	<bean id="syncJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="tradeSyncJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="tradeSyncTask" />
 		</property>
@@ -18,16 +18,16 @@
 		</property>
 	</bean>
 
-	<bean id="syncTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<bean id="tradeSyncTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
-			<ref bean="syncJobDetail" />
+			<ref bean="tradeSyncJobDetail" />
 		</property>
 		<property name="cronExpression">
 			<value>0 0/3 * * * ?</value>
 		</property>
 	</bean>
 	
-	<bean id="sync2SendJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="tradeSync2SendJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="tradeSyncTask" />
 		</property>
@@ -36,9 +36,9 @@
 		</property>
 	</bean>
 
-	<bean id="sync2SendTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<bean id="tradeSync2SendTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
-			<ref bean="sync2SendJobDetail" />
+			<ref bean="tradeSync2SendJobDetail" />
 		</property>
 		<property name="cronExpression">
 			<value>0 0/5 * * * ?</value>

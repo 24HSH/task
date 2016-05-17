@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="oms.receipt">
+	
+	<typeAlias alias="receipt" type="com.hsh24.sync.api.oms.bo.Receipt" />
+	
+	<select id="getReceipt" parameterClass="receipt" resultClass="receipt">
+	<![CDATA[
+		SELECT t.receipt_id AS receiptId,
+			   t.receipt_no AS receiptNo,
+			   DATE_FORMAT(t.create_date, '%Y-%m-%d %T') AS createDate
+		  FROM dms.dms_tb_receipt t
+		 WHERE t.state = 'U'
+		   AND t.receipt_id = #receiptId#
+	]]>
+	</select>
+	
+</sqlMap>

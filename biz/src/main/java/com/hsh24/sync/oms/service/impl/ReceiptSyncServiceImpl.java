@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSON;
 import com.hsh24.sync.api.oms.IReceiptLogService;
 import com.hsh24.sync.api.oms.IReceiptService;
 import com.hsh24.sync.api.oms.IReceiptSyncService;
-import com.hsh24.sync.api.oms.bo.Order;
 import com.hsh24.sync.api.oms.bo.Receipt;
 import com.hsh24.sync.api.oms.bo.ReceiptDetail;
 import com.hsh24.sync.api.oms.bo.ReceiptLog;
@@ -73,7 +72,6 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 			if (result.getResult()) {
 				count++;
 			}
-
 		}
 
 		return count;

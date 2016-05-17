@@ -13,6 +13,8 @@ public class ReceiptLog {
 
 	private String type;
 
+	private String modifyUser;
+
 	public Long getId() {
 		return id;
 	}
@@ -35,6 +37,14 @@ public class ReceiptLog {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getModifyUser() {
+		return modifyUser;
+	}
+
+	public void setModifyUser(String modifyUser) {
+		this.modifyUser = modifyUser;
 	}
 
 }

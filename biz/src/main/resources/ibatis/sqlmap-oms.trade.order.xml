@@ -16,7 +16,7 @@
 			   t.price,
 			   t.item_id AS itemId,
 			   t.sku_id AS skuId
-		  FROM dms_tb_order t
+		  FROM dms.dms_tb_order t
 		  LEFT JOIN oms.dms_vw_goods p ON t.item_id = p.item_id
 		 WHERE p.item_id is not null
 		   AND t.state = 'U'
