@@ -7,4 +7,9 @@ public interface ITradeSyncService {
 	 */
 	void sync();
 
+	/**
+	 * 同步交易订单发货状态.
+	 */
+	void syncTrade2Send();
+
 }

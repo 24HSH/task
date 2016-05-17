@@ -29,7 +29,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 		if (tradeLogList != null && tradeLogList.size() > 0) {
 			for (TradeLog tradeLog : tradeLogList) {
-				if (!"tosend".equals(tradeLog.getType())) {
+				if (!"tosend".equals(tradeLog.getType()) && !"cancel".equals(tradeLog.getType())) {
 					continue;
 				}
 
@@ -49,6 +49,12 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 			}
 		}
+	}
+
+	@Override
+	public void syncTrade2Send() {
+		// TODO Auto-generated method stub
+
 	}
 
 	public ITradeLogService getTradeLogService() {
