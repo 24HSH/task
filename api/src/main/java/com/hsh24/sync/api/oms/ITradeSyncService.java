@@ -1,24 +1,10 @@
 package com.hsh24.sync.api.oms;
 
-import java.util.List;
-
-import com.hsh24.sync.api.oms.bo.TradeLog;
-import com.hsh24.sync.framework.bo.BooleanResult;
-
 public interface ITradeSyncService {
 
 	/**
-	 * 获取 tradeLog 数据 (10条).
-	 * 
-	 * @return
+	 * 同步交易订单.
 	 */
-	List<TradeLog> getTradeLogList();
+	void sync();
 
-	/**
-	 * 完成 tradeLog 数据处理.
-	 * 
-	 * @param updateTradeLog
-	 * @return
-	 */
-	BooleanResult finishTradeLog(Long id, String modifyUser);
 }

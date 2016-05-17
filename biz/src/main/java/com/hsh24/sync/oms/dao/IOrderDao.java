@@ -1,4 +1,4 @@
-package com.hsh24.sync.api.oms;
+package com.hsh24.sync.oms.dao;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import com.hsh24.sync.api.oms.bo.Order;
  * @author JiakunXu
  * 
  */
-public interface IOrderService {
+public interface IOrderDao {
 
 	/**
 	 * 
-	 * @param tradeId
+	 * @param order
 	 * @return
 	 */
-	List<Order> getOrderList(Long tradeId);
+	List<Order> getOrderList(Order order);
 
 }
