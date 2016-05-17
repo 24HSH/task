@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="tradelog">
+	<select id="getTradeLogList" parameterClass="tradeLog" resultClass="tradeLog">
+	<![CDATA[
+		 SELECT ID ,
+			 TRADE_ID AS tradeId,
+			 TYPE, 
+			 STATE, 
+			 CREATE_DATE, 
+			 CREATE_USER, 
+			 MODIFY_DATE, 
+			 MODIFY_USER  AS modifyUser
+	     FROM dms.dms_tb_trade_log 
+	     WHERE STATE ='U'
+	]]>	
+		<dynamic>
+			<isEmpty property="sort">
+			<![CDATA[ ORDER BY MODIFY_DATE DESC ]]>
+			</isEmpty>
+		</dynamic>
+	<![CDATA[
+		LIMIT 10 
+	]]>
+	</select>
+	
+	
+	
+	<update id="" parameterClass="">
+	<![CDATA[
+		
+	]]>
+		<dynamic>
+			<isNotEmpty property="" prepend=",">
+			<![CDATA[ t.type          = #type# ]]>
+			</isNotEmpty>
+			
+		
+		</dynamic>
+	<![CDATA[
+		WHERE t.state       = 'U'
+	]]>
+		<dynamic>
+		
+			<isNotEmpty property="tradeNo" prepend="and">
+			<![CDATA[ t.trade_no = #tradeNo# ]]>
+			</isNotEmpty>
+		
+		</dynamic>
+	</update>
+</sqlMap>
+	
