@@ -16,4 +16,10 @@ public interface ITradeDao {
 	 */
 	Trade getTrade(Trade trade);
 
+	/**
+	 * 
+	 * @return
+	 */
+	int sync2Send();
+
 }

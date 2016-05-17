@@ -2,6 +2,7 @@ package com.hsh24.sync.oms.service.impl;
 
 import com.hsh24.sync.api.oms.ITradeService;
 import com.hsh24.sync.api.oms.bo.Trade;
+import com.hsh24.sync.framework.bo.BooleanResult;
 import com.hsh24.sync.framework.log.Logger4jCollection;
 import com.hsh24.sync.framework.log.Logger4jExtend;
 import com.hsh24.sync.framework.util.LogUtil;
@@ -34,6 +35,24 @@ public class TradeServiceImpl implements ITradeService {
 		}
 
 		return null;
+	}
+
+	@Override
+	public BooleanResult sync2Send() {
+		BooleanResult result = new BooleanResult();
+		result.setResult(false);
+
+		try {
+			int c = tradeDao.sync2Send();
+
+			result.setCode(String.valueOf(c));
+			result.setResult(true);
+		} catch (Exception e) {
+			logger.error(e);
+			result.setCode("同步交易表失败。");
+		}
+
+		return result;
 	}
 
 	public ITradeDao getTradeDao() {

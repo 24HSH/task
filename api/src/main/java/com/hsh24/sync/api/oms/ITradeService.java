@@ -1,6 +1,7 @@
 package com.hsh24.sync.api.oms;
 
 import com.hsh24.sync.api.oms.bo.Trade;
+import com.hsh24.sync.framework.bo.BooleanResult;
 
 /**
  * 
@@ -15,5 +16,11 @@ public interface ITradeService {
 	 * @return
 	 */
 	Trade getTrade(Long tradeId);
+
+	/**
+	 * 
+	 * @return
+	 */
+	BooleanResult sync2Send();
 
 }

@@ -10,6 +10,6 @@ public interface ITradeSyncService {
 	/**
 	 * 同步交易订单发货状态.
 	 */
-	void syncTrade2Send();
+	void sync2Send();
 
 }

@@ -52,9 +52,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 	}
 
 	@Override
-	public void syncTrade2Send() {
-		// TODO Auto-generated method stub
-
+	public void sync2Send() {
+		tradeService.sync2Send();
 	}
 
 	public ITradeLogService getTradeLogService() {
