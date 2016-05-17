@@ -3,6 +3,8 @@ package com.hsh24.sync.api.oms.bo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 订单.
  * 
@@ -23,14 +25,13 @@ public class Order implements Serializable {
 	/**
 	 * 商品 ID.
 	 */
+	@JSONField(name = "goodsId")
 	private Long itemId;
 
 	/**
 	 * 商品名称.
 	 */
 	private String itemName;
-
-	private String itemFilePath;
 
 	private Long skuId;
 
@@ -50,26 +51,6 @@ public class Order implements Serializable {
 	private BigDecimal price;
 
 	/**
-	 * 积分兑换.
-	 */
-	private BigDecimal points;
-
-	/**
-	 * 涨价或减价.
-	 */
-	private BigDecimal change;
-
-	/**
-	 * 库存.
-	 */
-	private int stock;
-
-	/**
-	 * 状态 D:删除 U:正常.
-	 */
-	private String state;
-
-	/**
 	 * 操作人ID.
 	 */
 	private String modifyUser;
@@ -80,11 +61,6 @@ public class Order implements Serializable {
 	 * 供应商id 创建时权限控制.
 	 */
 	private Long supId;
-
-	/**
-	 * 已收货数量.
-	 */
-	private int receiptedQuantity;
 
 	public Long getOrderId() {
 		return orderId;
@@ -116,14 +92,6 @@ public class Order implements Serializable {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
-	}
-
-	public String getItemFilePath() {
-		return itemFilePath;
-	}
-
-	public void setItemFilePath(String itemFilePath) {
-		this.itemFilePath = itemFilePath;
 	}
 
 	public Long getSkuId() {
@@ -171,38 +139,6 @@ public class Order implements Serializable {
 		return BigDecimal.ZERO;
 	}
 
-	public BigDecimal getPoints() {
-		return points;
-	}
-
-	public void setPoints(BigDecimal points) {
-		this.points = points;
-	}
-
-	public BigDecimal getChange() {
-		return change;
-	}
-
-	public void setChange(BigDecimal change) {
-		this.change = change;
-	}
-
-	public int getStock() {
-		return stock;
-	}
-
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public String getModifyUser() {
 		return modifyUser;
 	}
@@ -217,23 +153,6 @@ public class Order implements Serializable {
 
 	public void setSupId(Long supId) {
 		this.supId = supId;
-	}
-
-	public int getReceiptedQuantity() {
-		return receiptedQuantity;
-	}
-
-	public void setReceiptedQuantity(int receiptedQuantity) {
-		this.receiptedQuantity = receiptedQuantity;
-	}
-
-	/**
-	 * 可以收货数量.
-	 * 
-	 * @return
-	 */
-	public int getReceiptQuantity() {
-		return quantity - receiptedQuantity;
 	}
 
 }

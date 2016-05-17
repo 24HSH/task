@@ -16,6 +16,8 @@ public class Trade implements Serializable {
 
 	private static final long serialVersionUID = -1761794880999676421L;
 
+	private String actionType;
+
 	/**
 	 * 交易ID.
 	 */
@@ -74,6 +76,14 @@ public class Trade implements Serializable {
 	 */
 	@JSONField(name = "purchaseOrderGoodsList")
 	private List<Order> orderList;
+
+	public String getActionType() {
+		return actionType;
+	}
+
+	public void setActionType(String actionType) {
+		this.actionType = actionType;
+	}
 
 	public Long getTradeId() {
 		return tradeId;

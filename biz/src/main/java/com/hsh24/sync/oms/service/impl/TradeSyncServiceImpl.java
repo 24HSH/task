@@ -1,7 +1,10 @@
 package com.hsh24.sync.oms.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.hsh24.sync.api.oms.IOrderService;
 import com.hsh24.sync.api.oms.ITradeLogService;
 import com.hsh24.sync.api.oms.ITradeService;
@@ -10,6 +13,7 @@ import com.hsh24.sync.api.oms.bo.Order;
 import com.hsh24.sync.api.oms.bo.Trade;
 import com.hsh24.sync.api.oms.bo.TradeLog;
 import com.hsh24.sync.framework.bo.BooleanResult;
+import com.wideka.weixin.framework.util.HttpUtil;
 
 /**
  * 
@@ -56,12 +60,31 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 			trade.setOrderList(orderList);
 
 			if ("tosend".equals(tradeLog.getType())) {
+				trade.setActionType("add");
+
+				Map<String, String> map = new HashMap<String, String>();
+				try {
+					map.put("purchaseOrder", JSON.toJSONString(trade));
+					System.out.println(HttpUtil.post(
+						"http://192.168.0.:8080/ec-erp/interPurOrderAction.do/method=POST", map));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 				BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
 				if (result.getResult()) {
 					count++;
 				}
 			} else if ("cancel".equals(tradeLog.getType())) {
+				Map<String, String> map = new HashMap<String, String>();
+				try {
+					map.put("purchaseOrder", "{\"actionType\":\"delete\",\"purOrderCds\":[{\"interPurchaseCd\":\""
+						+ trade.getTradeNo() + "\"}]}");
+					System.out.println(HttpUtil.post(
+						"http://192.168.0.:8080/ec-erp/interPurOrderAction.do/method=POST", map));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 				BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
 				if (result.getResult()) {

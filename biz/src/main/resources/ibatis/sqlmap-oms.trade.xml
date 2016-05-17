@@ -4,7 +4,7 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="oms.trade">
 	
-	<typeAlias alias="trade" type="com.hsh24.sync.api.oms.bo.Trade" />
+	<typeAlias alias="omsTrade" type="com.hsh24.sync.api.oms.bo.Trade" />
 	
 	<update id="sync2Send">
 	<![CDATA[
@@ -20,7 +20,7 @@
 	]]>
 	</update>
 	
-	<select id="getTrade" parameterClass="trade" resultClass="trade">
+	<select id="getTrade" parameterClass="omsTrade" resultClass="omsTrade">
 	<![CDATA[
 		SELECT t.trade_id AS tradeId,
 			   t.trade_no AS tradeNo,
