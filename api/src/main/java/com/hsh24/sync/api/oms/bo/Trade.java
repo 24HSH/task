@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 交易.
  * 
@@ -35,16 +37,6 @@ public class Trade implements Serializable {
 	private BigDecimal tradePrice;
 
 	/**
-	 * 涨价或减价.
-	 */
-	private BigDecimal change = BigDecimal.ZERO;
-
-	/**
-	 * 星星级别，店小儿分类交易.
-	 */
-	private int score;
-
-	/**
 	 * 备注，店小儿分类交易.
 	 */
 	private String remark;
@@ -57,22 +49,14 @@ public class Trade implements Serializable {
 	/**
 	 * 交易订单号.
 	 */
+	@JSONField(name = "purchaseCd")
 	private String tradeNo;
-
-	/**
-	 * 状态 D:删除 U:正常.
-	 */
-	private String state;
 
 	/**
 	 * 下单时间.
 	 */
+	@JSONField(name = "purchaseDt")
 	private String createDate;
-
-	/**
-	 * 订单最后修改时间.
-	 */
-	private String modifyDate;
 
 	/**
 	 * 买家付款时间.
@@ -80,51 +64,11 @@ public class Trade implements Serializable {
 	private String payDate;
 
 	/**
-	 * 卖家发货时间.
-	 */
-	private String sendDate;
-
-	/**
-	 * 物流标记签收时间.
-	 */
-	private String signDate;
-
-	/**
-	 * 维权时订单类型.
-	 */
-	private String feedbackType;
-
-	/**
-	 * 买家维权时间.
-	 */
-	private String feedbackDate;
-
-	/**
-	 * 卖家处理维权时间.
-	 */
-	private String feedbackedDate;
-
-	/**
 	 * 操作人ID.
 	 */
 	private String modifyUser;
 
-	/**
-	 * 购物车(存在多个id: 1,2,3,4,5).
-	 */
-	private String cartId;
-
-	/**
-	 * 支付方式.
-	 */
-	private String payType;
-
 	// >>>>>>>>>>以下是辅助属性<<<<<<<<<<
-
-	/**
-	 * 供应商名称.
-	 */
-	private String supName;
 
 	/**
 	 * 订单行项目.
@@ -163,14 +107,6 @@ public class Trade implements Serializable {
 		this.tradePrice = tradePrice;
 	}
 
-	public BigDecimal getChange() {
-		return change;
-	}
-
-	public void setChange(BigDecimal change) {
-		this.change = change;
-	}
-
 	/**
 	 * 实付金额 tradePrice + (change).
 	 * 
@@ -178,18 +114,10 @@ public class Trade implements Serializable {
 	 */
 	public BigDecimal getPrice() {
 		if (this.tradePrice != null) {
-			return this.tradePrice.add(this.change);
+			return this.tradePrice;
 		}
 
 		return BigDecimal.ZERO;
-	}
-
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 	public String getRemark() {
@@ -216,28 +144,12 @@ public class Trade implements Serializable {
 		this.tradeNo = tradeNo;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public String getCreateDate() {
 		return createDate;
 	}
 
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
-	}
-
-	public String getModifyDate() {
-		return modifyDate;
-	}
-
-	public void setModifyDate(String modifyDate) {
-		this.modifyDate = modifyDate;
 	}
 
 	public String getPayDate() {
@@ -248,76 +160,12 @@ public class Trade implements Serializable {
 		this.payDate = payDate;
 	}
 
-	public String getSendDate() {
-		return sendDate;
-	}
-
-	public void setSendDate(String sendDate) {
-		this.sendDate = sendDate;
-	}
-
-	public String getSignDate() {
-		return signDate;
-	}
-
-	public void setSignDate(String signDate) {
-		this.signDate = signDate;
-	}
-
-	public String getFeedbackType() {
-		return feedbackType;
-	}
-
-	public void setFeedbackType(String feedbackType) {
-		this.feedbackType = feedbackType;
-	}
-
-	public String getFeedbackDate() {
-		return feedbackDate;
-	}
-
-	public void setFeedbackDate(String feedbackDate) {
-		this.feedbackDate = feedbackDate;
-	}
-
-	public String getFeedbackedDate() {
-		return feedbackedDate;
-	}
-
-	public void setFeedbackedDate(String feedbackedDate) {
-		this.feedbackedDate = feedbackedDate;
-	}
-
 	public String getModifyUser() {
 		return modifyUser;
 	}
 
 	public void setModifyUser(String modifyUser) {
 		this.modifyUser = modifyUser;
-	}
-
-	public String getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(String cartId) {
-		this.cartId = cartId;
-	}
-
-	public String getPayType() {
-		return payType;
-	}
-
-	public void setPayType(String payType) {
-		this.payType = payType;
-	}
-
-	public String getSupName() {
-		return supName;
-	}
-
-	public void setSupName(String supName) {
-		this.supName = supName;
 	}
 
 	public List<Order> getOrderList() {
