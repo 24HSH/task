@@ -9,6 +9,7 @@ import com.hsh24.sync.api.oms.ITradeSyncService;
 import com.hsh24.sync.api.oms.bo.Order;
 import com.hsh24.sync.api.oms.bo.Trade;
 import com.hsh24.sync.api.oms.bo.TradeLog;
+import com.hsh24.sync.framework.bo.BooleanResult;
 
 /**
  * 
@@ -24,36 +25,57 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 	private IOrderService orderService;
 
 	@Override
-	public void sync() {
+	public int sync() {
 		List<TradeLog> tradeLogList = tradeLogService.getTradeLogList();
 
-		if (tradeLogList != null && tradeLogList.size() > 0) {
-			for (TradeLog tradeLog : tradeLogList) {
-				if (!"tosend".equals(tradeLog.getType()) && !"cancel".equals(tradeLog.getType())) {
-					continue;
-				}
+		if (tradeLogList == null || tradeLogList.size() == 0) {
+			return 0;
 
-				Long tradeId = tradeLog.getTradeId();
+		}
 
-				Trade trade = tradeService.getTrade(tradeId);
-				if (trade == null) {
-					continue;
-				}
+		int count = 0;
 
-				List<Order> orderList = orderService.getOrderList(tradeId);
-				if (orderList == null || orderList.size() == 0) {
-					continue;
-				}
+		for (TradeLog tradeLog : tradeLogList) {
+			if (!"tosend".equals(tradeLog.getType()) && !"cancel".equals(tradeLog.getType())) {
+				continue;
+			}
 
-				trade.setOrderList(orderList);
+			Long tradeId = tradeLog.getTradeId();
 
+			Trade trade = tradeService.getTrade(tradeId);
+			if (trade == null) {
+				continue;
+			}
+
+			List<Order> orderList = orderService.getOrderList(tradeId);
+			if (orderList == null || orderList.size() == 0) {
+				continue;
+			}
+
+			trade.setOrderList(orderList);
+
+			if ("tosend".equals(tradeLog.getType())) {
+
+				continue;
+			}
+
+			if ("cancel".equals(tradeLog.getType())) {
+
+				continue;
 			}
 		}
+
+		return count;
 	}
 
 	@Override
-	public void sync2Send() {
-		tradeService.sync2Send();
+	public int sync2Send() {
+		BooleanResult result = tradeService.sync2Send();
+		if (result.getResult()) {
+			return Integer.parseInt(result.getCode());
+		}
+
+		return 0;
 	}
 
 	public ITradeLogService getTradeLogService() {

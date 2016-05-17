@@ -1,15 +1,20 @@
 package com.hsh24.sync.api.oms;
 
+/**
+ * 
+ * @author JiakunXu
+ * 
+ */
 public interface ITradeSyncService {
 
 	/**
 	 * 同步交易订单.
 	 */
-	void sync();
+	int sync();
 
 	/**
 	 * 同步交易订单发货状态.
 	 */
-	void sync2Send();
+	int sync2Send();
 
 }
