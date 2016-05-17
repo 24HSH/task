@@ -7,7 +7,9 @@
 	<typeAlias alias="trade" type="com.hsh24.dms.api.trade.bo.Trade" />
     <update id="syncToSendTradeState" parameterClass="trade">
 	 <![CDATA[
-	
+		UPDATE dms.dms_tb_trade t,oms.pur_order_t o 
+		SET t.TYPE='send' ,t.MODIFY_DATE=NOW(),t.MODIFY_USER='sys'
+		WHERE t.TRADE_NO=o.purchase_cd and o.purchase_status='0003' and t.TYPE='tosend' and t.STATE='U' 
 	  ]]>
 	</update>
 	
