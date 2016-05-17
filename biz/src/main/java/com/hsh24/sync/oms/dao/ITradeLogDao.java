@@ -18,4 +18,11 @@ public interface ITradeLogDao {
 	 */
 	List<TradeLog> getTradeLogList();
 
+	/**
+	 * 
+	 * @param tradeLog
+	 * @return
+	 */
+	int finishTradeLog(TradeLog tradeLog);
+
 }

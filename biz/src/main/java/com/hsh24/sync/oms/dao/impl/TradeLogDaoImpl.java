@@ -19,4 +19,9 @@ public class TradeLogDaoImpl extends BaseDaoImpl implements ITradeLogDao {
 		return getSqlMapClientTemplate().queryForList("oms.trade.log.getTradeLogList");
 	}
 
+	@Override
+	public int finishTradeLog(TradeLog tradeLog) {
+		return getSqlMapClientTemplate().update("oms.trade.log.finishTradeLog", tradeLog);
+	}
+
 }
