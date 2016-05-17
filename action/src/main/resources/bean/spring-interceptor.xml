@@ -6,6 +6,6 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
 	<!-- OAuth2 -->
-	<bean id="oauth2Interceptor" class="com.wideka.sync.framework.struts.interceptor.OAuth2Interceptor"></bean>
+	<bean id="oauth2Interceptor" class="com.hsh24.sync.framework.struts.interceptor.OAuth2Interceptor"></bean>
 	
 </beans>

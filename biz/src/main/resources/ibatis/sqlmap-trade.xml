@@ -4,7 +4,7 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="trade">
 	
-	<typeAlias alias="trade" type="com.wideka.sync.api.trade.bo.Trade" />
+	<typeAlias alias="trade" type="com.hsh24.sync.api.trade.bo.Trade" />
 	
 	<select id="getTrade" parameterClass="trade" resultClass="trade">
 	<![CDATA[
