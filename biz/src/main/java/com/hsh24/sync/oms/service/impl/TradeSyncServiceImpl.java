@@ -66,7 +66,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 				try {
 					map.put("purchaseOrder", JSON.toJSONString(trade));
 					System.out.println(HttpUtil.post(
-						"http://192.168.0.:8080/ec-erp/interPurOrderAction.do/method=POST", map));
+						"http://192.168.1.40:8080/ec-erp/interPurOrderAction.do/method=POST", map));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -81,7 +81,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 					map.put("purchaseOrder", "{\"actionType\":\"delete\",\"purOrderCds\":[{\"interPurchaseCd\":\""
 						+ trade.getTradeNo() + "\"}]}");
 					System.out.println(HttpUtil.post(
-						"http://192.168.0.:8080/ec-erp/interPurOrderAction.do/method=POST", map));
+						"http://192.168.1.40:8080/ec-erp/interPurOrderAction.do/method=POST", map));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

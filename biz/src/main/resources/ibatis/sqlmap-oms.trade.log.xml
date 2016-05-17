@@ -18,7 +18,7 @@
 			   MODIFY_USER AS modifyUser
 		  FROM dms.dms_tb_trade_log
 		 WHERE STATE= 'U'
-		 ORDER BY MODIFY_DATE DESC
+		 ORDER BY MODIFY_DATE
 		 LIMIT 10
 	]]>
 	</select>
