@@ -28,6 +28,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 	private IOrderService orderService;
 
+	private String url;
+
 	@Override
 	public int sync() {
 		List<TradeLog> tradeLogList = tradeLogService.getTradeLogList();
@@ -65,8 +67,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 				Map<String, String> map = new HashMap<String, String>();
 				try {
 					map.put("purchaseOrder", JSON.toJSONString(trade));
-					System.out.println(HttpUtil.post(
-						"http://192.168.1.40:8080/ec-erp/interPurOrderAction.do/method=POST", map));
+					System.out.println(HttpUtil.post(url, map));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -80,8 +81,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 				try {
 					map.put("purchaseOrder", "{\"actionType\":\"delete\",\"purOrderCds\":[{\"interPurchaseCd\":\""
 						+ trade.getTradeNo() + "\"}]}");
-					System.out.println(HttpUtil.post(
-						"http://192.168.1.40:8080/ec-erp/interPurOrderAction.do/method=POST", map));
+					System.out.println(HttpUtil.post(url, map));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -128,6 +128,14 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 	public void setOrderService(IOrderService orderService) {
 		this.orderService = orderService;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }
