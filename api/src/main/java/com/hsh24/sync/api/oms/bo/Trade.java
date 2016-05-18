@@ -21,6 +21,7 @@ public class Trade implements Serializable {
 	/**
 	 * 交易ID.
 	 */
+	@JSONField(serialize = false)
 	private Long tradeId;
 
 	/**
@@ -46,6 +47,7 @@ public class Trade implements Serializable {
 	/**
 	 * tosend: 待发货; send: 已发货; sign: 标记签收; cancel: 已关闭; feedback: 维权订单; feedbacked: 已处理维权订单.
 	 */
+	@JSONField(serialize = false)
 	private String type;
 
 	/**
@@ -115,19 +117,6 @@ public class Trade implements Serializable {
 
 	public void setTradePrice(BigDecimal tradePrice) {
 		this.tradePrice = tradePrice;
-	}
-
-	/**
-	 * 实付金额 tradePrice + (change).
-	 * 
-	 * @return
-	 */
-	public BigDecimal getPrice() {
-		if (this.tradePrice != null) {
-			return this.tradePrice;
-		}
-
-		return BigDecimal.ZERO;
 	}
 
 	public String getRemark() {

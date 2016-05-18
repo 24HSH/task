@@ -15,11 +15,13 @@ public class Order implements Serializable {
 
 	private static final long serialVersionUID = -1206444713292456901L;
 
+	@JSONField(serialize = false)
 	private Long orderId;
 
 	/**
 	 * 交易ID.
 	 */
+	@JSONField(serialize = false)
 	private Long tradeId;
 
 	/**
@@ -31,13 +33,16 @@ public class Order implements Serializable {
 	/**
 	 * 商品名称.
 	 */
+	@JSONField(serialize = false)
 	private String itemName;
 
+	@JSONField(serialize = false)
 	private Long skuId;
 
 	/**
 	 * sku所对应的销售属性的中文名字串，格式如：Pid1:vid1:pid_name1:vid_name1;Pid2:vid2:pid_name2:vid_name2.
 	 */
+	@JSONField(serialize = false)
 	private String propertiesName;
 
 	/**
@@ -125,19 +130,6 @@ public class Order implements Serializable {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
-	}
-
-	/**
-	 * 某商品总价格.
-	 * 
-	 * @return
-	 */
-	public BigDecimal getTotal() {
-		if (this.price != null) {
-			return this.price.multiply(new BigDecimal(this.quantity));
-		}
-
-		return BigDecimal.ZERO;
 	}
 
 	public String getCreateUser() {

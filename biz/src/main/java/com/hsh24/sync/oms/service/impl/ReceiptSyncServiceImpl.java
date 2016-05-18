@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -15,6 +16,7 @@ import com.hsh24.sync.api.oms.IReceiptSyncService;
 import com.hsh24.sync.api.oms.bo.Receipt;
 import com.hsh24.sync.api.oms.bo.ReceiptDetail;
 import com.hsh24.sync.api.oms.bo.ReceiptLog;
+import com.hsh24.sync.api.oms.bo.Result;
 import com.hsh24.sync.framework.bo.BooleanResult;
 import com.hsh24.sync.framework.log.Logger4jCollection;
 import com.hsh24.sync.framework.log.Logger4jExtend;
@@ -84,7 +86,15 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 						map.put("mrmReceive", JSON.toJSONString(receipt));
 
 						String code = HttpUtil.post(url, map);
-						if (!"s".equals(code)) {
+						if (StringUtils.isBlank(code)) {
+							ts.setRollbackOnly();
+
+							return result;
+						}
+
+						Result res = JSON.parseObject(code, Result.class);
+
+						if (!"success".equals(res.getInfo())) {
 							ts.setRollbackOnly();
 
 							return result;

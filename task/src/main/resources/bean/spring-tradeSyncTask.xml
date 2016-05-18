@@ -23,7 +23,7 @@
 			<ref bean="tradeSyncJobDetail" />
 		</property>
 		<property name="cronExpression">
-			<value>0 0/3 * * * ?</value>
+			<value>0 0/1 * * * ?</value>
 		</property>
 	</bean>
 	

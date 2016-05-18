@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -14,6 +15,7 @@ import com.hsh24.sync.api.oms.ITradeLogService;
 import com.hsh24.sync.api.oms.ITradeService;
 import com.hsh24.sync.api.oms.ITradeSyncService;
 import com.hsh24.sync.api.oms.bo.Order;
+import com.hsh24.sync.api.oms.bo.Result;
 import com.hsh24.sync.api.oms.bo.Trade;
 import com.hsh24.sync.api.oms.bo.TradeLog;
 import com.hsh24.sync.framework.bo.BooleanResult;
@@ -94,7 +96,15 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							map.put("purchaseOrder", JSON.toJSONString(trade));
 
 							String code = HttpUtil.post(url, map);
-							if (!"s".equals(code)) {
+							if (StringUtils.isBlank(code)) {
+								ts.setRollbackOnly();
+
+								return result;
+							}
+
+							Result res = JSON.parseObject(code, Result.class);
+
+							if (!"success".equals(res.getInfo())) {
 								ts.setRollbackOnly();
 
 								return result;
@@ -134,7 +144,15 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 									+ trade.getTradeNo() + "\"}]}");
 
 							String code = HttpUtil.post(url, map);
-							if (!"s".equals(code)) {
+							if (StringUtils.isBlank(code)) {
+								ts.setRollbackOnly();
+
+								return result;
+							}
+
+							Result res = JSON.parseObject(code, Result.class);
+
+							if (!"success".equals(res.getInfo())) {
 								ts.setRollbackOnly();
 
 								return result;
