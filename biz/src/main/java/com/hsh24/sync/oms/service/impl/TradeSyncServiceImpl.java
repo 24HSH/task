@@ -11,11 +11,13 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import com.alibaba.fastjson.JSON;
 import com.hsh24.sync.api.oms.IOrderService;
+import com.hsh24.sync.api.oms.IShopService;
 import com.hsh24.sync.api.oms.ITradeLogService;
 import com.hsh24.sync.api.oms.ITradeService;
 import com.hsh24.sync.api.oms.ITradeSyncService;
 import com.hsh24.sync.api.oms.bo.Order;
 import com.hsh24.sync.api.oms.bo.Result;
+import com.hsh24.sync.api.oms.bo.Shop;
 import com.hsh24.sync.api.oms.bo.Trade;
 import com.hsh24.sync.api.oms.bo.TradeLog;
 import com.hsh24.sync.framework.bo.BooleanResult;
@@ -39,6 +41,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 	private ITradeService tradeService;
 
 	private IOrderService orderService;
+
+	private IShopService shopService;
 
 	private String url;
 
@@ -67,6 +71,14 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 			}
 
 			Long shopId = trade.getShopId();
+
+			Shop shop = shopService.getShop(shopId);
+			if (shop == null) {
+				continue;
+			}
+
+			// 发货信息
+			trade.setRemark(shop.getShopName() + "|" + trade.getCreateUser() + "|" + shop.getAddress());
 
 			List<Order> orderList = orderService.getOrderList(tradeId);
 			if (orderList == null || orderList.size() == 0) {
@@ -220,6 +232,14 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 	public void setOrderService(IOrderService orderService) {
 		this.orderService = orderService;
+	}
+
+	public IShopService getShopService() {
+		return shopService;
+	}
+
+	public void setShopService(IShopService shopService) {
+		this.shopService = shopService;
 	}
 
 	public String getUrl() {

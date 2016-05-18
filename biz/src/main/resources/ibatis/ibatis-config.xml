@@ -37,6 +37,7 @@
 	<sqlMap resource="ibatis/sqlmap-oms.receipt.detail.xml" />
 	<sqlMap resource="ibatis/sqlmap-oms.receipt.log.xml" />
 	<sqlMap resource="ibatis/sqlmap-oms.receipt.xml" />
+	<sqlMap resource="ibatis/sqlmap-oms.shop.xml" />
 	<sqlMap resource="ibatis/sqlmap-oms.trade.log.xml" />
 	<sqlMap resource="ibatis/sqlmap-oms.trade.order.xml" />
 	<sqlMap resource="ibatis/sqlmap-oms.trade.xml" />

@@ -10,6 +10,7 @@
 		<property name="tradeLogService" ref="omsTradeLogService" />
 		<property name="tradeService" ref="omsTradeService" />
 		<property name="orderService" ref="omsOrderService" />
+		<property name="shopService" ref="shopService" />
 		<property name="url">
 			<value>${oms.trade.url}</value>
 		</property>
