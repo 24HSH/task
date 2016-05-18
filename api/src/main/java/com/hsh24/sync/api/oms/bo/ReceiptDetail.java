@@ -49,6 +49,9 @@ public class ReceiptDetail implements Serializable {
 
 	private String remark = "";
 
+	@JSONField(serialize = false)
+	private String barCode;
+
 	public Long getDetailId() {
 		return detailId;
 	}
@@ -135,6 +138,14 @@ public class ReceiptDetail implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 
 }

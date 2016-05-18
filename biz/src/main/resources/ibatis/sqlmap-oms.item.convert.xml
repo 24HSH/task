@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="oms.item.convert">
+	
+	<typeAlias alias="itemConvert" type="com.hsh24.sync.api.oms.bo.ItemConvert" />
+	
+	<select id="getItemConvert" parameterClass="itemConvert" resultClass="itemConvert">
+	<![CDATA[
+		SELECT p.item_id AS itemId,
+			   t.quantity
+		  FROM sup.sup_tb_item_convert t, oms.dms_vw_goods p
+		 WHERE t.sub_bar_code = p.bar_code
+		   AND t.state = 'U'
+		   AND t.bar_code = #barCode#
+	]]>
+	</select>
+	
+</sqlMap>

@@ -1,5 +1,6 @@
 package com.hsh24.sync.oms.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,11 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.alibaba.fastjson.JSON;
+import com.hsh24.sync.api.oms.IItemConvertService;
 import com.hsh24.sync.api.oms.IReceiptLogService;
 import com.hsh24.sync.api.oms.IReceiptService;
 import com.hsh24.sync.api.oms.IReceiptSyncService;
+import com.hsh24.sync.api.oms.bo.ItemConvert;
 import com.hsh24.sync.api.oms.bo.Receipt;
 import com.hsh24.sync.api.oms.bo.ReceiptDetail;
 import com.hsh24.sync.api.oms.bo.ReceiptLog;
@@ -36,6 +39,8 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 	private IReceiptLogService receiptLogService;
 
 	private IReceiptService receiptService;
+
+	private IItemConvertService itemConvertService;
 
 	private String url;
 
@@ -68,11 +73,30 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 				continue;
 			}
 
+			List<ReceiptDetail> detailList = new ArrayList<ReceiptDetail>();
+
 			for (ReceiptDetail receiptDetail : receiptDetailList) {
 				receiptDetail.setShopId(shopId);
+
+				List<ItemConvert> itemConvertList = itemConvertService.getItemConvert(receiptDetail.getBarCode());
+
+				// 存在商品转换
+				if (itemConvertList == null || itemConvertList.size() == 0) {
+					detailList.add(receiptDetail);
+				} else {
+					for (ItemConvert itemConvert : itemConvertList) {
+						ReceiptDetail detail = new ReceiptDetail();
+						detail.setItemId(itemConvert.getItemId());
+						detail.setQuantity(receiptDetail.getQuantity() * itemConvert.getQuantity());
+						detail.setShopId(receiptDetail.getShopId());
+						detail.setModifyUser(receiptDetail.getModifyUser());
+
+						detailList.add(detail);
+					}
+				}
 			}
 
-			receipt.setReceiptDetailList(receiptDetailList);
+			receipt.setReceiptDetailList(detailList);
 
 			BooleanResult result = transactionTemplate.execute(new TransactionCallback<BooleanResult>() {
 				public BooleanResult doInTransaction(TransactionStatus ts) {
@@ -145,6 +169,14 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 
 	public void setReceiptService(IReceiptService receiptService) {
 		this.receiptService = receiptService;
+	}
+
+	public IItemConvertService getItemConvertService() {
+		return itemConvertService;
+	}
+
+	public void setItemConvertService(IItemConvertService itemConvertService) {
+		this.itemConvertService = itemConvertService;
 	}
 
 	public String getUrl() {

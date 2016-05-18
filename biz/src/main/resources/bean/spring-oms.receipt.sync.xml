@@ -9,6 +9,7 @@
 		<property name="transactionTemplate" ref="transactionTemplate" />
 		<property name="receiptLogService" ref="receiptLogService" />
 		<property name="receiptService" ref="receiptService" />
+		<property name="itemConvertService" ref="itemConvertService" />
 		<property name="url">
 			<value>${oms.receipt.url}</value>
 		</property>

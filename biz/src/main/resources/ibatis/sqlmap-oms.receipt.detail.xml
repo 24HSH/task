@@ -12,10 +12,12 @@
 			   t.order_id AS orderId,
 			   t.quantity,
 			   t.modify_user AS modifyUser,
-			   p.item_id As itemId,
-			   p.price
-		  FROM dms.dms_tb_receipt_detail t, dms.dms_tb_order p
+			   p.item_id AS itemId,
+			   p.price,
+			   q.bar_code AS barCode
+		  FROM dms.dms_tb_receipt_detail t, dms.dms_tb_order p, oms.dms_vw_goods q
 		 WHERE t.order_id = p.order_id
+		   AND p.item_id = q.item_id
 		   AND t.state = 'U'
 		   AND t.receipt_id = #receiptId#
 	]]>
