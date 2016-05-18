@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
+
 import com.alibaba.fastjson.JSON;
 import com.hsh24.sync.api.oms.IOrderService;
 import com.hsh24.sync.api.oms.ITradeLogService;
@@ -13,6 +17,8 @@ import com.hsh24.sync.api.oms.bo.Order;
 import com.hsh24.sync.api.oms.bo.Trade;
 import com.hsh24.sync.api.oms.bo.TradeLog;
 import com.hsh24.sync.framework.bo.BooleanResult;
+import com.hsh24.sync.framework.log.Logger4jCollection;
+import com.hsh24.sync.framework.log.Logger4jExtend;
 import com.hsh24.sync.framework.util.HttpUtil;
 
 /**
@@ -21,6 +27,10 @@ import com.hsh24.sync.framework.util.HttpUtil;
  * 
  */
 public class TradeSyncServiceImpl implements ITradeSyncService {
+
+	private Logger4jExtend logger = Logger4jCollection.getLogger(TradeSyncServiceImpl.class);
+
+	private TransactionTemplate transactionTemplate;
 
 	private ITradeLogService tradeLogService;
 
@@ -46,10 +56,10 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 				continue;
 			}
 
-			Long id = tradeLog.getId();
+			final Long id = tradeLog.getId();
 			Long tradeId = tradeLog.getTradeId();
 
-			Trade trade = tradeService.getTrade(tradeId);
+			final Trade trade = tradeService.getTrade(tradeId);
 			if (trade == null) {
 				continue;
 			}
@@ -70,29 +80,79 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 			if ("tosend".equals(tradeLog.getType())) {
 				trade.setActionType("add");
 
-				Map<String, String> map = new HashMap<String, String>();
-				try {
-					map.put("purchaseOrder", JSON.toJSONString(trade));
-					System.out.println(HttpUtil.post(url, map));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				BooleanResult result = transactionTemplate.execute(new TransactionCallback<BooleanResult>() {
+					public BooleanResult doInTransaction(TransactionStatus ts) {
+						BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
+						if (!result.getResult()) {
+							ts.setRollbackOnly();
 
-				BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
+							return result;
+						}
+
+						try {
+							Map<String, String> map = new HashMap<String, String>();
+							map.put("purchaseOrder", JSON.toJSONString(trade));
+
+							String code = HttpUtil.post(url, map);
+							if (!"s".equals(code)) {
+								ts.setRollbackOnly();
+
+								return result;
+							}
+						} catch (Exception e) {
+							logger.error(e);
+
+							ts.setRollbackOnly();
+
+							result.setCode(e.getMessage());
+							result.setResult(false);
+							return result;
+						}
+
+						return result;
+					}
+				});
+
 				if (result.getResult()) {
 					count++;
 				}
 			} else if ("cancel".equals(tradeLog.getType())) {
-				Map<String, String> map = new HashMap<String, String>();
-				try {
-					map.put("purchaseOrder", "{\"actionType\":\"delete\",\"purOrderCds\":[{\"interPurchaseCd\":\""
-						+ trade.getTradeNo() + "\"}]}");
-					System.out.println(HttpUtil.post(url, map));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				BooleanResult result = transactionTemplate.execute(new TransactionCallback<BooleanResult>() {
+					public BooleanResult doInTransaction(TransactionStatus ts) {
+						BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
+						if (!result.getResult()) {
+							ts.setRollbackOnly();
 
-				BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
+							return result;
+						}
+
+						try {
+							Map<String, String> map = new HashMap<String, String>();
+							map.put(
+								"purchaseOrder",
+								"{\"actionType\":\"delete\",\"purOrderCds\":[{\"interPurchaseCd\":\""
+									+ trade.getTradeNo() + "\"}]}");
+
+							String code = HttpUtil.post(url, map);
+							if (!"s".equals(code)) {
+								ts.setRollbackOnly();
+
+								return result;
+							}
+						} catch (Exception e) {
+							logger.error(e);
+
+							ts.setRollbackOnly();
+
+							result.setCode(e.getMessage());
+							result.setResult(false);
+							return result;
+						}
+
+						return result;
+					}
+				});
+
 				if (result.getResult()) {
 					count++;
 				}
@@ -110,6 +170,14 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 		}
 
 		return 0;
+	}
+
+	public TransactionTemplate getTransactionTemplate() {
+		return transactionTemplate;
+	}
+
+	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
+		this.transactionTemplate = transactionTemplate;
 	}
 
 	public ITradeLogService getTradeLogService() {

@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
+
 import com.alibaba.fastjson.JSON;
 import com.hsh24.sync.api.oms.IReceiptLogService;
 import com.hsh24.sync.api.oms.IReceiptService;
@@ -12,6 +16,8 @@ import com.hsh24.sync.api.oms.bo.Receipt;
 import com.hsh24.sync.api.oms.bo.ReceiptDetail;
 import com.hsh24.sync.api.oms.bo.ReceiptLog;
 import com.hsh24.sync.framework.bo.BooleanResult;
+import com.hsh24.sync.framework.log.Logger4jCollection;
+import com.hsh24.sync.framework.log.Logger4jExtend;
 import com.hsh24.sync.framework.util.HttpUtil;
 
 /**
@@ -20,6 +26,10 @@ import com.hsh24.sync.framework.util.HttpUtil;
  * 
  */
 public class ReceiptSyncServiceImpl implements IReceiptSyncService {
+
+	private Logger4jExtend logger = Logger4jCollection.getLogger(ReceiptSyncServiceImpl.class);
+
+	private TransactionTemplate transactionTemplate;
 
 	private IReceiptLogService receiptLogService;
 
@@ -39,10 +49,10 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 		int count = 0;
 
 		for (ReceiptLog receiptLog : receiptLogList) {
-			Long id = receiptLog.getId();
+			final Long id = receiptLog.getId();
 			Long receiptId = receiptLog.getReceiptId();
 
-			Receipt receipt = receiptService.getReceipt(receiptId);
+			final Receipt receipt = receiptService.getReceipt(receiptId);
 			if (receipt == null) {
 				continue;
 			}
@@ -60,21 +70,53 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 
 			receipt.setReceiptDetailList(receiptDetailList);
 
-			Map<String, String> map = new HashMap<String, String>();
-			try {
-				map.put("mrmReceive", JSON.toJSONString(receipt));
-				System.out.println(HttpUtil.post(url, map));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			BooleanResult result = transactionTemplate.execute(new TransactionCallback<BooleanResult>() {
+				public BooleanResult doInTransaction(TransactionStatus ts) {
+					BooleanResult result = receiptLogService.finishReceiptLog(id, "sys");
+					if (!result.getResult()) {
+						ts.setRollbackOnly();
 
-			BooleanResult result = receiptLogService.finishReceiptLog(id, "sys");
+						return result;
+					}
+
+					try {
+						Map<String, String> map = new HashMap<String, String>();
+						map.put("mrmReceive", JSON.toJSONString(receipt));
+
+						String code = HttpUtil.post(url, map);
+						if (!"s".equals(code)) {
+							ts.setRollbackOnly();
+
+							return result;
+						}
+					} catch (Exception e) {
+						logger.error(e);
+
+						ts.setRollbackOnly();
+
+						result.setCode(e.getMessage());
+						result.setResult(false);
+						return result;
+					}
+
+					return result;
+				}
+			});
+
 			if (result.getResult()) {
 				count++;
 			}
 		}
 
 		return count;
+	}
+
+	public TransactionTemplate getTransactionTemplate() {
+		return transactionTemplate;
+	}
+
+	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
+		this.transactionTemplate = transactionTemplate;
 	}
 
 	public IReceiptLogService getReceiptLogService() {

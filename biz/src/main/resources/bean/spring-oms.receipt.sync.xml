@@ -6,6 +6,7 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
 	<bean id="receiptSyncService" class="com.hsh24.sync.oms.service.impl.ReceiptSyncServiceImpl">
+		<property name="transactionTemplate" ref="transactionTemplate" />
 		<property name="receiptLogService" ref="receiptLogService" />
 		<property name="receiptService" ref="receiptService" />
 		<property name="url">

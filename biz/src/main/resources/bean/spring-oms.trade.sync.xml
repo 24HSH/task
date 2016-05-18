@@ -6,6 +6,7 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
 	<bean id="omsTradeSyncService" class="com.hsh24.sync.oms.service.impl.TradeSyncServiceImpl">
+		<property name="transactionTemplate" ref="transactionTemplate" />
 		<property name="tradeLogService" ref="omsTradeLogService" />
 		<property name="tradeService" ref="omsTradeService" />
 		<property name="orderService" ref="omsOrderService" />
