@@ -72,7 +72,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 				Map<String, String> map = new HashMap<String, String>();
 				try {
-					map.put("purchaseOrder", JSON.toJSONString(trade).replace("\"", "\\\""));
+					map.put("purchaseOrder", JSON.toJSONString(trade));
 					System.out.println(HttpUtil.post(url, map));
 				} catch (Exception e) {
 					e.printStackTrace();
