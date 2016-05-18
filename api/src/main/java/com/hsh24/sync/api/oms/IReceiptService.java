@@ -26,4 +26,11 @@ public interface IReceiptService {
 	 */
 	List<ReceiptDetail> getReceiptDetailList(Long receiptId);
 
+	/**
+	 * 
+	 * @param shopId
+	 * @return
+	 */
+	String getWarehouse(Long shopId);
+
 }

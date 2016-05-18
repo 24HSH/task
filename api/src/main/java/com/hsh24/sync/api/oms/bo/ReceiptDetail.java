@@ -13,10 +13,13 @@ public class ReceiptDetail implements Serializable {
 
 	private static final long serialVersionUID = -6067606067147286331L;
 
+	@JSONField(serialize = false)
 	private Long detailId;
 
+	@JSONField(serialize = false)
 	private Long receiptId;
 
+	@JSONField(serialize = false)
 	private Long orderId;
 
 	/**
@@ -36,9 +39,15 @@ public class ReceiptDetail implements Serializable {
 	@JSONField(name = "goodsId")
 	private Long itemId;
 
+	@JSONField(serialize = false)
 	private String itemName;
 
+	@JSONField(serialize = false)
 	private String propertiesName;
+
+	private String goodsSpecCd = "";
+
+	private String remark = "";
 
 	public Long getDetailId() {
 		return detailId;
@@ -110,6 +119,22 @@ public class ReceiptDetail implements Serializable {
 
 	public void setPropertiesName(String propertiesName) {
 		this.propertiesName = propertiesName;
+	}
+
+	public String getGoodsSpecCd() {
+		return goodsSpecCd;
+	}
+
+	public void setGoodsSpecCd(String goodsSpecCd) {
+		this.goodsSpecCd = goodsSpecCd;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

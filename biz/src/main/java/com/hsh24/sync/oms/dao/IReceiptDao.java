@@ -16,4 +16,11 @@ public interface IReceiptDao {
 	 */
 	Receipt getReceipt(Receipt receipt);
 
+	/**
+	 * 
+	 * @param shopId
+	 * @return
+	 */
+	String getWarehouse(Long shopId);
+
 }

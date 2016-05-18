@@ -60,6 +60,21 @@ public class ReceiptServiceImpl implements IReceiptService {
 		return null;
 	}
 
+	@Override
+	public String getWarehouse(Long shopId) {
+		if (shopId == null) {
+			return null;
+		}
+
+		try {
+			return receiptDao.getWarehouse(shopId);
+		} catch (Exception e) {
+			logger.error(e);
+		}
+
+		return null;
+	}
+
 	public IReceiptDao getReceiptDao() {
 		return receiptDao;
 	}

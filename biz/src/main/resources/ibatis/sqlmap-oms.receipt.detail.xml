@@ -10,11 +10,14 @@
 	<![CDATA[
 		SELECT t.detail_id AS detailId,
 			   t.order_id AS orderId,
-			   t.quantity
-		  FROM dms.dms_tb_receipt_detail t
-		 WHERE t.state = 'U'
+			   t.quantity,
+			   t.modify_user AS modifyUser,
+			   p.item_id As itemId,
+			   p.price
+		  FROM dms.dms_tb_receipt_detail t, dms.dms_tb_order p
+		 WHERE t.order_id = p.order_id
+		   AND t.state = 'U'
 		   AND t.receipt_id = #receiptId#
-		 ORDER BY CREATE_DATE
 	]]>
 	</select>
 	

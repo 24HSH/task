@@ -61,6 +61,8 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 
 			Long shopId = receipt.getShopId();
 
+			receipt.setWarehouse(receiptService.getWarehouse(shopId));
+
 			List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailList(receiptId);
 			if (receiptDetailList == null || receiptDetailList.size() == 0) {
 				continue;

@@ -68,6 +68,10 @@ public class Order implements Serializable {
 	@JSONField(name = "orgId")
 	private Long shopId;
 
+	private String goodsSpecCd = "";
+
+	private String remark = "";
+
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -146,6 +150,22 @@ public class Order implements Serializable {
 
 	public void setShopId(Long shopId) {
 		this.shopId = shopId;
+	}
+
+	public String getGoodsSpecCd() {
+		return goodsSpecCd;
+	}
+
+	public void setGoodsSpecCd(String goodsSpecCd) {
+		this.goodsSpecCd = goodsSpecCd;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

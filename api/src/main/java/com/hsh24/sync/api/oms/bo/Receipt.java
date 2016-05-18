@@ -14,6 +14,7 @@ public class Receipt implements Serializable {
 
 	private static final long serialVersionUID = 371464744766432881L;
 
+	@JSONField(serialize = false)
 	private Long receiptId;
 
 	@JSONField(name = "receiveCd")
@@ -22,6 +23,7 @@ public class Receipt implements Serializable {
 	@JSONField(name = "orgId")
 	private Long shopId;
 
+	@JSONField(serialize = false)
 	private Long tradeId;
 
 	@JSONField(name = "receiveDt")
@@ -43,6 +45,10 @@ public class Receipt implements Serializable {
 
 	@JSONField(name = "interReceiveGoodsList")
 	private List<ReceiptDetail> receiptDetailList;
+
+	private String supplierOrderCd = "";
+
+	private String warehouse;
 
 	public Long getReceiptId() {
 		return receiptId;
@@ -122,6 +128,22 @@ public class Receipt implements Serializable {
 
 	public void setReceiptDetailList(List<ReceiptDetail> receiptDetailList) {
 		this.receiptDetailList = receiptDetailList;
+	}
+
+	public String getSupplierOrderCd() {
+		return supplierOrderCd;
+	}
+
+	public void setSupplierOrderCd(String supplierOrderCd) {
+		this.supplierOrderCd = supplierOrderCd;
+	}
+
+	public String getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
 	}
 
 }

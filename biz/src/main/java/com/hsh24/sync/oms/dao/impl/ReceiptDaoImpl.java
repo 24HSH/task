@@ -16,4 +16,9 @@ public class ReceiptDaoImpl extends BaseDaoImpl implements IReceiptDao {
 		return (Receipt) getSqlMapClientTemplate().queryForObject("oms.receipt.getReceipt", receipt);
 	}
 
+	@Override
+	public String getWarehouse(Long shopId) {
+		return (String) getSqlMapClientTemplate().queryForObject("oms.receipt.getWarehouse", shopId);
+	}
+
 }

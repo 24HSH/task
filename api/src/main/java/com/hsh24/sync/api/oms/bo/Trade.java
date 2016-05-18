@@ -42,7 +42,7 @@ public class Trade implements Serializable {
 	@JSONField(name = "purchaseMoney")
 	private BigDecimal tradePrice;
 
-	private String remark;
+	private String remark = "";
 
 	/**
 	 * tosend: 待发货; send: 已发货; sign: 标记签收; cancel: 已关闭; feedback: 维权订单; feedbacked: 已处理维权订单.
