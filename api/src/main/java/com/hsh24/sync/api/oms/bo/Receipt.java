@@ -50,6 +50,8 @@ public class Receipt implements Serializable {
 
 	private String warehouse;
 
+	private String remark = "";
+
 	public Long getReceiptId() {
 		return receiptId;
 	}
@@ -144,6 +146,14 @@ public class Receipt implements Serializable {
 
 	public void setWarehouse(String warehouse) {
 		this.warehouse = warehouse;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }
