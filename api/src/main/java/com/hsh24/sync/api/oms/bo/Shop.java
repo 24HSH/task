@@ -7,9 +7,19 @@ package com.hsh24.sync.api.oms.bo;
  */
 public class Shop {
 
+	private Long shopId;
+
 	private String shopName;
 
 	private String address;
+
+	public Long getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
+	}
 
 	public String getShopName() {
 		return shopName;
