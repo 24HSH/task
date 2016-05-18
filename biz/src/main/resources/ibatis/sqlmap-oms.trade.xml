@@ -27,7 +27,8 @@
 			   t.sup_id AS supId,
 			   t.type,
 			   t.trade_price AS tradePrice,
-			   DATE_FORMAT(t.create_date, '%Y-%m-%d %T') AS createDate
+			   DATE_FORMAT(t.create_date, '%Y-%m-%d %T') AS createDate,
+			   t.create_user AS createUser
 		  FROM dms.dms_tb_trade t
 		 WHERE t.trade_id = #tradeId#
 	]]>
