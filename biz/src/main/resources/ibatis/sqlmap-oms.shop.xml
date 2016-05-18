@@ -10,7 +10,7 @@
 	<![CDATA[
 		SELECT t.shop_name AS shopName,
 			   t.address
-		  FROM dms.dms_tb_shop t
+		  FROM mdm.mdm_tb_shop t
 		 WHERE t.state = 'U'
 		   AND t.shop_id = #shopId#
 	]]>
