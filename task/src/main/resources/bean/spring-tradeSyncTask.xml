@@ -41,7 +41,7 @@
 			<ref bean="tradeSync2SendJobDetail" />
 		</property>
 		<property name="cronExpression">
-			<value>0 0/5 * * * ?</value>
+			<value>0 0/3 * * * ?</value>
 		</property>
 	</bean>
 	

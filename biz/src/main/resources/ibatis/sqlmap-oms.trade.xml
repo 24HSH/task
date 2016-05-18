@@ -28,8 +28,10 @@
 			   t.type,
 			   t.trade_price AS tradePrice,
 			   DATE_FORMAT(t.create_date, '%Y-%m-%d %T') AS createDate,
+			   DATE_FORMAT(t.create_date, '%Y-%m-%d %T') AS sendDate,
 			   t.create_user AS createUser,
-			   t.modify_user AS modifyUser
+			   t.modify_user AS modifyUser,
+			   t.shop_id AS shopId
 		  FROM dms.dms_tb_trade t
 		 WHERE t.trade_id = #tradeId#
 	]]>

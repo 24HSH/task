@@ -23,7 +23,7 @@
 			<ref bean="receiptSyncJobDetail" />
 		</property>
 		<property name="cronExpression">
-			<value>0 0/1 * * * ?</value>
+			<value>0 0/3 * * * ?</value>
 		</property>
 	</bean>
 	
