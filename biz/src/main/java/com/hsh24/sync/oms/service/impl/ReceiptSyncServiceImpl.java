@@ -151,7 +151,7 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 	}
 
 	private void record(Long id, String error) {
-
+		receiptLogService.recordReceiptLog(id, error, "sys");
 	}
 
 	public TransactionTemplate getTransactionTemplate() {
