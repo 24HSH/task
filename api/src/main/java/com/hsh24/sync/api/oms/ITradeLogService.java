@@ -31,10 +31,10 @@ public interface ITradeLogService {
 	/**
 	 * 记录
 	 * @param id
-	 * @param error
+	 * @param e
 	 * @param modifyUser
 	 * @return
 	 */
-	BooleanResult recordTradeLog(Long id, String error, String modifyUser);
+	BooleanResult recordTradeLog(Long id, String e, String modifyUser);
 
 }

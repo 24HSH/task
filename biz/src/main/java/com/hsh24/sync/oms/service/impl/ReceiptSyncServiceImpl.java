@@ -150,8 +150,8 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 		return count;
 	}
 
-	private void record(Long id, String error) {
-		receiptLogService.recordReceiptLog(id, error, "sys");
+	private void record(Long id, String e) {
+		receiptLogService.recordReceiptLog(id, e, "sys");
 	}
 
 	public TransactionTemplate getTransactionTemplate() {

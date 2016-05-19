@@ -69,7 +69,7 @@ public class TradeLogServiceImpl implements ITradeLogService {
 	}
 
 	@Override
-	public BooleanResult recordTradeLog(Long id, String error, String modifyUser) {
+	public BooleanResult recordTradeLog(Long id, String e, String modifyUser) {
 		BooleanResult result = new BooleanResult();
 		result.setResult(false);
 
@@ -78,7 +78,7 @@ public class TradeLogServiceImpl implements ITradeLogService {
 			return result;
 		}
 
-		if (StringUtils.isBlank(error)) {
+		if (StringUtils.isBlank(e)) {
 			result.setCode("日志信息不能为空。");
 			return result;
 		}
@@ -90,7 +90,7 @@ public class TradeLogServiceImpl implements ITradeLogService {
 
 		TradeLog tradeLog = new TradeLog();
 		tradeLog.setId(id);
-		tradeLog.setError(error);
+		tradeLog.setE(e);
 		tradeLog.setModifyUser(modifyUser);
 
 		try {
@@ -100,8 +100,8 @@ public class TradeLogServiceImpl implements ITradeLogService {
 			} else {
 				result.setCode("更新交易日志失败。");
 			}
-		} catch (Exception e) {
-			logger.error(LogUtil.parserBean(tradeLog), e);
+		} catch (Exception ex) {
+			logger.error(LogUtil.parserBean(tradeLog), ex);
 			result.setCode("更新交易日志表失败。");
 		}
 

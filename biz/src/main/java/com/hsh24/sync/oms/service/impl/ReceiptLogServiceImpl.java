@@ -69,7 +69,7 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 	}
 
 	@Override
-	public BooleanResult recordReceiptLog(Long id, String error, String modifyUser) {
+	public BooleanResult recordReceiptLog(Long id, String e, String modifyUser) {
 		BooleanResult result = new BooleanResult();
 		result.setResult(false);
 
@@ -78,7 +78,7 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 			return result;
 		}
 
-		if (StringUtils.isBlank(error)) {
+		if (StringUtils.isBlank(e)) {
 			result.setCode("日志信息不能为空。");
 			return result;
 		}
@@ -90,7 +90,7 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 
 		ReceiptLog receiptLog = new ReceiptLog();
 		receiptLog.setId(id);
-		receiptLog.setError(error);
+		receiptLog.setE(e);
 		receiptLog.setModifyUser(modifyUser);
 
 		try {
@@ -100,8 +100,8 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 			} else {
 				result.setCode("更新交易日志失败。");
 			}
-		} catch (Exception e) {
-			logger.error(LogUtil.parserBean(receiptLog), e);
+		} catch (Exception ex) {
+			logger.error(LogUtil.parserBean(receiptLog), ex);
 			result.setCode("更新交易日志表失败。");
 		}
 

@@ -13,7 +13,7 @@ public class ReceiptLog {
 
 	private String type;
 
-	private String error;
+	private String e;
 
 	private String modifyUser;
 
@@ -41,12 +41,12 @@ public class ReceiptLog {
 		this.type = type;
 	}
 
-	public String getError() {
-		return error;
+	public String getE() {
+		return e;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setE(String e) {
+		this.e = e;
 	}
 
 	public String getModifyUser() {
