@@ -24,4 +24,9 @@ public class ReceiptLogDaoImpl extends BaseDaoImpl implements IReceiptLogDao {
 		return getSqlMapClientTemplate().update("oms.receipt.log.finishReceiptLog", receiptLog);
 	}
 
+	@Override
+	public int recordReceiptLog(ReceiptLog receiptLog) {
+		return getSqlMapClientTemplate().update("oms.receipt.log.recordReceiptLog", receiptLog);
+	}
+
 }

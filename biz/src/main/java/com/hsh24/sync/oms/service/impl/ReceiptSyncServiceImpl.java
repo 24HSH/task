@@ -116,6 +116,7 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 						if (StringUtils.isBlank(code)) {
 							ts.setRollbackOnly();
 
+							record(id, "返回空.");
 							return result;
 						}
 
@@ -124,6 +125,7 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 						if (!"success".equals(res.getInfo())) {
 							ts.setRollbackOnly();
 
+							record(id, code);
 							return result;
 						}
 					} catch (Exception e) {
@@ -146,6 +148,10 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 		}
 
 		return count;
+	}
+
+	private void record(Long id, String error) {
+
 	}
 
 	public TransactionTemplate getTransactionTemplate() {

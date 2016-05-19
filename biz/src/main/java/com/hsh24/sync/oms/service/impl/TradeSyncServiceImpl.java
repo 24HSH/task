@@ -111,6 +111,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (StringUtils.isBlank(code)) {
 								ts.setRollbackOnly();
 
+								record(id, "返回空.");
 								return result;
 							}
 
@@ -119,6 +120,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (!"success".equals(res.getInfo())) {
 								ts.setRollbackOnly();
 
+								record(id, code);
 								return result;
 							}
 						} catch (Exception e) {
@@ -159,6 +161,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (StringUtils.isBlank(code)) {
 								ts.setRollbackOnly();
 
+								record(id, "返回空.");
 								return result;
 							}
 
@@ -167,6 +170,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (!"success".equals(res.getInfo())) {
 								ts.setRollbackOnly();
 
+								record(id, code);
 								return result;
 							}
 						} catch (Exception e) {
@@ -190,6 +194,10 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 		}
 
 		return count;
+	}
+
+	private void record(Long id, String error) {
+		tradeLogService.recordTradeLog(id, error, "sys");
 	}
 
 	@Override

@@ -26,4 +26,13 @@ public interface IReceiptLogService {
 	 */
 	BooleanResult finishReceiptLog(Long id, String modifyUser);
 
+	/**
+	 * 
+	 * @param id
+	 * @param error
+	 * @param modifyUser
+	 * @return
+	 */
+	BooleanResult recordReceiptLog(Long id, String error, String modifyUser);
+
 }

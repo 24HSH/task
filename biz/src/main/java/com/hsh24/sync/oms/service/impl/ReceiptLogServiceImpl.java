@@ -68,11 +68,52 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 		return result;
 	}
 
+	@Override
+	public BooleanResult recordReceiptLog(Long id, String error, String modifyUser) {
+		BooleanResult result = new BooleanResult();
+		result.setResult(false);
+
+		if (id == null) {
+			result.setCode("交易日志信息不能为空。");
+			return result;
+		}
+
+		if (StringUtils.isBlank(error)) {
+			result.setCode("日志信息不能为空。");
+			return result;
+		}
+
+		if (StringUtils.isEmpty(modifyUser)) {
+			result.setCode("操作人信息不能为空。");
+			return result;
+		}
+
+		ReceiptLog receiptLog = new ReceiptLog();
+		receiptLog.setId(id);
+		receiptLog.setError(error);
+		receiptLog.setModifyUser(modifyUser);
+
+		try {
+			int c = receiptLogDao.recordReceiptLog(receiptLog);
+			if (c == 1) {
+				result.setResult(true);
+			} else {
+				result.setCode("更新交易日志失败。");
+			}
+		} catch (Exception e) {
+			logger.error(LogUtil.parserBean(receiptLog), e);
+			result.setCode("更新交易日志表失败。");
+		}
+
+		return result;
+	}
+
 	public IReceiptLogDao getReceiptLogDao() {
 		return receiptLogDao;
 	}
 
 	public void setReceiptLogDao(IReceiptLogDao receiptLogDao) {
+
 		this.receiptLogDao = receiptLogDao;
 	}
 

@@ -13,6 +13,7 @@
 			   TYPE
 		  FROM dms.dms_tb_receipt_log
 		 WHERE STATE= 'U'
+		 AND t.times < 3
 		 ORDER BY MODIFY_DATE
 		 LIMIT 10
 	]]>
@@ -22,6 +23,18 @@
 	<![CDATA[
 		UPDATE dms.dms_tb_receipt_log t
 		   SET t.STATE = 'D',
+			   t.MODIFY_DATE = NOW(),
+			   t.MODIFY_USER = #modifyUser#
+		 WHERE t.id = #id#
+		   AND t.STATE = 'U'
+	]]>
+	</update>
+	
+	<update id="recordReceiptLog" parameterClass="receiptLog">
+	<![CDATA[
+		UPDATE dms.dms_tb_receipt_log t
+		   SET t.times = t.times + 1,
+			   t.error = CONCAT(t.error, #error#),
 			   t.MODIFY_DATE = NOW(),
 			   t.MODIFY_USER = #modifyUser#
 		 WHERE t.id = #id#

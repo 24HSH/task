@@ -25,4 +25,11 @@ public interface IReceiptLogDao {
 	 */
 	int finishReceiptLog(ReceiptLog receiptLog);
 
+	/**
+	 * 
+	 * @param receiptLog
+	 * @return
+	 */
+	int recordReceiptLog(ReceiptLog receiptLog);
+
 }

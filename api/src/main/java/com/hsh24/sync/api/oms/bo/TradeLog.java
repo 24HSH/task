@@ -13,6 +13,8 @@ public class TradeLog {
 
 	private String type;
 
+	private String error;
+
 	private String modifyUser;
 
 	public Long getId() {
@@ -37,6 +39,14 @@ public class TradeLog {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	public String getModifyUser() {

@@ -28,4 +28,13 @@ public interface ITradeLogService {
 	 */
 	BooleanResult finishTradeLog(Long id, String modifyUser);
 
+	/**
+	 * 记录
+	 * @param id
+	 * @param error
+	 * @param modifyUser
+	 * @return
+	 */
+	BooleanResult recordTradeLog(Long id, String error, String modifyUser);
+
 }
