@@ -34,7 +34,7 @@
 	<![CDATA[
 		UPDATE dms.dms_tb_trade_log t
 		   SET t.times = t.times + 1,
-			   t.error = CONCAT(t.error, #error#),
+			   t.error = #error#,
 			   t.MODIFY_DATE = NOW(),
 			   t.MODIFY_USER = #modifyUser#
 		 WHERE t.id = #id#
