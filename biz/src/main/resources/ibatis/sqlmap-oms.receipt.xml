@@ -25,7 +25,7 @@
 	
 	<select id="getWarehouse" parameterClass="java.lang.Long" resultClass="java.lang.String">
 	<![CDATA[
-		SELECT t.`warehouse_id`
+		SELECT t.`warehouse_cd`
 		  FROM oms.`main_warehouse_t` t
 		 WHERE t.`org_id` = #shopId#
 	]]>
