@@ -14,7 +14,8 @@
 			   t.modify_user AS modifyUser,
 			   p.item_id AS itemId,
 			   p.price,
-			   q.bar_code AS barCode
+			   q.bar_code AS barCode,
+			   q.item_code  AS itemCode
 		  FROM dms.dms_tb_receipt_detail t, dms.dms_tb_order p, oms.dms_vw_goods q
 		 WHERE t.order_id = p.order_id
 		   AND p.item_id = q.item_id

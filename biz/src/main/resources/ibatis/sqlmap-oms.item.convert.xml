@@ -9,6 +9,7 @@
 	<select id="getItemConvert" parameterClass="itemConvert" resultClass="itemConvert">
 	<![CDATA[
 		SELECT p.item_id AS itemId,
+			   p.item_code AS itemCode,
 			   t.quantity
 		  FROM sup.sup_tb_item_convert t, oms.dms_vw_goods p
 		 WHERE t.sub_bar_code = p.bar_code

@@ -87,6 +87,7 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 					for (ItemConvert itemConvert : itemConvertList) {
 						ReceiptDetail detail = new ReceiptDetail();
 						detail.setItemId(itemConvert.getItemId());
+						detail.setItemCode(itemConvert.getItemCode());
 						detail.setQuantity(receiptDetail.getQuantity() * itemConvert.getQuantity());
 						detail.setShopId(receiptDetail.getShopId());
 						detail.setModifyUser(receiptDetail.getModifyUser());

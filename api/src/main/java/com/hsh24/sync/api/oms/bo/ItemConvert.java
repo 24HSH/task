@@ -11,6 +11,8 @@ public class ItemConvert {
 
 	private Long itemId;
 
+	private String itemCode;
+
 	private int quantity;
 
 	public String getBarCode() {
@@ -27,6 +29,14 @@ public class ItemConvert {
 
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
 	}
 
 	public int getQuantity() {

@@ -27,8 +27,11 @@ public class Order implements Serializable {
 	/**
 	 * 商品 ID.
 	 */
-	@JSONField(name = "goodsId")
+	@JSONField(serialize = false)
 	private Long itemId;
+
+	@JSONField(name = "goodsId")
+	private String itemCode;
 
 	/**
 	 * 商品名称.
@@ -94,6 +97,14 @@ public class Order implements Serializable {
 
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
 	}
 
 	public String getItemName() {

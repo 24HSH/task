@@ -36,8 +36,11 @@ public class ReceiptDetail implements Serializable {
 	@JSONField(name = "orgId")
 	private Long shopId;
 
-	@JSONField(name = "goodsId")
+	@JSONField(serialize = false)
 	private Long itemId;
+
+	@JSONField(name = "goodsId")
+	private String itemCode;
 
 	@JSONField(serialize = false)
 	private String itemName;
@@ -106,6 +109,14 @@ public class ReceiptDetail implements Serializable {
 
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
 	}
 
 	public String getItemName() {
