@@ -196,8 +196,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 		return count;
 	}
 
-	private void record(Long id, String error) {
-		tradeLogService.recordTradeLog(id, error, "sys");
+	private void record(Long id, String e) {
+		tradeLogService.recordTradeLog(id, e, "sys");
 	}
 
 	@Override
