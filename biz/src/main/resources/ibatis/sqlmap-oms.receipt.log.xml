@@ -12,7 +12,7 @@
 			   RECEIPT_ID AS receiptId,
 			   TYPE
 		  FROM dms.dms_tb_receipt_log
-		 WHERE STATE= 'U'
+		 WHERE STATE = 'U'
 		 AND times < 3
 		 ORDER BY MODIFY_DATE
 		 LIMIT 10
