@@ -58,7 +58,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 		int count = 0;
 
 		for (TradeLog tradeLog : tradeLogList) {
-			if (!"tosend".equals(tradeLog.getType()) && !"cancel".equals(tradeLog.getType())) {
+			if (!"tosend".equals(tradeLog.getType()) && !"tocancel".equals(tradeLog.getType())) {
 				continue;
 			}
 
