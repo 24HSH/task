@@ -116,7 +116,7 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 						if (StringUtils.isBlank(code)) {
 							ts.setRollbackOnly();
 
-							record(id, "返回空.");
+							result.setCode("返回空.");
 							return result;
 						}
 
@@ -125,7 +125,7 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 						if (!"success".equals(res.getInfo())) {
 							ts.setRollbackOnly();
 
-							record(id, code);
+							result.setCode(code);
 							return result;
 						}
 					} catch (Exception e) {
@@ -144,6 +144,8 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 
 			if (result.getResult()) {
 				count++;
+			} else {
+				record(id, result.getCode());
 			}
 		}
 

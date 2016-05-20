@@ -111,7 +111,6 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (StringUtils.isBlank(code)) {
 								ts.setRollbackOnly();
 
-								record(id, "返回空.");
 								return result;
 							}
 
@@ -120,7 +119,6 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (!"success".equals(res.getInfo())) {
 								ts.setRollbackOnly();
 
-								record(id, code);
 								return result;
 							}
 						} catch (Exception e) {
@@ -139,6 +137,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 				if (result.getResult()) {
 					count++;
+				} else {
+					record(id, result.getCode());
 				}
 			} else if ("cancel".equals(tradeLog.getType())) {
 				BooleanResult result = transactionTemplate.execute(new TransactionCallback<BooleanResult>() {
@@ -161,7 +161,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (StringUtils.isBlank(code)) {
 								ts.setRollbackOnly();
 
-								record(id, "返回空.");
+								result.setCode("返回空.");
 								return result;
 							}
 
@@ -170,7 +170,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							if (!"success".equals(res.getInfo())) {
 								ts.setRollbackOnly();
 
-								record(id, code);
+								result.setCode(code);
 								return result;
 							}
 						} catch (Exception e) {
@@ -189,6 +189,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 				if (result.getResult()) {
 					count++;
+				} else {
+					record(id, result.getCode());
 				}
 			}
 		}
