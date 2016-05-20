@@ -13,7 +13,7 @@
 			   TYPE
 		  FROM dms.dms_tb_trade_log
 		 WHERE STATE= 'U'
-		 AND t.times < 3
+		 AND times < 3
 		 ORDER BY MODIFY_DATE
 		 LIMIT 10
 	]]>
