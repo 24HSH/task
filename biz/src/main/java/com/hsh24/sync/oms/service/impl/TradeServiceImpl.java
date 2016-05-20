@@ -38,6 +38,30 @@ public class TradeServiceImpl implements ITradeService {
 	}
 
 	@Override
+	public BooleanResult cancelTrade(Long tradeId, String modifyUser) {
+		BooleanResult result = new BooleanResult();
+		result.setResult(false);
+
+		Trade trade = new Trade();
+		trade.setTradeId(tradeId);
+		trade.setModifyUser(modifyUser);
+
+		try {
+			int c = tradeDao.cancelTrade(trade);
+			if (c == 1) {
+				result.setResult(true);
+			} else {
+				result.setCode("更新交易失败。");
+			}
+		} catch (Exception e) {
+			logger.error(LogUtil.parserBean(trade), e);
+			result.setCode("更新交易表失败。");
+		}
+
+		return result;
+	}
+
+	@Override
 	public BooleanResult sync2Send() {
 		BooleanResult result = new BooleanResult();
 		result.setResult(false);

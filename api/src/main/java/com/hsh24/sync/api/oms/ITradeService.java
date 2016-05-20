@@ -18,6 +18,15 @@ public interface ITradeService {
 	Trade getTrade(Long tradeId);
 
 	/**
+	 * 根据 trade_log 取消订单成功.
+	 * 
+	 * @param id
+	 * @param modifyUser
+	 * @return
+	 */
+	BooleanResult cancelTrade(Long id, String modifyUser);
+
+	/**
 	 * 
 	 * @return
 	 */

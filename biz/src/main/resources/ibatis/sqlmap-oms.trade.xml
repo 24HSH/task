@@ -15,7 +15,7 @@
 			   t.MODIFY_USER = 'sys'
 		 WHERE t.TRADE_NO = o.purchase_cd
 		   AND o.purchase_status = '0003'
-		   AND t.TYPE = 'tosend'
+		   AND (t.TYPE = 'tosend' OR t.TYPE = 'tocancel')
 		   AND t.STATE = 'U'
 	]]>
 	</update>
@@ -36,5 +36,16 @@
 		 WHERE t.trade_id = #tradeId#
 	]]>
 	</select>
+	
+	<update id="cancelTrade" parameterClass="omsTrade">
+	<![CDATA[
+		UPDATE dms.dms_tb_trade t
+		   SET t.MODIFY_DATE = NOW(),
+			   t.MODIFY_USER = #modifyUser#,
+			   t.type = 'cancel'
+		 WHERE t.trade_id = #tradeId#
+		   AND t.STATE = 'U'
+	]]>
+	</update>
 	
 </sqlMap>

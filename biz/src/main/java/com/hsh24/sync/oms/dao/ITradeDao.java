@@ -18,6 +18,13 @@ public interface ITradeDao {
 
 	/**
 	 * 
+	 * @param trade
+	 * @return
+	 */
+	int cancelTrade(Trade trade);
+
+	/**
+	 * 
 	 * @return
 	 */
 	int sync2Send();

@@ -63,7 +63,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 			}
 
 			final Long id = tradeLog.getId();
-			Long tradeId = tradeLog.getTradeId();
+			final Long tradeId = tradeLog.getTradeId();
 
 			final Trade trade = tradeService.getTrade(tradeId);
 			if (trade == null) {
@@ -142,7 +142,7 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 				} else {
 					record(id, result.getCode());
 				}
-			} else if ("cancel".equals(tradeLog.getType())) {
+			} else if ("tocancel".equals(tradeLog.getType())) {
 				BooleanResult result = transactionTemplate.execute(new TransactionCallback<BooleanResult>() {
 					public BooleanResult doInTransaction(TransactionStatus ts) {
 						BooleanResult result = tradeLogService.finishTradeLog(id, "sys");
@@ -186,7 +186,14 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							return result;
 						}
 
-						result.setResult(true);
+						// 1. 取消成功
+						result = tradeService.cancelTrade(tradeId, "sys");
+						if (!result.getResult()) {
+							ts.setRollbackOnly();
+
+							return result;
+						}
+
 						return result;
 					}
 				});
