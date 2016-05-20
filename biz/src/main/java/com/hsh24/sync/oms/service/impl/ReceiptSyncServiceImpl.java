@@ -108,6 +108,8 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 						return result;
 					}
 
+					result.setResult(false);
+
 					try {
 						Map<String, String> map = new HashMap<String, String>();
 						map.put("mrmReceive", JSON.toJSONString(receipt));
@@ -134,10 +136,10 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 						ts.setRollbackOnly();
 
 						result.setCode(e.getMessage());
-						result.setResult(false);
 						return result;
 					}
 
+					result.setResult(true);
 					return result;
 				}
 			});

@@ -103,6 +103,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							return result;
 						}
 
+						result.setResult(false);
+
 						try {
 							Map<String, String> map = new HashMap<String, String>();
 							map.put("purchaseOrder", JSON.toJSONString(trade));
@@ -127,10 +129,10 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							ts.setRollbackOnly();
 
 							result.setCode(e.getMessage());
-							result.setResult(false);
 							return result;
 						}
 
+						result.setResult(true);
 						return result;
 					}
 				});
@@ -149,6 +151,8 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 
 							return result;
 						}
+
+						result.setResult(false);
 
 						try {
 							Map<String, String> map = new HashMap<String, String>();
@@ -179,10 +183,10 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 							ts.setRollbackOnly();
 
 							result.setCode(e.getMessage());
-							result.setResult(false);
 							return result;
 						}
 
+						result.setResult(true);
 						return result;
 					}
 				});
