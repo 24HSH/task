@@ -6,7 +6,7 @@
 	
 	<typeAlias alias="cashflow" type="com.hsh24.sync.api.oms.bo.Cashflow" />
 	
-	<update id="createCashflow" parameterClass="cashflow">
+	<insert id="createCashflow" parameterClass="cashflow">
 	<![CDATA[
 		INSERT
 		INTO dms_tb_cashflow
@@ -57,6 +57,6 @@
 			SELECT LAST_INSERT_ID()
 		]]>
 		</selectKey>
-	</update>
+	</insert>
 	
 </sqlMap>
