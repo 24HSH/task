@@ -7,6 +7,9 @@
 	
 	<!-- 账单 -->
 	<bean id="omsTradeService" class="com.hsh24.sync.oms.service.impl.TradeServiceImpl">
+		<property name="transactionTemplate" ref="transactionTemplate" />
+		<property name="cashflowService" ref="cashflowService" />
+		<property name="bankAcctService" ref="bankAcctService" />
 		<property name="tradeDao" ref="omsTradeDao" />
 	</bean>
 	
