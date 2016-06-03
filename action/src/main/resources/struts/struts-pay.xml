@@ -2,11 +2,9 @@
  "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
  "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	
 	<!-- wx 支付 -->
 	<package name="{http://sync}sync$wxpay"
 		extends="{http://sync}sync$framework" namespace="/wxpay">
 		<action name="notify" class="payAction" method="wxNotify"></action>
 	</package>
-	
 </struts>
