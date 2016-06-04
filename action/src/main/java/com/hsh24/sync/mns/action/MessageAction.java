@@ -28,15 +28,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.MethodNotSupportedException;
-import org.apache.http.protocol.ExecutionContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -66,7 +60,7 @@ public class MessageAction extends BaseAction {
 	public String mnsNotify() throws HttpException, IOException {
 		System.out.println("**********");
 		try {
-			handle1(this.getServletRequest(), this.getServletResponse());
+			handle2(this.getServletRequest(), this.getServletResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,7 +71,7 @@ public class MessageAction extends BaseAction {
 	}
 
 	/**
-	 * check if this request comes from MNS Server
+	 * check if this request comes from MNS Server.
 	 * 
 	 * @param method
 	 *            , http method
@@ -92,7 +86,6 @@ public class MessageAction extends BaseAction {
 	private Boolean authenticate(String method, String uri, Map<String, String> headers, String cert) {
 		// 获取待签名字符串
 		String str2sign = getSignStr(method, uri, headers);
-		System.out.println("String2Sign:\t" + str2sign);
 
 		// 对Authorization字段做Base64解码
 		String signature = headers.get("authorization");
@@ -112,13 +105,12 @@ public class MessageAction extends BaseAction {
 			java.security.Signature signetcheck = java.security.Signature.getInstance("SHA1withRSA");
 			signetcheck.initVerify(pk);
 			signetcheck.update(str2sign.getBytes());
-			Boolean res = signetcheck.verify(decodedSign);
-			return res;
+			return signetcheck.verify(decodedSign);
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.warn("authenticate fail, " + e.getMessage());
-			return false;
+			logger.error(e);
 		}
+
+		return false;
 	}
 
 	/**
@@ -190,26 +182,19 @@ public class MessageAction extends BaseAction {
 		while (headers.hasMoreElements()) {
 			String key = (String) headers.nextElement();
 			String value = request.getHeader(key);
-			System.out.println(key + ":" + value);
 			hm.put(key, value);
 		}
 
 		String target = request.getRequestURI();
-		System.out.println(target);
 
 		String cert = request.getHeader("x-mns-signing-cert-url");
 		if (StringUtils.isEmpty(cert)) {
-			System.out.println("SigningCertURL empty");
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			return;
 		}
 		cert = new String(Base64.decodeBase64(cert));
-		System.out.println("SigningCertURL:\t" + cert);
-		logger.debug("SigningCertURL:\t" + cert);
 
 		if (!authenticate(method, target, hm, cert)) {
-			System.out.println("authenticate fail");
-			logger.warn("authenticate fail");
 			response.setStatus(HttpStatus.SC_BAD_REQUEST);
 			return;
 		}
@@ -247,28 +232,22 @@ public class MessageAction extends BaseAction {
 		try {
 			String topicOwner = safeGetElementContent(notify, "TopicOwner");
 			System.out.println("TopicOwner:\t" + topicOwner);
-			logger.debug("TopicOwner:\t" + topicOwner);
 
 			String topicName = safeGetElementContent(notify, "TopicName");
 			System.out.println("TopicName:\t" + topicName);
-			logger.debug("TopicName:\t" + topicName);
 
 			String subscriber = safeGetElementContent(notify, "Subscriber");
 			System.out.println("Subscriber:\t" + subscriber);
-			logger.debug("Subscriber:\t" + subscriber);
 
 			String subscriptionName = safeGetElementContent(notify, "SubscriptionName");
 			System.out.println("SubscriptionName:\t" + subscriptionName);
-			logger.debug("SubscriptionName:\t" + subscriptionName);
 
 			String msgid = safeGetElementContent(notify, "MessageId");
 			System.out.println("MessageId:\t" + msgid);
-			logger.debug("MessageId:\t" + msgid);
 
 			// if PublishMessage with base64 message
 			String msg = safeGetElementContent(notify, "Message");
 			System.out.println("Message:\t" + new String(Base64.decodeBase64(msg)));
-			logger.debug("Message:\t" + new String(Base64.decodeBase64(msg)));
 
 			// if PublishMessage with string message
 			// String msg = safeGetElementContent(notify, "Message");
@@ -277,31 +256,25 @@ public class MessageAction extends BaseAction {
 
 			String msgMD5 = safeGetElementContent(notify, "MessageMD5");
 			System.out.println("MessageMD5:\t" + msgMD5);
-			logger.debug("MessageMD5:\t" + msgMD5);
 
 			String msgPublishTime = safeGetElementContent(notify, "PublishTime");
 			Date d = new Date(Long.parseLong(msgPublishTime));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String strdate = sdf.format(d);
 			System.out.println("PublishTime:\t" + strdate);
-			logger.debug("MessagePublishTime:\t" + strdate);
 
 			String msgTag = safeGetElementContent(notify, "MessageTag");
 			if (msgTag != "") {
 				System.out.println("MessageTag:\t" + msgTag);
 				logger.debug("MessageTag:\t" + msgTag);
 			}
-
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			logger.warn(e.getMessage());
+			logger.error(e);
 		}
-
 	}
 
 	/**
-	 * process method for NSHandler
+	 * process method for NSHandler.
 	 * 
 	 * @param request
 	 *            , http request
@@ -312,82 +285,63 @@ public class MessageAction extends BaseAction {
 	 * @throws HttpException
 	 * @throws IOException
 	 */
-	private void handle(final HttpRequest request, final HttpResponse response) throws HttpException, IOException {
-		String method = request.getRequestLine().getMethod().toUpperCase(Locale.ENGLISH);
+	private void handle2(HttpServletRequest request, HttpServletResponse response) throws HttpException, IOException {
+		String method = request.getMethod().toUpperCase(Locale.ENGLISH);
 
 		if (!method.equals("GET") && !method.equals("HEAD") && !method.equals("POST")) {
 			throw new MethodNotSupportedException(method + " method not supported");
 		}
 
-		Header[] headers = request.getAllHeaders();
+		Enumeration<?> headers = request.getHeaderNames();
 		Map<String, String> hm = new HashMap<String, String>();
-		for (Header h : headers) {
-			System.out.println(h.getName() + ":" + h.getValue());
-			hm.put(h.getName(), h.getValue());
+		while (headers.hasMoreElements()) {
+			String key = (String) headers.nextElement();
+			String value = request.getHeader(key);
+			hm.put(key, value);
 		}
 
-		String target = request.getRequestLine().getUri();
-		System.out.println(target);
+		String target = request.getRequestURI();
 
-		if (request instanceof HttpEntityEnclosingRequest) {
-			HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
-
-			// parser xml content
-			InputStream content = entity.getContent();
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			Element notify = null;
-			try {
-				DocumentBuilder db = dbf.newDocumentBuilder();
-				Document document = db.parse(content);
-				NodeList nl = document.getElementsByTagName("Notification");
-				if (nl == null || nl.getLength() == 0) {
-					System.out.println("xml tag error");
-					logger.warn("xml tag error");
-					response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
-					return;
-				}
-				notify = (Element) nl.item(0);
-			} catch (ParserConfigurationException e) {
-				e.printStackTrace();
-				logger.warn("xml parser fail! " + e.getMessage());
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
-				return;
-			} catch (SAXException e) {
-				e.printStackTrace();
-				logger.warn("xml parser fail! " + e.getMessage());
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
+		// parser xml content
+		InputStream content = request.getInputStream();
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		Element notify = null;
+		try {
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document document = db.parse(content);
+			NodeList nl = document.getElementsByTagName("Notification");
+			if (nl == null || nl.getLength() == 0) {
+				System.out.println("xml tag error");
+				logger.warn("xml tag error");
+				response.setStatus(HttpStatus.SC_BAD_REQUEST);
 				return;
 			}
-
-			// verify request
-			Header certHeader = request.getFirstHeader("x-mns-signing-cert-url");
-			if (certHeader == null) {
-				System.out.println("SigningCerURL Header not found");
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
-				return;
-			}
-
-			String cert = certHeader.getValue();
-			if (cert.isEmpty()) {
-				System.out.println("SigningCertURL empty");
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
-				return;
-			}
-			cert = new String(Base64.decodeBase64(cert));
-			System.out.println("SigningCertURL:\t" + cert);
-			logger.debug("SigningCertURL:\t" + cert);
-
-			if (!authenticate(method, target, hm, cert)) {
-				System.out.println("authenticate fail");
-				logger.warn("authenticate fail");
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
-				return;
-			}
-			paserContent(notify);
-
+			notify = (Element) nl.item(0);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			logger.warn("xml parser fail! " + e.getMessage());
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			return;
+		} catch (SAXException e) {
+			e.printStackTrace();
+			logger.warn("xml parser fail! " + e.getMessage());
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			return;
 		}
 
-		response.setStatusCode(HttpStatus.SC_NO_CONTENT);
+		String cert = request.getHeader("x-mns-signing-cert-url");
+		if (StringUtils.isEmpty(cert)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			return;
+		}
+		cert = new String(Base64.decodeBase64(cert));
+
+		if (!authenticate(method, target, hm, cert)) {
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			return;
+		}
+
+		paserContent(notify);
 	}
 
 }
