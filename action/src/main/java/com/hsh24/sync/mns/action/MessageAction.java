@@ -53,7 +53,7 @@ public class MessageAction extends BaseAction {
 
 	public String xml() {
 		try {
-			handle1(this.getServletRequest(), this.getServletResponse());
+			handle2(this.getServletRequest(), this.getServletResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -63,7 +63,7 @@ public class MessageAction extends BaseAction {
 
 	public String simplified() {
 		try {
-			handle2(this.getServletRequest(), this.getServletResponse());
+			handle1(this.getServletRequest(), this.getServletResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
