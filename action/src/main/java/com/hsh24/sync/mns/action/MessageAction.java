@@ -32,6 +32,7 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.MethodNotSupportedException;
+import org.apache.http.protocol.ExecutionContext;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -40,6 +41,7 @@ import org.xml.sax.SAXException;
 import com.hsh24.sync.framework.action.BaseAction;
 import com.hsh24.sync.framework.log.Logger4jCollection;
 import com.hsh24.sync.framework.log.Logger4jExtend;
+import com.opensymphony.xwork2.ActionContext;
 
 /**
  * 
@@ -59,8 +61,9 @@ public class MessageAction extends BaseAction {
 	 * @throws HttpException
 	 */
 	public String mnsNotify() throws HttpException, IOException {
-
-		handle1((HttpRequest) this.getServletRequest(), (HttpResponse) this.getServletResponse());
+		ActionContext ctx = ActionContext.getContext();
+		handle1((HttpRequest) ctx.get(ExecutionContext.HTTP_REQUEST),
+			(HttpResponse) ctx.get(ExecutionContext.HTTP_RESPONSE));
 
 		return SUCCESS;
 	}
