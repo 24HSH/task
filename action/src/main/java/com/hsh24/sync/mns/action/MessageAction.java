@@ -27,6 +27,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -194,40 +195,34 @@ public class MessageAction extends BaseAction {
 		String target = request.getRequestURI();
 		System.out.println(target);
 
-		if (request instanceof HttpEntityEnclosingRequest) {
-			HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
+		String cert = request.getHeader("x-mns-signing-cert-url");
+		if (StringUtils.isEmpty(cert)) {
+			System.out.println("SigningCertURL empty");
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			return;
+		}
+		cert = new String(Base64.decodeBase64(cert));
+		System.out.println("SigningCertURL:\t" + cert);
+		logger.debug("SigningCertURL:\t" + cert);
 
-			String cert = request.getHeader("x-mns-signing-cert-url");
-			if (cert.isEmpty()) {
-				System.out.println("SigningCertURL empty");
-				response.setStatus(HttpStatus.SC_BAD_REQUEST);
-				return;
-			}
-			cert = new String(Base64.decodeBase64(cert));
-			System.out.println("SigningCertURL:\t" + cert);
-			logger.debug("SigningCertURL:\t" + cert);
-
-			if (!authenticate(method, target, hm, cert)) {
-				System.out.println("authenticate fail");
-				logger.warn("authenticate fail");
-				response.setStatus(HttpStatus.SC_BAD_REQUEST);
-				return;
-			}
-
-			// parser content of simplified notification
-			InputStream is = entity.getContent();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-			StringBuffer buffer = new StringBuffer();
-			String line = "";
-			while ((line = reader.readLine()) != null) {
-				buffer.append(line);
-			}
-			String content = buffer.toString();
-
-			System.out.println("Simplified Notification: \n" + content);
+		if (!authenticate(method, target, hm, cert)) {
+			System.out.println("authenticate fail");
+			logger.warn("authenticate fail");
+			response.setStatus(HttpStatus.SC_BAD_REQUEST);
+			return;
 		}
 
-		response.setStatus(HttpStatus.SC_NO_CONTENT);
+		// parser content of simplified notification
+		InputStream is = request.getInputStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		StringBuffer buffer = new StringBuffer();
+		String line = "";
+		while ((line = reader.readLine()) != null) {
+			buffer.append(line);
+		}
+		String content = buffer.toString();
+
+		System.out.println("Simplified Notification: \n" + content);
 	}
 
 	private String safeGetElementContent(Element element, String tag) {
