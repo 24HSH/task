@@ -45,7 +45,6 @@ import org.xml.sax.SAXException;
 import com.hsh24.sync.framework.action.BaseAction;
 import com.hsh24.sync.framework.log.Logger4jCollection;
 import com.hsh24.sync.framework.log.Logger4jExtend;
-import com.opensymphony.xwork2.ActionContext;
 
 /**
  * 
@@ -92,7 +91,7 @@ public class MessageAction extends BaseAction {
 	 */
 	private Boolean authenticate(String method, String uri, Map<String, String> headers, String cert) {
 		String str2sign = getSignStr(method, uri, headers);
-		System.out.println(str2sign);
+		System.out.println("str2sign:\t" + str2sign);
 		String signature = headers.get("Authorization");
 		byte[] decodedSign = Base64.decodeBase64(signature);
 		// get cert, and verify this request with this cert
