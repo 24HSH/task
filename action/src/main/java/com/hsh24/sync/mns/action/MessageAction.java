@@ -92,13 +92,11 @@ public class MessageAction extends BaseAction {
 	 */
 	private Boolean authenticate(String method, String uri, Map<String, String> headers, String cert) {
 		String str2sign = getSignStr(method, uri, headers);
-		// System.out.println(str2sign);
+		System.out.println(str2sign);
 		String signature = headers.get("Authorization");
 		byte[] decodedSign = Base64.decodeBase64(signature);
 		// get cert, and verify this request with this cert
 		try {
-			// String cert =
-			// "http://mnstest.oss-cn-hangzhou.aliyuncs.com/x509_public_certificate.pem";
 			URL url = new URL(cert);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			DataInputStream in = new DataInputStream(conn.getInputStream());
@@ -107,6 +105,7 @@ public class MessageAction extends BaseAction {
 			Certificate c = cf.generateCertificate(in);
 			PublicKey pk = c.getPublicKey();
 
+			// 认证
 			java.security.Signature signetcheck = java.security.Signature.getInstance("SHA1withRSA");
 			signetcheck.initVerify(pk);
 			signetcheck.update(str2sign.getBytes());
