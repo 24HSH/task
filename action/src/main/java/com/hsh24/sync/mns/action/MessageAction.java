@@ -246,13 +246,12 @@ public class MessageAction extends BaseAction {
 			System.out.println("MessageId:\t" + msgid);
 
 			// if PublishMessage with base64 message
-			String msg = safeGetElementContent(notify, "Message");
-			System.out.println("Message:\t" + new String(Base64.decodeBase64(msg)));
+			// String msg = safeGetElementContent(notify, "Message");
+			// System.out.println("Message:\t" + new String(Base64.decodeBase64(msg)));
 
 			// if PublishMessage with string message
-			// String msg = safeGetElementContent(notify, "Message");
-			// System.out.println("Message:\t" + msg);
-			// logger.debug("Message:\t" + msg);
+			String msg = safeGetElementContent(notify, "Message");
+			System.out.println("Message:\t" + msg);
 
 			String msgMD5 = safeGetElementContent(notify, "MessageMD5");
 			System.out.println("MessageMD5:\t" + msgMD5);
