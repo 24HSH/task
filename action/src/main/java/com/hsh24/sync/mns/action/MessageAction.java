@@ -51,21 +51,22 @@ public class MessageAction extends BaseAction {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(MessageAction.class);
 
-	/**
-	 * 
-	 * @return
-	 * @throws IOException
-	 * @throws HttpException
-	 */
-	public String mnsNotify() throws HttpException, IOException {
-		System.out.println("**********");
+	public String xml() {
+		try {
+			handle1(this.getServletRequest(), this.getServletResponse());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return SUCCESS;
+	}
+
+	public String simplified() {
 		try {
 			handle2(this.getServletRequest(), this.getServletResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("**********");
 
 		return SUCCESS;
 	}

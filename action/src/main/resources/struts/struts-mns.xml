@@ -3,7 +3,8 @@
  "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="{http://sync}sync$mns"
-		extends="{http://sync}sync$framework" namespace="/mns">
-		<action name="notify" class="messageAction" method="mnsNotify"></action>
+		extends="{http://sync}sync$framework" namespace="/mns/notify">
+		<action name="xml" class="messageAction" method="xml"></action>
+		<action name="simplified" class="messageAction" method="simplified"></action>
 	</package>
 </struts>
