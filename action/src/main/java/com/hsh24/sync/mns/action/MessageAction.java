@@ -14,11 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -62,10 +65,8 @@ public class MessageAction extends BaseAction {
 	 */
 	public String mnsNotify() throws HttpException, IOException {
 		System.out.println("**********");
-		ActionContext ctx = ActionContext.getContext();
 		try {
-			handle1((HttpRequest) ctx.get(ExecutionContext.HTTP_REQUEST),
-				(HttpResponse) ctx.get(ExecutionContext.HTTP_RESPONSE));
+			handle1(this.getServletRequest(), this.getServletResponse());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -174,38 +175,32 @@ public class MessageAction extends BaseAction {
 	 * @throws HttpException
 	 * @throws IOException
 	 */
-	private void handle1(HttpRequest request, HttpResponse response) throws HttpException, IOException {
-		String method = request.getRequestLine().getMethod().toUpperCase(Locale.ENGLISH);
+	private void handle1(HttpServletRequest request, HttpServletResponse response) throws HttpException, IOException {
+		String method = request.getMethod().toUpperCase(Locale.ENGLISH);
 
 		if (!method.equals("GET") && !method.equals("HEAD") && !method.equals("POST")) {
 			throw new MethodNotSupportedException(method + " method not supported");
 		}
 
-		Header[] headers = request.getAllHeaders();
+		Enumeration<?> headers = request.getHeaderNames();
 		Map<String, String> hm = new HashMap<String, String>();
-		for (Header h : headers) {
-			System.out.println(h.getName() + ":" + h.getValue());
-			hm.put(h.getName(), h.getValue());
+		while (headers.hasMoreElements()) {
+			String key = (String) headers.nextElement();
+			String value = request.getHeader(key);
+			System.out.println(key + ":" + value);
+			hm.put(key, value);
 		}
 
-		String target = request.getRequestLine().getUri();
+		String target = request.getRequestURI();
 		System.out.println(target);
 
 		if (request instanceof HttpEntityEnclosingRequest) {
 			HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
 
-			// verify request
-			Header certHeader = request.getFirstHeader("x-mns-signing-cert-url");
-			if (certHeader == null) {
-				System.out.println("SigningCerURL Header not found");
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
-				return;
-			}
-
-			String cert = certHeader.getValue();
+			String cert = request.getHeader("x-mns-signing-cert-url");
 			if (cert.isEmpty()) {
 				System.out.println("SigningCertURL empty");
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
+				response.setStatus(HttpStatus.SC_BAD_REQUEST);
 				return;
 			}
 			cert = new String(Base64.decodeBase64(cert));
@@ -215,7 +210,7 @@ public class MessageAction extends BaseAction {
 			if (!authenticate(method, target, hm, cert)) {
 				System.out.println("authenticate fail");
 				logger.warn("authenticate fail");
-				response.setStatusCode(HttpStatus.SC_BAD_REQUEST);
+				response.setStatus(HttpStatus.SC_BAD_REQUEST);
 				return;
 			}
 
@@ -232,7 +227,7 @@ public class MessageAction extends BaseAction {
 			System.out.println("Simplified Notification: \n" + content);
 		}
 
-		response.setStatusCode(HttpStatus.SC_NO_CONTENT);
+		response.setStatus(HttpStatus.SC_NO_CONTENT);
 	}
 
 	private String safeGetElementContent(Element element, String tag) {
