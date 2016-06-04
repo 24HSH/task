@@ -90,11 +90,15 @@ public class MessageAction extends BaseAction {
 	 * @return true if verify pass
 	 */
 	private Boolean authenticate(String method, String uri, Map<String, String> headers, String cert) {
+		// 获取待签名字符串
 		String str2sign = getSignStr(method, uri, headers);
-		System.out.println("str2sign:\t" + str2sign);
-		String signature = headers.get("Authorization");
+		System.out.println("String2Sign:\t" + str2sign);
+
+		// 对Authorization字段做Base64解码
+		String signature = headers.get("authorization");
 		byte[] decodedSign = Base64.decodeBase64(signature);
-		// get cert, and verify this request with this cert
+
+		// 根据URL获取证书，并从证书中获取公钥
 		try {
 			URL url = new URL(cert);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
