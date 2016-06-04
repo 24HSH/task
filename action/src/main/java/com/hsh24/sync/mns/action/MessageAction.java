@@ -61,9 +61,16 @@ public class MessageAction extends BaseAction {
 	 * @throws HttpException
 	 */
 	public String mnsNotify() throws HttpException, IOException {
+		System.out.println("**********");
 		ActionContext ctx = ActionContext.getContext();
-		handle1((HttpRequest) ctx.get(ExecutionContext.HTTP_REQUEST),
-			(HttpResponse) ctx.get(ExecutionContext.HTTP_RESPONSE));
+		try {
+			handle1((HttpRequest) ctx.get(ExecutionContext.HTTP_REQUEST),
+				(HttpResponse) ctx.get(ExecutionContext.HTTP_RESPONSE));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("**********");
 
 		return SUCCESS;
 	}
