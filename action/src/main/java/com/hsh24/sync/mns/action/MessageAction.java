@@ -132,11 +132,11 @@ public class MessageAction extends BaseAction {
 		StringBuilder sb = new StringBuilder();
 		sb.append(method);
 		sb.append("\n");
-		sb.append(safeGetHeader(headers, "Content-md5"));
+		sb.append(safeGetHeader(headers, "content-md5"));
 		sb.append("\n");
-		sb.append(safeGetHeader(headers, "Content-Type"));
+		sb.append(safeGetHeader(headers, "content-type"));
 		sb.append("\n");
-		sb.append(safeGetHeader(headers, "Date"));
+		sb.append(safeGetHeader(headers, "date"));
 		sb.append("\n");
 
 		List<String> tmp = new ArrayList<String>();
