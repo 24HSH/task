@@ -53,9 +53,9 @@ public class MessageAction extends BaseAction {
 
 	public String xml() {
 		try {
-			handle2(this.getServletRequest(), this.getServletResponse());
+			handle(this.getServletRequest(), this.getServletResponse(), "XML");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 
 		return SUCCESS;
@@ -63,9 +63,9 @@ public class MessageAction extends BaseAction {
 
 	public String simplified() {
 		try {
-			handle1(this.getServletRequest(), this.getServletResponse());
+			handle(this.getServletRequest(), this.getServletResponse(), "SIMPLIFIED");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 
 		return SUCCESS;
@@ -115,7 +115,7 @@ public class MessageAction extends BaseAction {
 	}
 
 	/**
-	 * build string for sign
+	 * build string for sign.
 	 * 
 	 * @param method
 	 *            , http method
@@ -160,7 +160,7 @@ public class MessageAction extends BaseAction {
 	}
 
 	/**
-	 * process method for NSHandler
+	 * process method for NSHandler.
 	 * 
 	 * @param request
 	 *            , http request
@@ -171,12 +171,15 @@ public class MessageAction extends BaseAction {
 	 * @throws HttpException
 	 * @throws IOException
 	 */
-	private void handle1(HttpServletRequest request, HttpServletResponse response) throws HttpException, IOException {
+	private void handle(HttpServletRequest request, HttpServletResponse response, String format) throws HttpException,
+		IOException {
 		String method = request.getMethod().toUpperCase(Locale.ENGLISH);
 
 		if (!method.equals("GET") && !method.equals("HEAD") && !method.equals("POST")) {
 			throw new MethodNotSupportedException(method + " method not supported");
 		}
+
+		String target = request.getRequestURI();
 
 		Enumeration<?> headers = request.getHeaderNames();
 		Map<String, String> hm = new HashMap<String, String>();
@@ -185,8 +188,6 @@ public class MessageAction extends BaseAction {
 			String value = request.getHeader(key);
 			hm.put(key, value);
 		}
-
-		String target = request.getRequestURI();
 
 		String cert = request.getHeader("x-mns-signing-cert-url");
 		if (StringUtils.isEmpty(cert)) {
@@ -200,31 +201,48 @@ public class MessageAction extends BaseAction {
 			return;
 		}
 
-		// parser content of simplified notification
-		InputStream is = request.getInputStream();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		StringBuffer buffer = new StringBuffer();
-		String line = "";
-		while ((line = reader.readLine()) != null) {
-			buffer.append(line);
-		}
-		String content = buffer.toString();
+		if ("XML".equals(format)) {
+			// parser xml content
+			InputStream content = request.getInputStream();
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			Element notify = null;
+			try {
+				DocumentBuilder db = dbf.newDocumentBuilder();
+				Document document = db.parse(content);
+				NodeList nl = document.getElementsByTagName("Notification");
+				if (nl == null || nl.getLength() == 0) {
+					response.setStatus(HttpStatus.SC_BAD_REQUEST);
+					return;
+				}
+				notify = (Element) nl.item(0);
+			} catch (ParserConfigurationException e) {
+				logger.error(e);
+				response.setStatus(HttpStatus.SC_BAD_REQUEST);
+				return;
+			} catch (SAXException e) {
+				logger.error(e);
+				response.setStatus(HttpStatus.SC_BAD_REQUEST);
+				return;
+			}
 
-		System.out.println("Simplified Notification: \n" + content);
-	}
+			paserContent(notify);
+		} else if ("SIMPLIFIED".equals(format)) {
+			// parser content of simplified notification
+			InputStream is = request.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			StringBuffer buffer = new StringBuffer();
+			String line = "";
+			while ((line = reader.readLine()) != null) {
+				buffer.append(line);
+			}
+			String content = buffer.toString();
 
-	private String safeGetElementContent(Element element, String tag) {
-		NodeList nl = element.getElementsByTagName(tag);
-		if (nl != null && nl.getLength() > 0) {
-			return nl.item(0).getTextContent();
-		} else {
-			logger.warn("get " + tag + " from xml fail");
-			return "";
+			System.out.println("Simplified Notification: \n" + content);
 		}
 	}
 
 	/**
-	 * parser /notifications message content
+	 * parser /notifications message content.
 	 * 
 	 * @param notify
 	 *            , xml element
@@ -266,82 +284,20 @@ public class MessageAction extends BaseAction {
 			String msgTag = safeGetElementContent(notify, "MessageTag");
 			if (msgTag != "") {
 				System.out.println("MessageTag:\t" + msgTag);
-				logger.debug("MessageTag:\t" + msgTag);
 			}
 		} catch (Exception e) {
 			logger.error(e);
 		}
 	}
 
-	/**
-	 * process method for NSHandler.
-	 * 
-	 * @param request
-	 *            , http request
-	 * @param response
-	 *            , http responst
-	 * @param context
-	 *            , http context
-	 * @throws HttpException
-	 * @throws IOException
-	 */
-	private void handle2(HttpServletRequest request, HttpServletResponse response) throws HttpException, IOException {
-		String method = request.getMethod().toUpperCase(Locale.ENGLISH);
-
-		if (!method.equals("GET") && !method.equals("HEAD") && !method.equals("POST")) {
-			throw new MethodNotSupportedException(method + " method not supported");
+	private String safeGetElementContent(Element element, String tag) {
+		NodeList nl = element.getElementsByTagName(tag);
+		if (nl != null && nl.getLength() > 0) {
+			return nl.item(0).getTextContent();
+		} else {
+			logger.warn("get " + tag + " from xml fail");
+			return "";
 		}
-
-		Enumeration<?> headers = request.getHeaderNames();
-		Map<String, String> hm = new HashMap<String, String>();
-		while (headers.hasMoreElements()) {
-			String key = (String) headers.nextElement();
-			String value = request.getHeader(key);
-			hm.put(key, value);
-		}
-
-		String target = request.getRequestURI();
-
-		// parser xml content
-		InputStream content = request.getInputStream();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		Element notify = null;
-		try {
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document document = db.parse(content);
-			NodeList nl = document.getElementsByTagName("Notification");
-			if (nl == null || nl.getLength() == 0) {
-				System.out.println("xml tag error");
-				logger.warn("xml tag error");
-				response.setStatus(HttpStatus.SC_BAD_REQUEST);
-				return;
-			}
-			notify = (Element) nl.item(0);
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-			logger.warn("xml parser fail! " + e.getMessage());
-			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			return;
-		} catch (SAXException e) {
-			e.printStackTrace();
-			logger.warn("xml parser fail! " + e.getMessage());
-			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			return;
-		}
-
-		String cert = request.getHeader("x-mns-signing-cert-url");
-		if (StringUtils.isEmpty(cert)) {
-			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			return;
-		}
-		cert = new String(Base64.decodeBase64(cert));
-
-		if (!authenticate(method, target, hm, cert)) {
-			response.setStatus(HttpStatus.SC_BAD_REQUEST);
-			return;
-		}
-
-		paserContent(notify);
 	}
 
 }
