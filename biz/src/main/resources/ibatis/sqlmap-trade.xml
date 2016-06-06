@@ -30,7 +30,7 @@
 			   DATE_FORMAT(t.sign_date, '%Y-%m-%d %T') AS signDate,
 			   DATE_FORMAT(t.feedback_date, '%Y-%m-%d %T') AS feedbackDate,
 			   DATE_FORMAT(t.feedbacked_date, '%Y-%m-%d %T') AS feedbackedDate
-		  FROM basis_tb_trade t
+		  FROM mall.mall_tb_trade t
 		 WHERE t.trade_no = #tradeNo#
 	]]>
 		<dynamic>
@@ -42,7 +42,7 @@
 	
 	<update id="updateTrade" parameterClass="trade">
 	<![CDATA[
-		UPDATE basis_tb_trade t
+		UPDATE mall.mall_tb_trade t
 		SET t.modify_date = NOW(),
 		  t.modify_user   = #modifyUser#
 	]]>
