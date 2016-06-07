@@ -12,8 +12,6 @@ import com.hsh24.sync.api.trade.bo.Trade;
 import com.hsh24.sync.api.wxpay.IWxpayService;
 import com.hsh24.sync.framework.bo.BooleanResult;
 import com.hsh24.sync.framework.exception.ServiceException;
-import com.hsh24.sync.framework.log.Logger4jCollection;
-import com.hsh24.sync.framework.log.Logger4jExtend;
 import com.wideka.weixin.api.pay.bo.WxNotify;
 import com.wideka.weixin.framework.util.XmlUtil;
 
@@ -23,8 +21,6 @@ import com.wideka.weixin.framework.util.XmlUtil;
  * 
  */
 public class PayServiceImpl implements IPayService {
-
-	private Logger4jExtend logger = Logger4jCollection.getLogger(PayServiceImpl.class);
 
 	private TransactionTemplate transactionTemplate;
 
