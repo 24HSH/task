@@ -56,12 +56,12 @@ public class TradeServiceImpl implements ITradeService {
 		result.setResult(false);
 
 		if (tradeId == null) {
-			result.setCode("交易信息不能为空。");
+			result.setCode("交易信息不能为空");
 			return result;
 		}
 
 		if (StringUtils.isEmpty(modifyUser)) {
-			result.setCode("操作人信息不能为空。");
+			result.setCode("操作人信息不能为空");
 			return result;
 		}
 
@@ -79,14 +79,14 @@ public class TradeServiceImpl implements ITradeService {
 					if (c != 1) {
 						ts.setRollbackOnly();
 
-						result.setCode("更新交易失败。");
+						result.setCode("更新交易失败");
 						return result;
 					}
 				} catch (Exception e) {
 					logger.error(LogUtil.parserBean(trade), e);
 					ts.setRollbackOnly();
 
-					result.setCode("更新交易表失败。");
+					result.setCode("更新交易表失败");
 					return result;
 				}
 
@@ -123,7 +123,7 @@ public class TradeServiceImpl implements ITradeService {
 			result.setResult(true);
 		} catch (Exception e) {
 			logger.error(e);
-			result.setCode("同步交易表失败。");
+			result.setCode("同步交易表失败");
 		}
 
 		return result;

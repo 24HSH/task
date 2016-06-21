@@ -40,12 +40,12 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 		result.setResult(false);
 
 		if (id == null) {
-			result.setCode("收货日志信息不能为空。");
+			result.setCode("收货日志信息不能为空");
 			return result;
 		}
 
 		if (StringUtils.isEmpty(modifyUser)) {
-			result.setCode("操作人信息不能为空。");
+			result.setCode("操作人信息不能为空");
 			return result;
 		}
 
@@ -58,11 +58,11 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 			if (c == 1) {
 				result.setResult(true);
 			} else {
-				result.setCode("更新收货日志失败。");
+				result.setCode("更新收货日志失败");
 			}
 		} catch (Exception e) {
 			logger.error(LogUtil.parserBean(receiptLog), e);
-			result.setCode("更新收货日志表失败。");
+			result.setCode("更新收货日志表失败");
 		}
 
 		return result;
@@ -74,17 +74,17 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 		result.setResult(false);
 
 		if (id == null) {
-			result.setCode("交易日志信息不能为空。");
+			result.setCode("交易日志信息不能为空");
 			return result;
 		}
 
 		if (StringUtils.isBlank(e)) {
-			result.setCode("日志信息不能为空。");
+			result.setCode("日志信息不能为空");
 			return result;
 		}
 
 		if (StringUtils.isEmpty(modifyUser)) {
-			result.setCode("操作人信息不能为空。");
+			result.setCode("操作人信息不能为空");
 			return result;
 		}
 
@@ -98,11 +98,11 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 			if (c == 1) {
 				result.setResult(true);
 			} else {
-				result.setCode("更新交易日志失败。");
+				result.setCode("更新交易日志失败");
 			}
 		} catch (Exception ex) {
 			logger.error(LogUtil.parserBean(receiptLog), ex);
-			result.setCode("更新交易日志表失败。");
+			result.setCode("更新交易日志表失败");
 		}
 
 		return result;

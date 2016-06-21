@@ -45,19 +45,19 @@ public class TradeServiceImpl implements ITradeService {
 		trade.setType(ITradeService.TO_SEND);
 
 		if (StringUtils.isBlank(tradeNo)) {
-			result.setCode("交易订单不能为空。");
+			result.setCode("交易订单不能为空");
 			return result;
 		}
 		trade.setTradeNo(tradeNo.trim());
 
 		if (StringUtils.isBlank(payType)) {
-			result.setCode("支付类型不能为空。");
+			result.setCode("支付类型不能为空");
 			return result;
 		}
 		trade.setPayType(payType.trim());
 
 		if (StringUtils.isBlank(payDate)) {
-			result.setCode("支付时间不能为空。");
+			result.setCode("支付时间不能为空");
 			return result;
 		}
 		trade.setPayDate(payDate);
@@ -91,11 +91,11 @@ public class TradeServiceImpl implements ITradeService {
 			if (c == 1) {
 				result.setResult(true);
 			} else {
-				result.setCode("更新交易失败。");
+				result.setCode("更新交易失败");
 			}
 		} catch (Exception e) {
 			logger.error(LogUtil.parserBean(trade), e);
-			result.setCode("更新交易表失败。");
+			result.setCode("更新交易表失败");
 		}
 
 		return result;

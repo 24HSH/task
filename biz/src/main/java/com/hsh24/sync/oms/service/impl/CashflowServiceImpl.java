@@ -27,12 +27,12 @@ public class CashflowServiceImpl implements ICashflowService {
 		result.setResult(false);
 
 		if (tradeId == null) {
-			result.setCode("交易信息不能为空。");
+			result.setCode("交易信息不能为空");
 			return result;
 		}
 
 		if (StringUtils.isEmpty(modifyUser)) {
-			result.setCode("操作人信息不能为空。");
+			result.setCode("操作人信息不能为空");
 			return result;
 		}
 
@@ -46,7 +46,7 @@ public class CashflowServiceImpl implements ICashflowService {
 		} catch (Exception e) {
 			logger.error(LogUtil.parserBean(cashflow), e);
 
-			result.setCode("添加资金流水信息失败，请稍后再试。");
+			result.setCode("添加资金流水信息失败，请稍后再试");
 		}
 
 		return result;

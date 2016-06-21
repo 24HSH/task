@@ -27,12 +27,12 @@ public class BankAcctServiceImpl implements IBankAcctService {
 		result.setResult(false);
 
 		if (tradeId == null) {
-			result.setCode("交易信息不能为空。");
+			result.setCode("交易信息不能为空");
 			return result;
 		}
 
 		if (StringUtils.isEmpty(modifyUser)) {
-			result.setCode("操作人信息不能为空。");
+			result.setCode("操作人信息不能为空");
 			return result;
 		}
 
@@ -45,11 +45,11 @@ public class BankAcctServiceImpl implements IBankAcctService {
 			if (c == 1) {
 				result.setResult(true);
 			} else {
-				result.setCode("更新账户信息失败。");
+				result.setCode("更新账户信息失败");
 			}
 		} catch (Exception e) {
 			logger.error(LogUtil.parserBean(bankAcct), e);
-			result.setCode("更新账户信息表失败。");
+			result.setCode("更新账户信息表失败");
 		}
 
 		return result;
