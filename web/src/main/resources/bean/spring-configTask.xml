@@ -13,11 +13,9 @@
 				<ref bean="cacheMonitorTrigger" />
 				<ref bean="logMonitorTrigger" />
 				-->
-				<!--
 				<ref bean="tradeSyncTrigger" />
 				<ref bean="tradeSync2SendTrigger" />
 				<ref bean="receiptSyncTrigger" />
-				-->
 			</list>
 		</property>
 	</bean>
