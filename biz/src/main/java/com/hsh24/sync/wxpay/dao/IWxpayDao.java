@@ -14,6 +14,6 @@ public interface IWxpayDao {
 	 * @param wxNotify
 	 * @return
 	 */
-	void createWxNotify(WxNotify wxNotify);
+	int createWxNotify(WxNotify wxNotify);
 
 }

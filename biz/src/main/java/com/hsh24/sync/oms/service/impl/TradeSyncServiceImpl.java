@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -30,20 +34,27 @@ import com.hsh24.sync.framework.util.HttpUtil;
  * @author JiakunXu
  * 
  */
+@Service("omsTradeSyncService")
 public class TradeSyncServiceImpl implements ITradeSyncService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(TradeSyncServiceImpl.class);
 
+	@Resource
 	private TransactionTemplate transactionTemplate;
 
+	@Resource(name = "omsTradeLogService")
 	private ITradeLogService tradeLogService;
 
+	@Resource(name = "omsTradeService")
 	private ITradeService tradeService;
 
+	@Resource(name = "omsOrderService")
 	private IOrderService orderService;
 
+	@Resource
 	private IShopService shopService;
 
+	@Value("${oms.trade.url}")
 	private String url;
 
 	@Override
@@ -221,54 +232,6 @@ public class TradeSyncServiceImpl implements ITradeSyncService {
 		}
 
 		return 0;
-	}
-
-	public TransactionTemplate getTransactionTemplate() {
-		return transactionTemplate;
-	}
-
-	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
-		this.transactionTemplate = transactionTemplate;
-	}
-
-	public ITradeLogService getTradeLogService() {
-		return tradeLogService;
-	}
-
-	public void setTradeLogService(ITradeLogService tradeLogService) {
-		this.tradeLogService = tradeLogService;
-	}
-
-	public ITradeService getTradeService() {
-		return tradeService;
-	}
-
-	public void setTradeService(ITradeService tradeService) {
-		this.tradeService = tradeService;
-	}
-
-	public IOrderService getOrderService() {
-		return orderService;
-	}
-
-	public void setOrderService(IOrderService orderService) {
-		this.orderService = orderService;
-	}
-
-	public IShopService getShopService() {
-		return shopService;
-	}
-
-	public void setShopService(IShopService shopService) {
-		this.shopService = shopService;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
 }

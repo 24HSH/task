@@ -2,7 +2,10 @@ package com.hsh24.sync.oms.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import com.hsh24.sync.api.oms.IReceiptLogService;
 import com.hsh24.sync.api.oms.bo.ReceiptLog;
@@ -17,10 +20,12 @@ import com.hsh24.sync.oms.dao.IReceiptLogDao;
  * @author JiakunXu
  * 
  */
+@Service
 public class ReceiptLogServiceImpl implements IReceiptLogService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(ReceiptLogServiceImpl.class);
 
+	@Resource
 	private IReceiptLogDao receiptLogDao;
 
 	@Override
@@ -106,15 +111,6 @@ public class ReceiptLogServiceImpl implements IReceiptLogService {
 		}
 
 		return result;
-	}
-
-	public IReceiptLogDao getReceiptLogDao() {
-		return receiptLogDao;
-	}
-
-	public void setReceiptLogDao(IReceiptLogDao receiptLogDao) {
-
-		this.receiptLogDao = receiptLogDao;
 	}
 
 }

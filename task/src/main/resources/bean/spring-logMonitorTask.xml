@@ -3,13 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+           http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 	
-	<bean id="logMonitorTask" class="com.hsh24.sync.monitor.task.LogMonitorTask">
-		<property name="memcachedCacheService" ref="memcachedCacheService" />
-		<property name="logMonitorService" ref="logMonitorService" />
-	</bean>
-
 	<bean id="logMonitorJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="logMonitorTask" />
@@ -19,7 +14,7 @@
 		</property>
 	</bean>
 
-	<bean id="logMonitorTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<bean id="logMonitorTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail">
 			<ref bean="logMonitorJobDetail" />
 		</property>

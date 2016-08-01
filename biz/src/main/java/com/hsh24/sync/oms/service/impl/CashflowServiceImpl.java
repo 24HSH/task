@@ -1,6 +1,9 @@
 package com.hsh24.sync.oms.service.impl;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import com.hsh24.sync.api.oms.ICashflowService;
 import com.hsh24.sync.api.oms.bo.Cashflow;
@@ -15,10 +18,12 @@ import com.wideka.weixin.framework.util.LogUtil;
  * @author JiakunXu
  * 
  */
+@Service
 public class CashflowServiceImpl implements ICashflowService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(CashflowServiceImpl.class);
 
+	@Resource
 	private ICashflowDao cashflowDao;
 
 	@Override
@@ -50,14 +55,6 @@ public class CashflowServiceImpl implements ICashflowService {
 		}
 
 		return result;
-	}
-
-	public ICashflowDao getCashflowDao() {
-		return cashflowDao;
-	}
-
-	public void setCashflowDao(ICashflowDao cashflowDao) {
-		this.cashflowDao = cashflowDao;
 	}
 
 }

@@ -2,7 +2,11 @@ package com.hsh24.sync.wxpay.service.impl;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.hsh24.sync.api.wxpay.IWxpayService;
 import com.hsh24.sync.framework.bo.BooleanResult;
@@ -20,26 +24,36 @@ import com.wideka.weixin.framework.util.EncryptUtil;
  * @author JiakunXu
  * 
  */
+@Service
 public class WxpayServiceImpl implements IWxpayService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(WxpayServiceImpl.class);
 
+	@Resource
 	private IUnifiedOrderService unifiedOrderService;
 
+	@Resource
 	private IRefundService refundService;
 
+	@Resource
 	private IWxpayDao wxpayDao;
 
+	@Value("${weixin.app.id}")
 	private String appId;
 
+	@Value("${weixin.app.secret}")
 	private String appSecret;
 
+	@Value("${weixin.mch.id}")
 	private String mchId;
 
+	@Value("${weixin.notify.url}")
 	private String notifyUrl;
 
+	@Value("${weixin.key}")
 	private String key;
 
+	@Value("${weixin.ssl.path}")
 	private String sslPath;
 
 	@Override
@@ -177,78 +191,6 @@ public class WxpayServiceImpl implements IWxpayService {
 		}
 
 		return result;
-	}
-
-	public IUnifiedOrderService getUnifiedOrderService() {
-		return unifiedOrderService;
-	}
-
-	public void setUnifiedOrderService(IUnifiedOrderService unifiedOrderService) {
-		this.unifiedOrderService = unifiedOrderService;
-	}
-
-	public IRefundService getRefundService() {
-		return refundService;
-	}
-
-	public void setRefundService(IRefundService refundService) {
-		this.refundService = refundService;
-	}
-
-	public IWxpayDao getWxpayDao() {
-		return wxpayDao;
-	}
-
-	public void setWxpayDao(IWxpayDao wxpayDao) {
-		this.wxpayDao = wxpayDao;
-	}
-
-	public String getAppId() {
-		return appId;
-	}
-
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
-
-	public String getAppSecret() {
-		return appSecret;
-	}
-
-	public void setAppSecret(String appSecret) {
-		this.appSecret = appSecret;
-	}
-
-	public String getMchId() {
-		return mchId;
-	}
-
-	public void setMchId(String mchId) {
-		this.mchId = mchId;
-	}
-
-	public String getNotifyUrl() {
-		return notifyUrl;
-	}
-
-	public void setNotifyUrl(String notifyUrl) {
-		this.notifyUrl = notifyUrl;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getSslPath() {
-		return sslPath;
-	}
-
-	public void setSslPath(String sslPath) {
-		this.sslPath = sslPath;
 	}
 
 }

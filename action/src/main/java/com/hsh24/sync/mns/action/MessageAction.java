@@ -31,6 +31,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpException;
 import org.apache.http.HttpStatus;
 import org.apache.http.MethodNotSupportedException;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -45,6 +47,8 @@ import com.hsh24.sync.framework.log.Logger4jExtend;
  * @author JiakunXu
  * 
  */
+@Controller
+@Scope("request")
 public class MessageAction extends BaseAction {
 
 	private static final long serialVersionUID = -5409620057199615942L;

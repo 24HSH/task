@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.annotation.Resource;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
 import com.hsh24.sync.api.pay.IPayService;
 import com.hsh24.sync.framework.action.BaseAction;
 import com.hsh24.sync.framework.bo.BooleanResult;
@@ -15,12 +20,15 @@ import com.hsh24.sync.framework.log.Logger4jExtend;
  * @author JiakunXu
  * 
  */
+@Controller
+@Scope("request")
 public class PayAction extends BaseAction {
 
 	private static final long serialVersionUID = 3200362561478926494L;
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(PayAction.class);
 
+	@Resource
 	private IPayService payService;
 
 	/**
@@ -65,14 +73,6 @@ public class PayAction extends BaseAction {
 		this.setResourceResult(result.getCode());
 
 		return RESOURCE_RESULT;
-	}
-
-	public IPayService getPayService() {
-		return payService;
-	}
-
-	public void setPayService(IPayService payService) {
-		this.payService = payService;
 	}
 
 }

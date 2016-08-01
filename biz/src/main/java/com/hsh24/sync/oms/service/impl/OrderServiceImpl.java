@@ -2,6 +2,10 @@ package com.hsh24.sync.oms.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.hsh24.sync.api.oms.IOrderService;
 import com.hsh24.sync.api.oms.bo.Order;
 import com.hsh24.sync.framework.log.Logger4jCollection;
@@ -13,10 +17,12 @@ import com.hsh24.sync.oms.dao.IOrderDao;
  * @author JiakunXu
  * 
  */
+@Service("omsOrderService")
 public class OrderServiceImpl implements IOrderService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(OrderServiceImpl.class);
 
+	@Resource(name = "omsOrderDao")
 	private IOrderDao orderDao;
 
 	@Override
@@ -35,14 +41,6 @@ public class OrderServiceImpl implements IOrderService {
 		}
 
 		return null;
-	}
-
-	public IOrderDao getOrderDao() {
-		return orderDao;
-	}
-
-	public void setOrderDao(IOrderDao orderDao) {
-		this.orderDao = orderDao;
 	}
 
 }

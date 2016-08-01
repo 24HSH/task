@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
@@ -12,6 +14,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @author JiakunXu
  * 
  */
+@Alias("omsTrade")
 public class Trade implements Serializable {
 
 	private static final long serialVersionUID = -1761794880999676421L;

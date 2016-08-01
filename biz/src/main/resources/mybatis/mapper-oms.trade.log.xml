@@ -1,0 +1,44 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hsh24.sync.oms.dao.ITradeLogDao">
+	
+	<select id="getTradeLogList" parameterType="tradeLog" resultType="tradeLog">
+	<![CDATA[
+		SELECT ID,
+			   TRADE_ID AS tradeId,
+			   TYPE
+		  FROM dms.dms_tb_trade_log
+		 WHERE STATE = 'U'
+		 AND times < 3
+		 ORDER BY MODIFY_DATE
+		 LIMIT 10
+	]]>
+	</select>
+
+	<update id="finishTradeLog" parameterType="tradeLog">
+	<![CDATA[
+		UPDATE dms.dms_tb_trade_log t
+		   SET t.STATE = 'D',
+			   t.MODIFY_DATE = NOW(),
+			   t.MODIFY_USER = #{modifyUser}
+		 WHERE t.id = #{id}
+		   AND t.STATE = 'U'
+	]]>
+	</update>
+	
+	<update id="recordTradeLog" parameterType="tradeLog">
+	<![CDATA[
+		UPDATE dms.dms_tb_trade_log t
+		   SET t.times = t.times + 1,
+			   t.e = #{e},
+			   t.MODIFY_DATE = NOW(),
+			   t.MODIFY_USER = #{modifyUser}
+		 WHERE t.id = #{id}
+		   AND t.STATE = 'U'
+	]]>
+	</update>
+	
+</mapper>
+	

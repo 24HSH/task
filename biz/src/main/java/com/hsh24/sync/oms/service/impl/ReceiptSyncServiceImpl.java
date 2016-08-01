@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -30,18 +34,24 @@ import com.hsh24.sync.framework.util.HttpUtil;
  * @author JiakunXu
  * 
  */
+@Service
 public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(ReceiptSyncServiceImpl.class);
 
+	@Resource
 	private TransactionTemplate transactionTemplate;
 
+	@Resource
 	private IReceiptLogService receiptLogService;
 
+	@Resource
 	private IReceiptService receiptService;
 
+	@Resource
 	private IItemConvertService itemConvertService;
 
+	@Value("${oms.receipt.url}")
 	private String url;
 
 	@Override
@@ -156,46 +166,6 @@ public class ReceiptSyncServiceImpl implements IReceiptSyncService {
 
 	private void record(Long id, String e) {
 		receiptLogService.recordReceiptLog(id, e, "sys");
-	}
-
-	public TransactionTemplate getTransactionTemplate() {
-		return transactionTemplate;
-	}
-
-	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
-		this.transactionTemplate = transactionTemplate;
-	}
-
-	public IReceiptLogService getReceiptLogService() {
-		return receiptLogService;
-	}
-
-	public void setReceiptLogService(IReceiptLogService receiptLogService) {
-		this.receiptLogService = receiptLogService;
-	}
-
-	public IReceiptService getReceiptService() {
-		return receiptService;
-	}
-
-	public void setReceiptService(IReceiptService receiptService) {
-		this.receiptService = receiptService;
-	}
-
-	public IItemConvertService getItemConvertService() {
-		return itemConvertService;
-	}
-
-	public void setItemConvertService(IItemConvertService itemConvertService) {
-		this.itemConvertService = itemConvertService;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
 }

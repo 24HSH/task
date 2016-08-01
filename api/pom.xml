@@ -17,7 +17,7 @@
 			<artifactId>sync-util</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<!-- module weixin -->
 		<dependency>
 			<groupId>com.wideka</groupId>
@@ -29,6 +29,12 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
 		</dependency>
 
 		<!-- fastjson -->

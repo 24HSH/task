@@ -1,6 +1,9 @@
 package com.hsh24.sync.pay.service.impl;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -20,14 +23,19 @@ import com.wideka.weixin.framework.util.XmlUtil;
  * @author JiakunXu
  * 
  */
+@Service
 public class PayServiceImpl implements IPayService {
 
+	@Resource
 	private TransactionTemplate transactionTemplate;
 
+	@Resource
 	private IMemcachedCacheService memcachedCacheService;
 
+	@Resource
 	private IWxpayService wxpayService;
 
+	@Resource
 	private ITradeService tradeService;
 
 	// >>>>>>>>>>以下是第三方交易平台<<<<<<<<<<
@@ -103,38 +111,6 @@ public class PayServiceImpl implements IPayService {
 		}
 
 		return result;
-	}
-
-	public TransactionTemplate getTransactionTemplate() {
-		return transactionTemplate;
-	}
-
-	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
-		this.transactionTemplate = transactionTemplate;
-	}
-
-	public IMemcachedCacheService getMemcachedCacheService() {
-		return memcachedCacheService;
-	}
-
-	public void setMemcachedCacheService(IMemcachedCacheService memcachedCacheService) {
-		this.memcachedCacheService = memcachedCacheService;
-	}
-
-	public IWxpayService getWxpayService() {
-		return wxpayService;
-	}
-
-	public void setWxpayService(IWxpayService wxpayService) {
-		this.wxpayService = wxpayService;
-	}
-
-	public ITradeService getTradeService() {
-		return tradeService;
-	}
-
-	public void setTradeService(ITradeService tradeService) {
-		this.tradeService = tradeService;
 	}
 
 }

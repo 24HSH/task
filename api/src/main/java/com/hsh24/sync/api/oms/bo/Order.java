@@ -3,6 +3,8 @@ package com.hsh24.sync.api.oms.bo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.apache.ibatis.type.Alias;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
@@ -11,6 +13,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @author JiakunXu
  * 
  */
+@Alias("omsOrder")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = -1206444713292456901L;

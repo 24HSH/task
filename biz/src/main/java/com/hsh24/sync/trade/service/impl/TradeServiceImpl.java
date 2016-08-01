@@ -1,6 +1,9 @@
 package com.hsh24.sync.trade.service.impl;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Service;
 
 import com.hsh24.sync.api.trade.ITradeService;
 import com.hsh24.sync.api.trade.bo.Trade;
@@ -15,10 +18,12 @@ import com.hsh24.sync.trade.dao.ITradeDao;
  * @author JiakunXu
  * 
  */
+@Service
 public class TradeServiceImpl implements ITradeService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(TradeServiceImpl.class);
 
+	@Resource
 	private ITradeDao tradeDao;
 
 	// >>>>>>>>>>以下是第三方交易平台<<<<<<<<<<
@@ -99,14 +104,6 @@ public class TradeServiceImpl implements ITradeService {
 		}
 
 		return result;
-	}
-
-	public ITradeDao getTradeDao() {
-		return tradeDao;
-	}
-
-	public void setTradeDao(ITradeDao tradeDao) {
-		this.tradeDao = tradeDao;
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.hsh24.sync.oms.service.impl;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -20,16 +23,21 @@ import com.hsh24.sync.oms.dao.ITradeDao;
  * @author JiakunXu
  * 
  */
+@Service("omsTradeService")
 public class TradeServiceImpl implements ITradeService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(TradeServiceImpl.class);
 
+	@Resource
 	private TransactionTemplate transactionTemplate;
 
+	@Resource
 	private ICashflowService cashflowService;
 
+	@Resource
 	private IBankAcctService bankAcctService;
 
+	@Resource(name = "omsTradeDao")
 	private ITradeDao tradeDao;
 
 	@Override
@@ -127,38 +135,6 @@ public class TradeServiceImpl implements ITradeService {
 		}
 
 		return result;
-	}
-
-	public TransactionTemplate getTransactionTemplate() {
-		return transactionTemplate;
-	}
-
-	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
-		this.transactionTemplate = transactionTemplate;
-	}
-
-	public ICashflowService getCashflowService() {
-		return cashflowService;
-	}
-
-	public void setCashflowService(ICashflowService cashflowService) {
-		this.cashflowService = cashflowService;
-	}
-
-	public IBankAcctService getBankAcctService() {
-		return bankAcctService;
-	}
-
-	public void setBankAcctService(IBankAcctService bankAcctService) {
-		this.bankAcctService = bankAcctService;
-	}
-
-	public ITradeDao getTradeDao() {
-		return tradeDao;
-	}
-
-	public void setTradeDao(ITradeDao tradeDao) {
-		this.tradeDao = tradeDao;
 	}
 
 }

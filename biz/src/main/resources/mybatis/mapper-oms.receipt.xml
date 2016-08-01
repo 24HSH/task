@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hsh24.sync.oms.dao.IReceiptDao">
+	
+	<select id="getReceipt" parameterType="receipt" resultType="receipt">
+	<![CDATA[
+		SELECT t.receipt_id AS receiptId,
+			   t.receipt_no AS receiptNo,
+			   DATE_FORMAT(t.create_date, '%Y-%m-%d %T') AS createDate,
+			   p.trade_no AS tradeNo,
+			   t.shop_id AS shopId,
+			   p.sup_id AS supId,
+			   t.create_user AS createUser,
+			   t.modify_user AS modifyUser
+		  FROM dms.dms_tb_receipt t, dms.dms_tb_trade p
+		 WHERE t.trade_id = p.trade_id
+		   AND t.state = 'U'
+		   AND t.receipt_id = #{receiptId}
+	]]>
+	</select>
+	
+	<select id="getWarehouse" parameterType="java.lang.Long" resultType="java.lang.String">
+	<![CDATA[
+		SELECT t.`warehouse_cd`
+		  FROM oms.`main_warehouse_t` t
+		 WHERE t.`org_id` = #{shopId}
+	]]>
+	</select>
+	
+</mapper>

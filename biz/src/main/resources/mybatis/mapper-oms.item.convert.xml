@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hsh24.sync.oms.dao.IItemConvertDao">
+	
+	<select id="getItemConvert" parameterType="itemConvert" resultType="itemConvert">
+	<![CDATA[
+		SELECT p.item_id AS itemId,
+			   p.item_code AS itemCode,
+			   t.quantity
+		  FROM sup.sup_tb_item_convert t, oms.dms_vw_goods p
+		 WHERE t.sub_bar_code = p.bar_code
+		   AND t.state = 'U'
+		   AND t.bar_code = #{barCode}
+	]]>
+	</select>
+	
+</mapper>

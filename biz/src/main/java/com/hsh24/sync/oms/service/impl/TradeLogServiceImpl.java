@@ -2,7 +2,10 @@ package com.hsh24.sync.oms.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import com.hsh24.sync.api.oms.ITradeLogService;
 import com.hsh24.sync.api.oms.bo.TradeLog;
@@ -17,10 +20,12 @@ import com.hsh24.sync.oms.dao.ITradeLogDao;
  * @author JiakunXu
  * 
  */
+@Service("omsTradeLogService")
 public class TradeLogServiceImpl implements ITradeLogService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(TradeLogServiceImpl.class);
 
+	@Resource(name = "omsTradeLogDao")
 	private ITradeLogDao tradeLogDao;
 
 	@Override
@@ -106,14 +111,6 @@ public class TradeLogServiceImpl implements ITradeLogService {
 		}
 
 		return result;
-	}
-
-	public ITradeLogDao getTradeLogDao() {
-		return tradeLogDao;
-	}
-
-	public void setTradeLogDao(ITradeLogDao tradeLogDao) {
-		this.tradeLogDao = tradeLogDao;
 	}
 
 }

@@ -1,5 +1,9 @@
 package com.hsh24.sync.oms.service.impl;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.hsh24.sync.api.oms.IShopService;
 import com.hsh24.sync.api.oms.bo.Shop;
 import com.hsh24.sync.framework.log.Logger4jCollection;
@@ -12,10 +16,12 @@ import com.hsh24.sync.oms.dao.IShopDao;
  * @author JiakunXu
  * 
  */
+@Service
 public class ShopServiceImpl implements IShopService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(ShopServiceImpl.class);
 
+	@Resource
 	private IShopDao shopDao;
 
 	@Override
@@ -34,14 +40,6 @@ public class ShopServiceImpl implements IShopService {
 		}
 
 		return null;
-	}
-
-	public IShopDao getShopDao() {
-		return shopDao;
-	}
-
-	public void setShopDao(IShopDao shopDao) {
-		this.shopDao = shopDao;
 	}
 
 }

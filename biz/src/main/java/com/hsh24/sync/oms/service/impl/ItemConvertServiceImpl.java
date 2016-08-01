@@ -2,7 +2,10 @@ package com.hsh24.sync.oms.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import com.hsh24.sync.api.oms.IItemConvertService;
 import com.hsh24.sync.api.oms.bo.ItemConvert;
@@ -16,10 +19,12 @@ import com.hsh24.sync.oms.dao.IItemConvertDao;
  * @author JiakunXu
  * 
  */
+@Service
 public class ItemConvertServiceImpl implements IItemConvertService {
 
 	private Logger4jExtend logger = Logger4jCollection.getLogger(ItemConvertServiceImpl.class);
 
+	@Resource
 	private IItemConvertDao itemConvertDao;
 
 	@Override
@@ -38,14 +43,6 @@ public class ItemConvertServiceImpl implements IItemConvertService {
 		}
 
 		return null;
-	}
-
-	public IItemConvertDao getItemConvertDao() {
-		return itemConvertDao;
-	}
-
-	public void setItemConvertDao(IItemConvertDao itemConvertDao) {
-		this.itemConvertDao = itemConvertDao;
 	}
 
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hsh24.sync.oms.dao.IOrderDao">
+	
+	<select id="getOrderList" parameterType="omsOrder" resultType="omsOrder">
+	<![CDATA[
+		SELECT t.order_id AS orderId,
+			   t.item_name AS itemName,
+			   t.item_file_path AS itemFilePath,
+			   t.properties_name AS propertiesName,
+			   t.quantity,
+			   t.price,
+			   t.item_id AS itemId,
+			   t.sku_id AS skuId,
+			   t.create_user AS createUser,
+			   p.item_code As itemCode
+		  FROM dms.dms_tb_order t
+		  LEFT JOIN oms.dms_vw_goods p ON t.item_id = p.item_id
+		 WHERE p.item_id is not null
+		   AND t.state = 'U'
+		   AND p.state = 'U'
+		   AND t.trade_id = #{tradeId}
+	]]>
+	</select>
+	
+</mapper>
